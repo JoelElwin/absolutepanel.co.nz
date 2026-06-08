@@ -25,7 +25,7 @@
       color: var(--black);
     }
 
-    /* Header - Same as main page */
+    /* === HEADER - Exact same as main page === */
     header {
       background: var(--orange);
       position: sticky;
@@ -39,8 +39,6 @@
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       height: 70px;
-      max-width: 1100px;
-      margin: 0 auto;
     }
     .logo {
       justify-self: start;
@@ -161,9 +159,6 @@
       display: block;
     }
 
-    /* REMOVED description preview from grid */
-    /* .gallery-item::after { ... }  ← removed */
-
     /* Modal */
     .modal {
       display: none;
@@ -248,7 +243,7 @@
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Header (Fixed alignment) -->
   <header>
     <nav>
       <a href="index.html" class="logo">
@@ -272,7 +267,7 @@
     <h1>Showcase Work</h1>
   </div>
 
-  <!-- Gallery Grid (no description preview) -->
+  <!-- Gallery Grid -->
   <div class="gallery-grid" id="gallery-grid"></div>
 
   <!-- Modal -->
