@@ -106,6 +106,12 @@
       nav {
         grid-template-columns: 1fr 1fr;
       }
+
+      /* Centre the logo on mobile */
+      .logo {
+        justify-self: center;
+      }
+
       .nav-links {
         position: absolute;
         top: 70px;
@@ -118,11 +124,16 @@
         display: none;
       }
       .nav-links.active { display: flex; }
-      .nav-toggle { display: block; }
 
-      /* Hide phone number on mobile */
+      /* Hide phone on mobile */
       .nav-phone {
         display: none;
+      }
+
+      /* Move burger menu slightly inward */
+      .nav-toggle {
+        margin-right: 0.75rem;
+        display: block;
       }
     }
 
