@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work in Progress | Absolute Panel & Paint 2010 Ltd</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Same styles as beforeafter.html above */
+    /* (Copy the entire <style> block from beforeafter.html) */
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <a href="index.html" class="logo">
+        <img src="Images/Logo/Logo.jpg" alt="Absolute Panel & Paint 2010 Ltd">
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:092999895" class="nav-phone">09 299 9895</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="page-header">
+    <h1>Work in Progress</h1>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid"></div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <button class="modal-arrow prev" onclick="prevImage()">←</button>
+      <button class="modal-arrow next" onclick="nextImage()">→</button>
+      <img id="modal-image" src="" alt="">
+      <p id="modal-description" class="modal-description"></p>
+    </div>
+  </div>
+
+  <script>
+    let galleryData = [];
+    let currentIndex = 0;
+
+    async function loadGallery() {
+      const res = await fetch('working.json');
+      galleryData = await res.json();
+      const container = document.getElementById('gallery-grid');
+
+      galleryData.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.innerHTML = `<img src="${item.image}" alt="">`;
+
+        div.addEventListener('click', () => openModal(index));
+        container.appendChild(div);
+      });
+    }
+
+    function openModal(index) {
+      currentIndex = index;
+      const modal = document.getElementById('modal');
+      const img = document.getElementById('modal-image');
+      const desc = document.getElementById('modal-description');
+
+      img.src = galleryData[currentIndex].image;
+      desc.textContent = galleryData[currentIndex].description || '';
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % galleryData.length;
+      updateModalImage();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+      updateModalImage();
+    }
+
+    function updateModalImage() {
+      const img = document.getElementById('modal-image');
+      const desc = document.getElementById('modal-description');
+
+      img.src = galleryData[currentIndex].image;
+      desc.textContent = galleryData[currentIndex].description || '';
+    }
+
+    function setupModal() {
+      const modal = document.getElementById('modal');
+
+      document.querySelector('.close').addEventListener('click', closeModal);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      });
+    }
+
+    function setupMobileMenu() {
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+
+      if (toggle && links) {
+        toggle.addEventListener('click', () => links.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => links.classList.remove('active'));
+        });
+      }
+    }
+
+    window.onload = function () {
+      loadGallery();
+      setupModal();
+      setupMobileMenu();
+    };
+  </script>
+</body>
+</html>
