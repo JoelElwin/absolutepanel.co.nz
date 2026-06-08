@@ -122,7 +122,7 @@
         padding: 1rem 0;
         gap: 1rem;
         display: none;
-        align-items: center;      /* ← Centres the menu items */
+        align-items: center;
         text-align: center;
       }
       .nav-links.active { display: flex; }
@@ -136,6 +136,11 @@
         margin-right: 0.5rem;
         display: block;
       }
+    }
+
+    /* Fix for sticky header cutting off section titles */
+    section {
+      scroll-margin-top: 85px;
     }
 
     /* HERO */
