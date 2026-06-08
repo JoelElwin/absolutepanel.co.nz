@@ -35,7 +35,7 @@
       background: var(--white);
     }
 
-    /* NAV - Wider for more left/right spread */
+    /* NAV - Full width with logo left, menu center, phone right */
     header {
       background: var(--orange);
       position: sticky;
@@ -44,9 +44,9 @@
       border-bottom: 4px solid var(--white);
     }
     nav {
-      max-width: 1400px;           /* ← Wider container */
+      width: 100%;                    /* ← Full width */
+      padding: 0 3rem;                /* ← Good spacing from edges */
       margin: 0 auto;
-      padding: 0 2rem;             /* ← More breathing room on edges */
       display: flex;
       align-items: center;
       height: 70px;
