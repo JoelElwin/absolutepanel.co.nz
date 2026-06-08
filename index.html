@@ -35,7 +35,7 @@
       background: var(--white);
     }
 
-    /* ========== BIGGER HEADER ========== */
+    /* NAV - Compact header with bigger logo */
     header {
       background: var(--orange);
       position: sticky;
@@ -50,11 +50,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 95px;                    /* ← Much taller header */
+      height: 70px;                    /* ← Kept compact */
       gap: 1rem;
     }
     .logo img {
-      height: 62px;                    /* ← Bigger logo */
+      height: 52px;                    /* ← Bigger logo */
       width: auto;
       vertical-align: middle;
     }
@@ -64,7 +64,7 @@
       list-style: none;
     }
     .nav-links a {
-      color: #ffffff;                  /* ← Better contrast on orange */
+      color: #ffffff;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
@@ -74,13 +74,12 @@
     .nav-links a:hover { color: #fff; opacity: 0.85; }
     .nav-phone {
       font-family: var(--font-head);
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: #ffffff;
       text-decoration: none;
       letter-spacing: 0.03em;
       white-space: nowrap;
-      flex-shrink: 0;
     }
     .nav-phone:hover { color: #fff; opacity: 0.85; }
 
@@ -97,7 +96,7 @@
     @media (max-width: 700px) {
       .nav-links {
         position: absolute;
-        top: 95px;                     /* ← Matches new taller header */
+        top: 70px;
         left: 0;
         right: 0;
         background: var(--black);
@@ -108,7 +107,7 @@
       }
       .nav-links.active { display: flex; }
       .nav-toggle { display: block; }
-      .nav-phone { font-size: 1.15rem; }
+      .nav-phone { font-size: 1.1rem; }
     }
 
     /* HERO */
