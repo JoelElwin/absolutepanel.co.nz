@@ -35,7 +35,7 @@
       background: var(--white);
     }
 
-    /* NAV - Full width with logo left, menu center, phone right */
+    /* NAV */
     header {
       background: var(--orange);
       position: sticky;
@@ -44,12 +44,13 @@
       border-bottom: 4px solid var(--white);
     }
     nav {
-      width: 100%;                    /* ← Full width */
-      padding: 0 3rem;                /* ← Good spacing from edges */
+      width: 100%;
+      padding: 0 3rem;
       margin: 0 auto;
       display: flex;
       align-items: center;
       height: 70px;
+      position: relative;           /* Needed for perfect centering */
     }
     .logo {
       flex-shrink: 0;
@@ -59,10 +60,13 @@
       width: auto;
       vertical-align: middle;
     }
+
+    /* Perfectly Centered Menu */
     .nav-links {
-      flex: 1;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      justify-content: center;
       gap: 2.2rem;
       list-style: none;
     }
@@ -78,8 +82,10 @@
       color: #fff;
       opacity: 0.85;
     }
+
     .nav-phone {
       flex-shrink: 0;
+      margin-left: auto;            /* Pushes phone to the right */
       font-family: var(--font-head);
       font-size: 1.35rem;
       font-weight: 700;
@@ -422,7 +428,7 @@
         <img src="Images/Logo/Logo.png" alt="Absolute Panel & Paint 2010 Ltd">
       </a>
 
-      <!-- Menu Centered -->
+      <!-- Menu Perfectly Centered -->
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
