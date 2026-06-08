@@ -489,7 +489,7 @@
 </head>
 <body>
 
-  <!-- NAV (Cleaned up) -->
+  <!-- NAV -->
   <header>
     <nav>
       <a href="#" class="logo">
@@ -497,7 +497,7 @@
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
-        <li><a href="gallery.html">Gallery</a></li>   <!-- ← New single Gallery link -->
+        <li><a href="#gallery">Gallery</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -530,57 +530,58 @@
     </div>
   </div>
 
-  <!-- SHOWCASE CAROUSEL -->
-  <section id="showcase">
+  <!-- GALLERY SECTION (All 3 carousels together) -->
+  <section id="gallery">
     <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h2 class="section-title">Showcase <span>Work</span></h2>
-        <a href="showcase.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
-      </div>
-      <div class="divider"></div>
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev">←</button>
-        <div class="carousel" id="showcase-carousel">
-          <div class="carousel-track" id="showcase-track"></div>
-        </div>
-        <button class="carousel-btn next">→</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- BEFORE & AFTER CAROUSEL -->
-  <section id="beforeafter">
-    <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h2 class="section-title">Before <span>&amp; After</span></h2>
-        <a href="beforeafter.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
-      </div>
-      <div class="divider"></div>
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev">←</button>
-        <div class="carousel" id="beforeafter-carousel">
-          <div class="carousel-track" id="beforeafter-track"></div>
+      <!-- Showcase -->
+      <div style="margin-bottom: 3rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 class="section-title">Showcase <span>Work</span></h2>
+          <a href="showcase.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
         </div>
-        <button class="carousel-btn next">→</button>
+        <div class="divider"></div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn prev">←</button>
+          <div class="carousel" id="showcase-carousel">
+            <div class="carousel-track" id="showcase-track"></div>
+          </div>
+          <button class="carousel-btn next">→</button>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- WORKING CAROUSEL -->
-  <section id="working">
-    <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h2 class="section-title">Work in <span>Progress</span></h2>
-        <a href="working.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
-      </div>
-      <div class="divider"></div>
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev">←</button>
-        <div class="carousel" id="working-carousel">
-          <div class="carousel-track" id="working-track"></div>
+      <!-- Before & After -->
+      <div style="margin-bottom: 3rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 class="section-title">Before <span>&amp; After</span></h2>
+          <a href="beforeafter.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
         </div>
-        <button class="carousel-btn next">→</button>
+        <div class="divider"></div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn prev">←</button>
+          <div class="carousel" id="beforeafter-carousel">
+            <div class="carousel-track" id="beforeafter-track"></div>
+          </div>
+          <button class="carousel-btn next">→</button>
+        </div>
       </div>
+
+      <!-- Working -->
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 class="section-title">Work in <span>Progress</span></h2>
+          <a href="working.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
+        </div>
+        <div class="divider"></div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn prev">←</button>
+          <div class="carousel" id="working-carousel">
+            <div class="carousel-track" id="working-track"></div>
+          </div>
+          <button class="carousel-btn next">→</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
