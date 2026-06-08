@@ -489,7 +489,7 @@
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- NAV (Cleaned up) -->
   <header>
     <nav>
       <a href="#" class="logo">
@@ -497,9 +497,7 @@
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
-        <li><a href="#showcase">Showcase</a></li>
-        <li><a href="#beforeafter">Before & After</a></li>
-        <li><a href="#working">Working</a></li>
+        <li><a href="gallery.html">Gallery</a></li>   <!-- ← New single Gallery link -->
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -717,7 +715,7 @@
   </div>
 
   <script>
-    const AUTO_SLIDE_INTERVAL = 5000;
+    const AUTO_SLIDE_INTERVAL = 3000;
 
     function initCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
