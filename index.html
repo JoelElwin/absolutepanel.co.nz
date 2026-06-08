@@ -256,7 +256,7 @@
     }
     .carousel-item img {
       width: 100%;
-      height: 220px;
+      aspect-ratio: 2000 / 1047;   /* ← Your requested ratio */
       object-fit: cover;
       border-radius: 4px;
     }
@@ -268,9 +268,6 @@
       .carousel-item {
         flex: 0 0 100%;
         padding: 0 8px;
-      }
-      .carousel-item img {
-        height: 200px;
       }
     }
 
@@ -464,10 +461,7 @@
   </div>
 
   <script>
-    // ==================== CHANGE THIS TO TEST DIFFERENT TIMES ====================
-    const AUTO_SLIDE_INTERVAL = 5000; // ← Change this value (in milliseconds)
-    // Examples: 2000 = 2 seconds, 4000 = 4 seconds, 5000 = 5 seconds
-    // ========================================================================
+    const AUTO_SLIDE_INTERVAL = 3000;
 
     function initCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
