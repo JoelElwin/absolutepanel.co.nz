@@ -35,7 +35,7 @@
       background: var(--white);
     }
 
-    /* NAV - EXACTLY AS YOU HAVE IT */
+    /* NAV */
     header {
       background: var(--orange);
       position: sticky;
@@ -101,6 +101,7 @@
       padding: 0.2rem;
     }
 
+    /* MOBILE */
     @media (max-width: 700px) {
       nav {
         grid-template-columns: 1fr 1fr;
@@ -118,7 +119,11 @@
       }
       .nav-links.active { display: flex; }
       .nav-toggle { display: block; }
-      .nav-phone { font-size: 1.1rem; }
+
+      /* Hide phone number on mobile */
+      .nav-phone {
+        display: none;
+      }
     }
 
     /* HERO */
