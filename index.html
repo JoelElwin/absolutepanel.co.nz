@@ -6,17 +6,14 @@
   <title>Absolute Panel & Paint 2010 Ltd | Papakura, Auckland</title>
   <meta name="description" content="Specialists in accident repairs, rust repairs, restorations, insurance work and full repaints. Based in Papakura, Auckland. Call 09 299 9895." />
   
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="Absolute Panel & Paint 2010 Ltd" />
-  <meta property="og:description" content="Quality panel beating, paintwork & restorations in Papakura." />
-  <meta property="og:image" content="https://yourdomain.com/og-image.jpg" /> <!-- add later -->
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
   
   <style>
-    /* Your existing styles + additions */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --orange: #e8560a;
@@ -30,9 +27,69 @@
       --font-body: 'Barlow', sans-serif;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--black); background: var(--white); }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
 
-    /* Hamburger */
+    /* NAV */
+    header {
+      background: var(--black);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 4px solid var(--orange);
+    }
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 66px;
+      gap: 1rem;
+    }
+    .logo {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .logo span { color: var(--orange); }
+    .logo small { display: block; font-size: 0.7rem; font-weight: 600; color: #999; letter-spacing: 0.1em; }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #bbb;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .nav-phone {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--orange);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
     .nav-toggle {
       display: none;
       background: none;
@@ -41,33 +98,143 @@
       color: white;
       cursor: pointer;
     }
-    @media (max-width: 700px) {
-      .nav-links { 
-        position: absolute; top: 66px; left: 0; right: 0;
-        background: var(--black);
-        flex-direction: column;
-        padding: 1rem 0;
-        gap: 1rem;
-        display: none;
-      }
-      .nav-links.active { display: flex; }
-      .nav-toggle { display: block; }
+
+    /* HERO */
+    .hero {
+      background: var(--black);
+      color: var(--white);
+      padding: 5rem 1.5rem 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(232,86,10,0.18) 0%, transparent 65%);
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      border: 1.5px solid var(--orange);
+      padding: 0.3rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero-sub { margin: 1.25rem auto 0.5rem; max-width: 560px; color: #bbb; font-size: 1.1rem; }
+    .hero-location { color: #666; font-size: 0.9rem; margin-bottom: 2.25rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .hero-location span { color: var(--orange); }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+    }
+    .btn-primary:hover { background: var(--orange-dark); }
+    .btn-outline {
+      border: 2px solid #444;
+      color: #ccc;
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* TRUST BAR */
+    .trust-bar {
+      background: var(--orange);
+      padding: 0.85rem 1.5rem;
+    }
+    .trust-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-bar span {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
     }
 
-    /* Rest of your styles (I kept them all, just adding a few) */
-    header { background: var(--black); position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--orange); }
-    nav { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 1rem; }
-    .logo { font-family: var(--font-head); font-weight: 800; font-size: 1.35rem; color: var(--white); text-decoration: none; letter-spacing: 0.02em; text-transform: uppercase; }
-    .logo span { color: var(--orange); }
-    .logo small { display: block; font-size: 0.7rem; font-weight: 600; color: #999; letter-spacing: 0.1em; }
-    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
-    .nav-links a { color: #bbb; text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
-    .nav-links a:hover { color: var(--orange); }
-    .nav-phone { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; color: var(--orange); text-decoration: none; white-space: nowrap; }
+    /* SECTIONS */
+    section { padding: 4rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+    .section-title span { color: var(--orange); }
+    .divider {
+      width: 52px;
+      height: 5px;
+      background: var(--orange);
+      margin-bottom: 2rem;
+    }
 
-    /* Hero, Services, etc. — your original styles go here (unchanged) */
-    /* ... paste all your existing CSS here ... */
+    /* SERVICES */
+    #services { background: var(--gray-light); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-top: 5px solid var(--orange);
+      padding: 1.5rem 1.25rem;
+      border-radius: 4px;
+    }
+    .service-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
 
+    /* GALLERY */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -77,6 +244,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 4px;
+      height: 240px;
     }
     .gallery-item img {
       width: 100%;
@@ -85,20 +253,88 @@
       transition: transform 0.3s;
     }
     .gallery-item:hover img { transform: scale(1.05); }
-    .gallery-item::after {
-      content: attr(data-caption);
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
-      color: white;
-      padding: 1rem;
-      font-size: 0.9rem;
+
+    /* ABOUT */
+    #about { background: var(--black); color: var(--white); }
+    #about .section-title { color: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .about-quote {
+      border-left: 4px solid var(--orange);
+      padding-left: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .about-quote p {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      font-style: italic;
+    }
+    .highlights li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .highlights li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      flex-shrink: 0;
     }
 
-    .testimonial {
-      background: var(--gray-light);
-      padding: 1.5rem;
-      border-radius: 4px;
-      font-style: italic;
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .contact-card {
+      border-top: 4px solid var(--orange);
+      padding-top: 1rem;
+    }
+    .contact-card .label {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.35rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: #666;
+      text-align: center;
+      padding: 1.75rem 1.5rem;
+      font-size: 0.85rem;
+      border-top: 4px solid var(--orange);
+    }
+
+    /* MOBILE MENU */
+    @media (max-width: 700px) {
+      .nav-links {
+        position: absolute;
+        top: 66px;
+        left: 0;
+        right: 0;
+        background: var(--black);
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 1rem;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      }
+      .nav-links.active { display: flex; }
+      .nav-toggle { display: block; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
@@ -124,54 +360,140 @@
     </nav>
   </header>
 
-  <!-- Rest of your sections remain the same until Gallery -->
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Papakura, Auckland</div>
+    <h1>Accident Repairs<br>&amp; <span>Paintwork</span><br>Done Properly</h1>
+    <p class="hero-sub">Specialists in collision repairs, full repaints, rust repairs, and classic car restorations.</p>
+    <p class="hero-location">Serving <span>South Auckland</span> since 2010</p>
+    <div class="hero-ctas">
+      <a href="tel:092999895" class="btn-primary">📞 Call 09 299 9895</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </section>
 
-  <!-- GALLERY - Updated -->
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <span>✔ Insurance Work Welcome</span>
+      <span>✔ Free Quotes</span>
+      <span>✔ Quality Workmanship</span>
+      <span>✔ Honest Service</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">Our <span>Services</span></h2>
+      <div class="divider"></div>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Accident &amp; Collision Repairs</h3>
+          <p>Panel beating and structural repairs restored to factory standard.</p>
+        </div>
+        <div class="service-card">
+          <h3>Insurance Repairs</h3>
+          <p>We work with all major insurers. We'll handle the claim for you.</p>
+        </div>
+        <div class="service-card">
+          <h3>Full Repaints &amp; Custom Paint</h3>
+          <p>Full vehicle resprays with precise computer colour matching.</p>
+        </div>
+        <div class="service-card">
+          <h3>Rust Repairs</h3>
+          <p>Proper rust cut-out and replacement — built to last.</p>
+        </div>
+        <div class="service-card">
+          <h3>Classic &amp; Performance Restoration</h3>
+          <p>Expert restoration of classic and performance vehicles.</p>
+        </div>
+        <div class="service-card">
+          <h3>Scratch &amp; Scuff Repair</h3>
+          <p>Quick and clean repair of minor damage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
   <section id="gallery">
     <div class="container">
       <h2 class="section-title">Before <span>&amp; After</span></h2>
       <div class="divider"></div>
       <div class="gallery-grid">
-        <!-- Replace these src with your real images in /images/ folder -->
-        <div class="gallery-item" data-caption="Accident Repair - Before">
-          <img src="https://picsum.photos/id/1015/600/400" alt="Car accident damage before repair">
-        </div>
-        <div class="gallery-item" data-caption="Full Respray - After">
-          <img src="https://picsum.photos/id/201/600/400" alt="Car after professional full repaint">
-        </div>
-        <div class="gallery-item" data-caption="Rust Repair">
-          <img src="https://picsum.photos/id/237/600/400" alt="Rust repair on classic car">
-        </div>
-        <!-- Add more as you upload real photos -->
+        <div class="gallery-item"><img src="https://picsum.photos/id/1015/800/600" alt="Before and after accident repair"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/id/201/800/600" alt="Full repaint example"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/id/237/800/600" alt="Rust repair example"></div>
       </div>
+      <p style="text-align:center; margin-top:1.5rem; color:#777;">More photos coming soon — we'll update with real work</p>
     </div>
   </section>
 
-  <!-- Add Testimonials Section before Contact -->
-  <section id="testimonials" style="background: var(--gray-light);">
+  <!-- ABOUT -->
+  <section id="about">
     <div class="container">
-      <h2 class="section-title">What Our <span>Customers Say</span></h2>
+      <h2 class="section-title">About <span>Us</span></h2>
       <div class="divider"></div>
-      <div class="services-grid"> <!-- reuse grid -->
-        <div class="testimonial">
-          <p>"Best panel beaters in South Auckland. Honest pricing and perfect work on my insurance claim."</p>
-          <strong>— Mark T., Papakura</strong>
+      <div class="about-grid">
+        <div>
+          <p>Absolute Panel &amp; Paint 2010 Ltd is your local expert in collision repairs, restorations, and quality paintwork in Papakura, South Auckland.</p>
+          <p>With years of experience, we take pride in bringing vehicles back to their best with honest service and expert craftsmanship.</p>
         </div>
-        <div class="testimonial">
-          <p>"Brought my classic back to life. The attention to detail is outstanding."</p>
-          <strong>— Paul S., Auckland</strong>
+        <div>
+          <ul class="highlights">
+            <li>Accident &amp; insurance repairs</li>
+            <li>Full repaints &amp; custom paintwork</li>
+            <li>Rust repairs &amp; restoration</li>
+            <li>Classic &amp; performance vehicles</li>
+            <li>Free quotes — no obligation</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Your existing Contact and Footer -->
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in <span>Touch</span></h2>
+      <div class="divider"></div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="label">Phone</div>
+          <a href="tel:092999895">09 299 9895</a>
+        </div>
+        <div class="contact-card">
+          <div class="label">Email</div>
+          <a href="mailto:absolutepanel@gmail.com">absolutepanel@gmail.com</a>
+        </div>
+        <div class="contact-card">
+          <div class="label">Address</div>
+          <p>3/14 Dent Place<br>Papakura, Auckland 2112</p>
+        </div>
+        <div class="contact-card">
+          <div class="label">Hours</div>
+          <p>Monday – Friday: 8am – 5pm<br>Saturday: By appointment</p>
+        </div>
+      </div>
+      <div class="map-wrap" style="margin-top: 3rem;">
+        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=3/14+Dent+Place,+Papakura,+Auckland+2112" width="100%" height="350" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Absolute Panel &amp; Paint 2010 Ltd &nbsp;|&nbsp; 3/14 Dent Place, Papakura &nbsp;|&nbsp; <a href="tel:092999895">09 299 9895</a></p>
+  </footer>
 
   <script>
-    // Simple mobile menu
+    // Mobile menu
     const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => links.classList.toggle('active'));
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
   </script>
 </body>
 </html>
