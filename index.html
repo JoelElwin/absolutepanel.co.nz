@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Absolute Panel & Paint | Auckland</title>
+  <meta name="description" content="Professional panel beating and paint services in Auckland. Quality repairs, insurance work, and colour matching." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111111;
+      --white: #ffffff;
+      --red: #c8211a;
+      --red-dark: #9e1a14;
+      --gray-light: #f4f4f2;
+      --gray-mid: #888;
+      --gray-border: #ddd;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    /* ── NAV ── */
+    header {
+      background: var(--black);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid var(--red);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .logo span { color: var(--red); }
+
+    .nav-phone {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-phone:hover { color: var(--red); }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav ul a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    nav ul a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--black);
+      color: var(--white);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero p {
+      margin: 1.25rem auto 2rem;
+      max-width: 520px;
+      color: #bbb;
+      font-size: 1.1rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--red);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+    }
+
+    .hero-cta:hover { background: var(--red-dark); }
+
+    /* ── SECTION WRAPPER ── */
+    section { padding: 4rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title span { color: var(--red); }
+
+    .divider {
+      width: 48px;
+      height: 4px;
+      background: var(--red);
+      margin-bottom: 2rem;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--gray-light); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-top: 4px solid var(--red);
+      padding: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p { color: #555; font-size: 0.95rem; }
+
+    /* ── GALLERY ── */
+    .gallery-placeholder {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      background: var(--gray-light);
+      border: 2px dashed var(--gray-border);
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-mid);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--black); color: var(--white); }
+    #about .section-title { color: var(--white); }
+    #about p { color: #bbb; max-width: 640px; line-height: 1.8; }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .contact-item { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .contact-item .label {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--red);
+    }
+
+    .contact-item a {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .contact-item a:hover { color: var(--red); }
+
+    .contact-item p { font-size: 1rem; color: #444; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: #888;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      border-top: 3px solid var(--red);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-phone { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header>
+    <nav>
+      <a href="#" class="logo">Absolute <span>Panel</span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="tel:+6400000000" class="nav-phone">📞 (00) 000 0000</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Panel &amp; <span>Paint</span><br>Done Right</h1>
+    <p>Quality panel beating and spray painting in Auckland. Insurance work welcome.</p>
+    <a href="tel:+6400000000" class="hero-cta">Call for a Free Quote</a>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">Our <span>Services</span></h2>
+      <div class="divider"></div>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Panel Beating</h3>
+          <p>Dents, creases, and collision damage repaired to factory standard.</p>
+        </div>
+        <div class="service-card">
+          <h3>Spray Painting</h3>
+          <p>Full resprays and spot repairs with precise colour matching.</p>
+        </div>
+        <div class="service-card">
+          <h3>Insurance Repairs</h3>
+          <p>We work with all major insurers. We can handle the paperwork.</p>
+        </div>
+        <div class="service-card">
+          <h3>Rust Repair</h3>
+          <p>Cut out and replace rust before it spreads — done properly.</p>
+        </div>
+        <div class="service-card">
+          <h3>Colour Matching</h3>
+          <p>Computer-aided mixing for a seamless, invisible repair.</p>
+        </div>
+        <div class="service-card">
+          <h3>Scratch &amp; Scuff Repair</h3>
+          <p>Minor damage repaired quickly without a full panel respray.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <h2 class="section-title">Before <span>&amp; After</span></h2>
+      <div class="divider"></div>
+      <div class="gallery-placeholder">
+        <div class="gallery-item">Before &amp; after photos<br>coming soon</div>
+        <div class="gallery-item">Before &amp; after photos<br>coming soon</div>
+        <div class="gallery-item">Before &amp; after photos<br>coming soon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About <span>Us</span></h2>
+      <div class="divider"></div>
+      <p>We're a family-owned panel and paint shop based in Auckland. With years of hands-on experience, we take pride in every repair — whether it's a minor scuff or a major smash. No job is too big or too small.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in <span>Touch</span></h2>
+      <div class="divider"></div>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="label">Phone</span>
+          <a href="tel:+6400000000">(00) 000 0000</a>
+        </div>
+        <div class="contact-item">
+          <span class="label">Email</span>
+          <a href="mailto:info@absolutepanel.co.nz">info@absolutepanel.co.nz</a>
+        </div>
+        <div class="contact-item">
+          <span class="label">Address</span>
+          <p>123 Example Street, Auckland</p>
+        </div>
+        <div class="contact-item">
+          <span class="label">Hours</span>
+          <p>Mon–Fri: 8am – 5pm<br>Saturday: By appointment</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Absolute Panel &amp; Paint. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
