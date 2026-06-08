@@ -96,7 +96,6 @@
       padding: 0.2rem;
     }
 
-    /* MOBILE */
     @media (max-width: 700px) {
       nav {
         grid-template-columns: 1fr 1fr;
@@ -119,9 +118,7 @@
         text-align: center;
       }
       .nav-links.active { display: flex; }
-      .nav-phone {
-        display: none;
-      }
+      .nav-phone { display: none; }
       .nav-toggle {
         justify-self: end;
         margin-right: 0.5rem;
@@ -129,9 +126,7 @@
       }
     }
 
-    section {
-      scroll-margin-top: 85px;
-    }
+    section { scroll-margin-top: 85px; }
 
     /* HERO */
     .hero {
@@ -239,7 +234,91 @@
       color: var(--white);
     }
 
-    /* SECTIONS */
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #f5f5f3;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-item::after {
+      content: attr(data-caption);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      color: white;
+      padding: 0.9rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* MODAL / LIGHTBOX */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      text-align: center;
+    }
+    .modal-content img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .modal-description {
+      color: #ffffff;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #ffffff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+    .close:hover {
+      color: var(--orange);
+    }
+
+    /* Other sections (Services, About, etc.) */
     section { padding: 4rem 1.5rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-title {
@@ -257,37 +336,6 @@
       height: 5px;
       background: var(--orange);
       margin-bottom: 2rem;
-    }
-
-    /* GALLERY */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 4px;
-      background: #f5f5f3;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-item::after {
-      content: attr(data-caption);
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.85));
-      color: white;
-      padding: 0.9rem 1rem;
-      font-size: 0.95rem;
-      font-weight: 500;
     }
 
     /* SERVICES */
@@ -435,7 +483,9 @@
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
-        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#showcase">Showcase</a></li>
+        <li><a href="#beforeafter">Before & After</a></li>
+        <li><a href="#working">Working</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -468,7 +518,7 @@
     </div>
   </div>
 
-  <!-- ==================== SHOWCASE GALLERY ==================== -->
+  <!-- SHOWCASE GALLERY -->
   <section id="showcase">
     <div class="container">
       <h2 class="section-title">Showcase <span>Work</span></h2>
@@ -477,7 +527,7 @@
     </div>
   </section>
 
-  <!-- ==================== BEFORE & AFTER GALLERY ==================== -->
+  <!-- BEFORE & AFTER GALLERY -->
   <section id="beforeafter">
     <div class="container">
       <h2 class="section-title">Before <span>&amp; After</span></h2>
@@ -486,7 +536,7 @@
     </div>
   </section>
 
-  <!-- ==================== WORKING GALLERY ==================== -->
+  <!-- WORKING GALLERY -->
   <section id="working">
     <div class="container">
       <h2 class="section-title">Work in <span>Progress</span></h2>
@@ -600,7 +650,7 @@
         </div>
       </div>
       <div class="map-wrap">
-        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=3/14+Dent+Place,+Papakura,+Auckland+2112" allowfullscreen loading="lazy" title="Absolute Panel & Paint location"></iframe>
+        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=3/14+Dent+Place,+Papakura,+Auckland+2112" allowfullscreen loading="lazy"></iframe>
       </div>
     </div>
   </section>
@@ -610,19 +660,38 @@
     <p>&copy; 2026 Absolute Panel &amp; Paint 2010 Ltd &nbsp;|&nbsp; 3/14 Dent Place, Papakura, Auckland &nbsp;|&nbsp; <a href="tel:092999895">09 299 9895</a></p>
   </footer>
 
+  <!-- MODAL / LIGHTBOX -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="modal-image" src="" alt="">
+      <p id="modal-description" class="modal-description"></p>
+    </div>
+  </div>
+
   <script>
-    // Dynamic Gallery Loader
+    // Load Gallery + Add Click to Open Modal
     async function loadGallery(jsonFile, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
       try {
         const response = await fetch(jsonFile);
+        if (!response.ok) return;
+
         const data = await response.json();
-        const container = document.getElementById(containerId);
 
         data.forEach(item => {
           const div = document.createElement('div');
           div.className = 'gallery-item';
-          div.setAttribute('data-caption', item.description);
-          div.innerHTML = `<img src="${item.image}" alt="${item.description}">`;
+          div.setAttribute('data-caption', item.description || '');
+          div.innerHTML = `<img src="${item.image}" alt="${item.description || ''}">`;
+
+          // Click to open modal
+          div.addEventListener('click', () => {
+            openModal(item.image, item.description || '');
+          });
+
           container.appendChild(div);
         });
       } catch (error) {
@@ -630,11 +699,51 @@
       }
     }
 
-    // Load all galleries
+    // Open Modal
+    function openModal(imageSrc, description) {
+      const modal = document.getElementById('modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalDesc = document.getElementById('modal-description');
+
+      modalImage.src = imageSrc;
+      modalDesc.textContent = description;
+      modal.classList.add('active');
+    }
+
+    // Close Modal
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+    }
+
+    // Modal Event Listeners
+    function setupModal() {
+      const modal = document.getElementById('modal');
+      const closeBtn = document.querySelector('.close');
+
+      // Close on X button
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+      // Close when clicking outside the image
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Close with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+    }
+
+    // Initialize everything
     window.onload = function () {
       loadGallery('showcase.json', 'showcase-gallery');
       loadGallery('beforeafter.json', 'beforeafter-gallery');
       loadGallery('working.json', 'working-gallery');
+
+      setupModal();
 
       // Mobile menu
       const toggle = document.getElementById('navToggle');
