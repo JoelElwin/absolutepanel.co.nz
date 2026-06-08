@@ -256,7 +256,7 @@
     }
     .carousel-item img {
       width: 100%;
-      aspect-ratio: 2000 / 1047;   /* ← Your requested ratio */
+      aspect-ratio: 2000 / 1047;
       object-fit: cover;
       border-radius: 4px;
     }
@@ -332,6 +332,7 @@
     }
     .close:hover { color: var(--orange); }
 
+    /* SECTIONS */
     section { padding: 4rem 1.5rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-title {
@@ -349,6 +350,140 @@
       height: 5px;
       background: var(--orange);
       margin-bottom: 2rem;
+    }
+
+    /* SERVICES */
+    #services { background: var(--gray-light); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-top: 5px solid var(--orange);
+      padding: 1.5rem 1.25rem;
+    }
+    .service-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .service-card p { color: #555; font-size: 0.95rem; line-height: 1.55; }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--gray-light); }
+    .testimonial {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 4px;
+      border-top: 5px solid var(--orange);
+    }
+    .testimonial p {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ABOUT */
+    #about { background: var(--black); color: var(--white); }
+    #about .section-title { color: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    #about p { color: #bbb; line-height: 1.8; margin-bottom: 1rem; }
+    .about-quote {
+      border-left: 4px solid var(--orange);
+      padding-left: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .about-quote p {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white) !important;
+      font-style: italic;
+      letter-spacing: 0.01em;
+      line-height: 1.35;
+    }
+    .highlights { list-style: none; margin-top: 0.5rem; }
+    .highlights li {
+      color: #bbb;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #222;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .highlights li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 0.5rem;
+    }
+    .contact-card {
+      border-top: 4px solid var(--orange);
+      padding-top: 1rem;
+    }
+    .contact-card .label {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      margin-bottom: 0.35rem;
+    }
+    .contact-card a {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      display: block;
+    }
+    .contact-card a:hover { color: var(--orange); }
+    .contact-card p { font-size: 1rem; color: #444; line-height: 1.5; }
+    .map-wrap {
+      margin-top: 2.5rem;
+      border-top: 4px solid var(--orange);
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: #666;
+      text-align: center;
+      padding: 1.75rem 1.5rem;
+      font-size: 0.85rem;
+      border-top: 4px solid var(--orange);
+    }
+    footer a { color: var(--orange); text-decoration: none; }
+
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     }
   </style>
 </head>
@@ -450,6 +585,127 @@
       </div>
     </div>
   </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">Our <span>Services</span></h2>
+      <div class="divider"></div>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Accident &amp; Collision Repairs</h3>
+          <p>Panel beating and structural repairs restored to factory standard, no matter the severity.</p>
+        </div>
+        <div class="service-card">
+          <h3>Insurance Repairs</h3>
+          <p>We work with all major insurers. Bring your claim to us and we'll handle the rest.</p>
+        </div>
+        <div class="service-card">
+          <h3>Full Repaints &amp; Custom Paint</h3>
+          <p>Full vehicle resprays and custom colour work with precise computer-aided colour matching.</p>
+        </div>
+        <div class="service-card">
+          <h3>Rust Repairs</h3>
+          <p>Rust cut out and replaced properly — not just covered up. Done to last.</p>
+        </div>
+        <div class="service-card">
+          <h3>Classic &amp; Performance Restoration</h3>
+          <p>We restore classic and performance vehicles with the care and attention they deserve.</p>
+        </div>
+        <div class="service-card">
+          <h3>Scratch &amp; Scuff Repair</h3>
+          <p>Minor damage repaired quickly without needing a full panel replacement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our <span>Customers Say</span></h2>
+      <div class="divider"></div>
+      <div class="services-grid">
+        <div class="testimonial">
+          <p>"Best panel beaters in South Auckland. Honest pricing and the work on my insurance claim was perfect."</p>
+          <strong>— Mark T., Papakura</strong>
+        </div>
+        <div class="testimonial">
+          <p>"They brought my classic car back to life. The attention to detail is outstanding."</p>
+          <strong>— Paul S., Auckland</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About <span>Us</span></h2>
+      <div class="divider"></div>
+      <div class="about-grid">
+        <div>
+          <p>Absolute Panel &amp; Paint 2010 Ltd is your local expert in collision repairs, restorations, and quality paintwork — based right here in Papakura, South Auckland.</p>
+          <p>With years of experience, we take pride in bringing vehicles back to their best. Whether it's accident damage, rust repairs, a full respray, insurance work, or a classic car restoration, we treat every vehicle like our own.</p>
+          <p>We're committed to honest service, expert craftsmanship, and outstanding results every time.</p>
+          <div class="about-quote">
+            <p>"Restoring vehicles with pride, precision, and quality."</p>
+          </div>
+        </div>
+        <div>
+          <ul class="highlights">
+            <li>Accident &amp; insurance repairs</li>
+            <li>Full repaints &amp; custom paintwork</li>
+            <li>Rust repairs &amp; restoration</li>
+            <li>Classic &amp; performance vehicle restoration</li>
+            <li>Quality workmanship &amp; attention to detail</li>
+            <li>Honest, straightforward service</li>
+            <li>Free quotes — no obligation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in <span>Touch</span></h2>
+      <div class="divider"></div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="label">Phone</div>
+          <a href="tel:092999895">09 299 9895</a>
+        </div>
+        <div class="contact-card">
+          <div class="label">Email</div>
+          <a href="mailto:absolutepanel@gmail.com">absolutepanel@gmail.com</a>
+        </div>
+        <div class="contact-card">
+          <div class="label">Address</div>
+          <p>3/14 Dent Place<br>Papakura, Auckland 2112</p>
+        </div>
+        <div class="contact-card">
+          <div class="label">Hours</div>
+          <p>Monday – Friday: 8am – 5pm<br>Saturday: By appointment</p>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=3/14+Dent+Place,+Papakura,+Auckland+2112"
+          allowfullscreen
+          loading="lazy"
+          title="Absolute Panel & Paint location">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Absolute Panel &amp; Paint 2010 Ltd &nbsp;|&nbsp; 3/14 Dent Place, Papakura, Auckland &nbsp;|&nbsp; <a href="tel:092999895">09 299 9895</a></p>
+  </footer>
 
   <!-- MODAL -->
   <div id="modal" class="modal">
