@@ -198,19 +198,27 @@
       padding: 0.85rem 2rem;
     }
     .btn-primary:hover { background: var(--orange-dark); }
+
+    /* IMPROVED VIEW ALL BUTTONS */
     .btn-outline {
       display: inline-block;
-      border: 2px solid #444;
-      color: #ccc;
+      border: 2px solid #222;
+      color: #222;
       text-decoration: none;
       font-family: var(--font-head);
-      font-size: 1.15rem;
+      font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 0.85rem 2rem;
+      padding: 0.55rem 1.3rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
     }
-    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-outline:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: white;
+    }
 
     /* TRUST BAR */
     .trust-bar {
@@ -296,41 +304,75 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.92);
+      background: rgba(0,0,0,0.92);
       justify-content: center;
       align-items: center;
     }
     .modal.active { display: flex; }
+
     .modal-content {
       position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      text-align: center;
+      max-width: 92%;
+      max-height: 92%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
     .modal-content img {
       max-width: 100%;
-      max-height: 75vh;
+      max-height: 78vh;
       object-fit: contain;
-      border-radius: 4px;
+      border-radius: 6px;
     }
+
     .modal-description {
-      color: #ffffff;
+      color: white;
+      text-align: center;
       margin-top: 1rem;
       font-size: 1.15rem;
       max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
     }
+
     .close {
       position: absolute;
-      top: -45px;
+      top: -55px;
       right: 0;
-      color: #ffffff;
-      font-size: 42px;
+      color: white;
+      font-size: 52px;
       font-weight: bold;
       cursor: pointer;
+      line-height: 1;
     }
     .close:hover { color: var(--orange); }
+
+    .modal-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      font-size: 2.2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-arrow:hover {
+      background: var(--orange);
+    }
+    .modal-arrow.prev { left: -70px; }
+    .modal-arrow.next { right: -70px; }
+
+    @media (max-width: 700px) {
+      .modal-arrow.prev { left: 10px; }
+      .modal-arrow.next { right: 10px; }
+    }
 
     /* SECTIONS */
     section { padding: 4rem 1.5rem; }
@@ -530,7 +572,7 @@
     </div>
   </div>
 
-  <!-- GALLERY SECTION (All 3 carousels together) -->
+  <!-- GALLERY SECTION -->
   <section id="gallery">
     <div class="container">
 
@@ -538,7 +580,7 @@
       <div style="margin-bottom: 3rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
           <h2 class="section-title">Showcase <span>Work</span></h2>
-          <a href="showcase.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
+          <a href="showcase.html" class="btn-outline">View All</a>
         </div>
         <div class="divider"></div>
         <div class="carousel-wrapper">
@@ -554,7 +596,7 @@
       <div style="margin-bottom: 3rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
           <h2 class="section-title">Before <span>&amp; After</span></h2>
-          <a href="beforeafter.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
+          <a href="beforeafter.html" class="btn-outline">View All</a>
         </div>
         <div class="divider"></div>
         <div class="carousel-wrapper">
@@ -570,7 +612,7 @@
       <div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
           <h2 class="section-title">Work in <span>Progress</span></h2>
-          <a href="working.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
+          <a href="working.html" class="btn-outline">View All</a>
         </div>
         <div class="divider"></div>
         <div class="carousel-wrapper">
@@ -710,6 +752,8 @@
   <div id="modal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
+      <button class="modal-arrow prev" onclick="prevImage()">←</button>
+      <button class="modal-arrow next" onclick="nextImage()">→</button>
       <img id="modal-image" src="" alt="">
       <p id="modal-description" class="modal-description"></p>
     </div>
@@ -718,6 +762,9 @@
   <script>
     const AUTO_SLIDE_INTERVAL = 3000;
 
+    let currentGalleryData = [];
+    let currentIndex = 0;
+
     function initCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
       const carousel = document.getElementById(carouselId);
@@ -725,7 +772,7 @@
 
       if (!track || !carousel) return;
 
-      let currentIndex = 0;
+      let currentSlideIndex = 0;
       let items = [];
       let itemsPerView = 3;
       let itemWidth = 0;
@@ -746,11 +793,16 @@
 
       function renderAllItems() {
         track.innerHTML = '';
-        items.forEach(item => {
+        items.forEach((item, index) => {
           const div = document.createElement('div');
           div.className = 'carousel-item';
           div.innerHTML = `<img src="${item.image}" alt="">`;
-          div.addEventListener('click', () => openModal(item.image, item.description || ''));
+
+          div.addEventListener('click', () => {
+            currentGalleryData = items;
+            openModal(index);
+          });
+
           track.appendChild(div);
         });
       }
@@ -761,17 +813,17 @@
 
         const gap = window.innerWidth <= 700 ? 0 : 16;
         itemWidth = item.offsetWidth + gap;
-        track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
       }
 
       function goNext() {
-        currentIndex = (currentIndex + 1) % items.length;
-        if (currentIndex + itemsPerView > items.length) currentIndex = 0;
+        currentSlideIndex = (currentSlideIndex + 1) % items.length;
+        if (currentSlideIndex + itemsPerView > items.length) currentSlideIndex = 0;
         updateTrackPosition();
       }
 
       function goPrev() {
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
         updateTrackPosition();
       }
 
@@ -800,19 +852,57 @@
       load();
     }
 
-    function openModal(src, desc) {
+    function openModal(index) {
+      currentIndex = index;
       const modal = document.getElementById('modal');
-      document.getElementById('modal-image').src = src;
-      document.getElementById('modal-description').textContent = desc;
+      const img = document.getElementById('modal-image');
+      const desc = document.getElementById('modal-description');
+
+      img.src = currentGalleryData[currentIndex].image;
+      desc.textContent = currentGalleryData[currentIndex].description || '';
+
       modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % currentGalleryData.length;
+      updateModalImage();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
+      updateModalImage();
+    }
+
+    function updateModalImage() {
+      const img = document.getElementById('modal-image');
+      const desc = document.getElementById('modal-description');
+
+      img.src = currentGalleryData[currentIndex].image;
+      desc.textContent = currentGalleryData[currentIndex].description || '';
     }
 
     function setupModal() {
       const modal = document.getElementById('modal');
-      document.querySelector('.close').addEventListener('click', () => modal.classList.remove('active'));
-      modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') modal.classList.remove('active');
+
+      document.querySelector('.close').addEventListener('click', closeModal);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
       });
     }
 
