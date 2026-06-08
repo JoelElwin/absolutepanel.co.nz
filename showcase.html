@@ -25,40 +25,46 @@
       color: var(--black);
     }
 
-    /* NAV - Same style as homepage */
+    /* === SAME HEADER AS MAIN PAGE === */
     header {
       background: var(--orange);
       position: sticky;
       top: 0;
       z-index: 150;
+      border-bottom: 4px solid var(--white);
     }
     nav {
-      padding: 0 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
+      padding: 0 3rem;
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      height: 65px;
+      height: 70px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
     .logo {
       justify-self: start;
     }
     .logo img {
-      height: 48px;
+      height: 60px;
+      width: auto;
+      vertical-align: middle;
     }
     .nav-links {
       display: flex;
       justify-content: center;
-      gap: 2rem;
+      gap: 3.5rem;
       list-style: none;
     }
     .nav-links a {
-      color: white;
+      color: #ffffff;
       text-decoration: none;
+      font-size: 1.2rem;
       font-weight: 600;
-      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
+    .nav-links a:hover { opacity: 0.85; }
     .nav-right {
       justify-self: end;
       display: flex;
@@ -66,11 +72,15 @@
       gap: 1rem;
     }
     .nav-phone {
-      color: white;
-      text-decoration: none;
+      font-family: var(--font-head);
+      font-size: 2rem;
       font-weight: 700;
-      font-size: 1.1rem;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
     }
+    .nav-phone:hover { opacity: 0.85; }
     .nav-toggle {
       display: none;
       background: none;
@@ -78,12 +88,20 @@
       font-size: 1.8rem;
       color: white;
       cursor: pointer;
+      padding: 0.2rem;
     }
 
     @media (max-width: 700px) {
+      nav {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 1rem;
+      }
+      .logo {
+        justify-self: center;
+      }
       .nav-links {
         position: absolute;
-        top: 65px;
+        top: 70px;
         left: 0;
         right: 0;
         background: var(--black);
@@ -91,13 +109,15 @@
         padding: 1rem 0;
         gap: 1rem;
         display: none;
+        align-items: center;
         text-align: center;
       }
       .nav-links.active { display: flex; }
       .nav-phone { display: none; }
       .nav-toggle {
-        display: block;
         justify-self: end;
+        margin-right: 0.5rem;
+        display: block;
       }
     }
 
@@ -195,13 +215,12 @@
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- HEADER - Same as main page -->
   <header>
     <nav>
       <a href="index.html" class="logo">
-        <img src="Images/Logo/Logo.jpg" alt="Absolute Panel & Paint">
+        <img src="Images/Logo/Logo.jpg" alt="Absolute Panel & Paint 2010 Ltd">
       </a>
-
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="index.html#services">Services</a></li>
@@ -209,7 +228,6 @@
         <li><a href="index.html#about">About</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
-
       <div class="nav-right">
         <a href="tel:092999895" class="nav-phone">09 299 9895</a>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
@@ -269,20 +287,16 @@
       });
     }
 
-    // Mobile menu
+    // Mobile hamburger menu
     function setupMobileMenu() {
       const toggle = document.getElementById('navToggle');
       const links = document.getElementById('navLinks');
 
       if (toggle && links) {
-        toggle.addEventListener('click', () => {
-          links.classList.toggle('active');
-        });
+        toggle.addEventListener('click', () => links.classList.toggle('active'));
 
         document.querySelectorAll('.nav-links a').forEach(link => {
-          link.addEventListener('click', () => {
-            links.classList.remove('active');
-          });
+          link.addEventListener('click', () => links.classList.remove('active'));
         });
       }
     }
