@@ -5,19 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Absolute Panel & Paint 2010 Ltd | Papakura, Auckland</title>
   <meta name="description" content="Specialists in accident repairs, rust repairs, restorations, insurance work and full repaints. Based in Papakura, Auckland. Call 09 299 9895." />
-  
-  <!-- Favicon (put favicon.ico in the root folder) -->
+ 
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
-  <!-- Open Graph / Social sharing -->
-  <meta property="og:title" content="Absolute Panel & Paint 2010 Ltd" />
-  <meta property="og:description" content="Quality panel beating, paintwork & restorations in Papakura, South Auckland." />
   <meta property="og:image" content="Images/Logo/Logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
-  
+ 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -40,7 +35,7 @@
       background: var(--white);
     }
 
-    /* NAV */
+    /* ========== BIGGER HEADER ========== */
     header {
       background: var(--orange);
       position: sticky;
@@ -55,11 +50,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 66px;
+      height: 95px;                    /* ← Much taller header */
       gap: 1rem;
     }
     .logo img {
-      height: 42px;
+      height: 62px;                    /* ← Bigger logo */
       width: auto;
       vertical-align: middle;
     }
@@ -69,27 +64,27 @@
       list-style: none;
     }
     .nav-links a {
-      color: #bbb;
+      color: #ffffff;                  /* ← Better contrast on orange */
       text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.9rem;
+      font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
-    .nav-links a:hover { color: var(--orange); }
+    .nav-links a:hover { color: #fff; opacity: 0.85; }
     .nav-phone {
       font-family: var(--font-head);
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      color: var(--orange);
+      color: #ffffff;
       text-decoration: none;
       letter-spacing: 0.03em;
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .nav-phone:hover { color: var(--orange-light); }
+    .nav-phone:hover { color: #fff; opacity: 0.85; }
 
-    /* Hamburger Menu */
+    /* Hamburger */
     .nav-toggle {
       display: none;
       background: none;
@@ -102,7 +97,7 @@
     @media (max-width: 700px) {
       .nav-links {
         position: absolute;
-        top: 66px;
+        top: 95px;                     /* ← Matches new taller header */
         left: 0;
         right: 0;
         background: var(--black);
@@ -113,7 +108,7 @@
       }
       .nav-links.active { display: flex; }
       .nav-toggle { display: block; }
-      .nav-phone { font-size: 1.1rem; }
+      .nav-phone { font-size: 1.15rem; }
     }
 
     /* HERO */
@@ -428,7 +423,6 @@
       </ul>
 
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
-      
       <a href="tel:092999895" class="nav-phone">09 299 9895</a>
     </nav>
   </header>
@@ -504,7 +498,6 @@
         <div class="gallery-item" data-caption="Rust Repair &amp; Restoration">
           <img src="https://picsum.photos/id/237/600/400" alt="Classic car after rust repair">
         </div>
-        <!-- Replace these with your real before/after photos -->
       </div>
     </div>
   </section>
@@ -597,18 +590,11 @@
   </footer>
 
   <script>
-    // Mobile hamburger menu
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
-
-    toggle.addEventListener('click', () => {
-      links.classList.toggle('active');
-    });
-
+    toggle.addEventListener('click', () => links.classList.toggle('active'));
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        links.classList.remove('active');
-      });
+      link.addEventListener('click', () => links.classList.remove('active'));
     });
   </script>
 </body>
