@@ -6,13 +6,13 @@
   <title>Absolute Panel & Paint 2010 Ltd | Papakura, Auckland</title>
   <meta name="description" content="Specialists in accident repairs, rust repairs, restorations, insurance work and full repaints. Based in Papakura, Auckland. Call 09 299 9895." />
   
-  <!-- ✅ Best Favicon Setup -->
+  <!-- Favicon (put favicon.ico in the root folder) -->
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Social sharing -->
   <meta property="og:title" content="Absolute Panel & Paint 2010 Ltd" />
   <meta property="og:description" content="Quality panel beating, paintwork & restorations in Papakura, South Auckland." />
-  <meta property="og:image" content="images/logo/logo.png" />
+  <meta property="og:image" content="Images/Logo/Logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -89,7 +89,7 @@
     }
     .nav-phone:hover { color: var(--orange-light); }
 
-    /* Hamburger */
+    /* Hamburger Menu */
     .nav-toggle {
       display: none;
       background: none;
@@ -298,6 +298,20 @@
       font-weight: 500;
     }
 
+    /* TESTIMONIALS */
+    #testimonials { background: var(--gray-light); }
+    .testimonial {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 4px;
+      border-top: 5px solid var(--orange);
+    }
+    .testimonial p {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 0.75rem;
+    }
+
     /* ABOUT */
     #about { background: var(--black); color: var(--white); }
     #about .section-title { color: var(--white); }
@@ -338,20 +352,6 @@
       height: 8px;
       background: var(--orange);
       flex-shrink: 0;
-    }
-
-    /* TESTIMONIALS */
-    #testimonials { background: var(--gray-light); }
-    .testimonial {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 4px;
-      border-top: 5px solid var(--orange);
-    }
-    .testimonial p {
-      font-style: italic;
-      color: #444;
-      margin-bottom: 0.75rem;
     }
 
     /* CONTACT */
@@ -417,7 +417,7 @@
   <header>
     <nav>
       <a href="#" class="logo">
-        <img src="images/logos/logo.png" alt="Absolute Panel & Paint 2010 Ltd">
+        <img src="Images/Logo/Logo.png" alt="Absolute Panel & Paint 2010 Ltd">
       </a>
 
       <ul class="nav-links" id="navLinks">
@@ -504,7 +504,7 @@
         <div class="gallery-item" data-caption="Rust Repair &amp; Restoration">
           <img src="https://picsum.photos/id/237/600/400" alt="Classic car after rust repair">
         </div>
-        <!-- Add your real before/after photos here -->
+        <!-- Replace these with your real before/after photos -->
       </div>
     </div>
   </section>
@@ -605,7 +605,6 @@
       links.classList.toggle('active');
     });
 
-    // Close menu when clicking a link (mobile)
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
         links.classList.remove('active');
