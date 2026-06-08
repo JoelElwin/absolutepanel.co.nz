@@ -234,7 +234,7 @@
       color: var(--white);
     }
 
-    /* === CAROUSEL (Arrows Outside) === */
+    /* === SMOOTH ANIMATED CAROUSEL === */
     .carousel-wrapper {
       display: flex;
       align-items: center;
@@ -243,15 +243,17 @@
     .carousel {
       flex: 1;
       overflow: hidden;
+      position: relative;
     }
     .carousel-track {
       display: flex;
       gap: 1rem;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth animated scroll */
     }
     .carousel-item {
       flex: 0 0 calc(33.333% - 0.67rem);
       cursor: pointer;
+      flex-shrink: 0;
     }
     .carousel-item img {
       width: 100%;
@@ -455,23 +457,24 @@
       const carousel = document.getElementById(carouselId);
       const wrapper = carousel.parentElement;
 
-      if (!track || !carousel || !wrapper) return;
+      if (!track || !carousel) return;
 
       let currentIndex = 0;
       let items = [];
+      let itemWidth = 0;
       let autoSlide;
 
       async function load() {
         const res = await fetch(jsonFile);
         items = await res.json();
-        render();
+        renderAllItems();
+        updateTrackPosition();
         startAuto();
       }
 
-      function render() {
+      function renderAllItems() {
         track.innerHTML = '';
-        const visible = items.slice(currentIndex, currentIndex + 3);
-        visible.forEach(item => {
+        items.forEach(item => {
           const div = document.createElement('div');
           div.className = 'carousel-item';
           div.innerHTML = `<img src="${item.image}" alt="">`;
@@ -480,15 +483,22 @@
         });
       }
 
+      function updateTrackPosition() {
+        const item = track.querySelector('.carousel-item');
+        if (!item) return;
+        itemWidth = item.offsetWidth + 16; // 16px = gap
+        track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+      }
+
       function goNext() {
         currentIndex = (currentIndex + 1) % items.length;
         if (currentIndex + 3 > items.length) currentIndex = 0;
-        render();
+        updateTrackPosition();
       }
 
       function goPrev() {
         currentIndex = (currentIndex - 1 + items.length) % items.length;
-        render();
+        updateTrackPosition();
       }
 
       function startAuto() {
@@ -509,6 +519,9 @@
       // Pause on hover
       wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
       wrapper.addEventListener('mouseleave', startAuto);
+
+      // Recalculate on resize
+      window.addEventListener('resize', updateTrackPosition);
 
       load();
     }
