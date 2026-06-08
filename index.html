@@ -44,30 +44,26 @@
       border-bottom: 4px solid var(--white);
     }
     nav {
-      width: 100%;
-      padding: 0 3rem;
+      max-width: 1100px;
       margin: 0 auto;
-      display: flex;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
       height: 70px;
-      position: relative;           /* Needed for perfect centering */
     }
     .logo {
-      flex-shrink: 0;
+      justify-self: start;
     }
     .logo img {
       height: 52px;
       width: auto;
       vertical-align: middle;
     }
-
-    /* Perfectly Centered Menu */
     .nav-links {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
-      gap: 2.2rem;
+      justify-content: center;
+      gap: 2rem;
       list-style: none;
     }
     .nav-links a {
@@ -78,25 +74,23 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .nav-links a:hover {
-      color: #fff;
-      opacity: 0.85;
+    .nav-links a:hover { opacity: 0.85; }
+    .nav-right {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
-
     .nav-phone {
-      flex-shrink: 0;
-      margin-left: auto;            /* Pushes phone to the right */
       font-family: var(--font-head);
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: #ffffff;
       text-decoration: none;
       letter-spacing: 0.03em;
       white-space: nowrap;
     }
-    .nav-phone:hover { color: #fff; opacity: 0.85; }
-
-    /* Hamburger */
+    .nav-phone:hover { opacity: 0.85; }
     .nav-toggle {
       display: none;
       background: none;
@@ -106,7 +100,11 @@
       cursor: pointer;
       padding: 0.2rem;
     }
+
     @media (max-width: 700px) {
+      nav {
+        grid-template-columns: 1fr 1fr;
+      }
       .nav-links {
         position: absolute;
         top: 70px;
@@ -120,7 +118,7 @@
       }
       .nav-links.active { display: flex; }
       .nav-toggle { display: block; }
-      .nav-phone { font-size: 1.15rem; }
+      .nav-phone { font-size: 1.1rem; }
     }
 
     /* HERO */
@@ -211,10 +209,9 @@
     .trust-bar {
       background: var(--orange);
       padding: 0.85rem 1.5rem;
-      overflow: hidden;
     }
     .trust-bar-inner {
-      max-width: 1400px;
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -232,7 +229,7 @@
 
     /* SECTIONS */
     section { padding: 4rem 1.5rem; }
-    .container { max-width: 1400px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
     .section-title {
       font-family: var(--font-head);
       font-size: 2.4rem;
@@ -423,12 +420,10 @@
   <!-- NAV -->
   <header>
     <nav>
-      <!-- Logo Left -->
       <a href="#" class="logo">
         <img src="Images/Logo/Logo.png" alt="Absolute Panel & Paint 2010 Ltd">
       </a>
 
-      <!-- Menu Perfectly Centered -->
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
@@ -436,10 +431,10 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <!-- Phone Right -->
-      <a href="tel:092999895" class="nav-phone">09 299 9895</a>
-
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <div class="nav-right">
+        <a href="tel:092999895" class="nav-phone">09 299 9895</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      </div>
     </nav>
   </header>
 
