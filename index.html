@@ -35,7 +35,7 @@
       background: var(--white);
     }
 
-    /* NAV - Compact header with bigger logo */
+    /* NAV */
     header {
       background: var(--orange);
       position: sticky;
@@ -49,14 +49,17 @@
       padding: 0 1.5rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: 100px;                    /* ← Kept compact */
-      gap: 1rem;
+      justify-content: flex-start;   /* ← Logo left aligned */
+      height: 70px;
+      gap: 2rem;
+    }
+    .logo {
+      margin-right: auto;            /* ← Pushes everything else to the right */
     }
     .logo img {
-      height: 95px;                    /* ← Bigger logo */
+      height: 52px;
       width: auto;
-      vertical-align: left;
+      vertical-align: middle;
     }
     .nav-links {
       display: flex;
