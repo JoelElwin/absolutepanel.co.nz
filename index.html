@@ -261,9 +261,17 @@
       border-radius: 4px;
     }
 
+    /* Mobile - 1 photo only */
     @media (max-width: 700px) {
+      .carousel-track {
+        gap: 0;
+      }
       .carousel-item {
-        flex: 0 0 100%; /* Show only 1 photo on mobile */
+        flex: 0 0 100%;
+        padding: 0 8px;
+      }
+      .carousel-item img {
+        height: 200px;
       }
     }
 
@@ -498,7 +506,8 @@
         const item = track.querySelector('.carousel-item');
         if (!item) return;
 
-        itemWidth = item.offsetWidth + 16; // gap
+        const gap = window.innerWidth <= 700 ? 0 : 16;
+        itemWidth = item.offsetWidth + gap;
         track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
       }
 
@@ -518,7 +527,6 @@
         autoSlide = setInterval(goNext, 3000);
       }
 
-      // Arrow buttons
       wrapper.querySelector('.prev').addEventListener('click', () => {
         goPrev();
         startAuto();
@@ -528,11 +536,9 @@
         startAuto();
       });
 
-      // Pause on hover
       wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
       wrapper.addEventListener('mouseleave', startAuto);
 
-      // Update on resize
       window.addEventListener('resize', () => {
         updateItemsPerView();
         updateTrackPosition();
@@ -564,7 +570,6 @@
 
       setupModal();
 
-      // Mobile menu
       const toggle = document.getElementById('navToggle');
       const links = document.getElementById('navLinks');
       if (toggle && links) {
