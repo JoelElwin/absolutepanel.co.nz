@@ -234,9 +234,14 @@
       color: var(--white);
     }
 
-    /* CAROUSEL */
+    /* === CAROUSEL (Arrows Outside) === */
+    .carousel-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
     .carousel {
-      position: relative;
+      flex: 1;
       overflow: hidden;
     }
     .carousel-track {
@@ -255,22 +260,21 @@
       border-radius: 4px;
     }
     .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
+      background: var(--orange);
       color: white;
       border: none;
       font-size: 1.8rem;
-      width: 42px;
-      height: 42px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       cursor: pointer;
-      z-index: 10;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
     }
-    .carousel-btn.prev { left: 10px; }
-    .carousel-btn.next { right: 10px; }
-    .carousel-btn:hover { background: var(--orange); }
+    .carousel-btn:hover {
+      background: var(--orange-dark);
+      transform: scale(1.1);
+    }
 
     /* MODAL */
     .modal {
@@ -390,9 +394,11 @@
         <a href="showcase.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
       </div>
       <div class="divider"></div>
-      <div class="carousel" id="showcase-carousel">
+      <div class="carousel-wrapper">
         <button class="carousel-btn prev">←</button>
-        <div class="carousel-track" id="showcase-track"></div>
+        <div class="carousel" id="showcase-carousel">
+          <div class="carousel-track" id="showcase-track"></div>
+        </div>
         <button class="carousel-btn next">→</button>
       </div>
     </div>
@@ -406,9 +412,11 @@
         <a href="beforeafter.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
       </div>
       <div class="divider"></div>
-      <div class="carousel" id="beforeafter-carousel">
+      <div class="carousel-wrapper">
         <button class="carousel-btn prev">←</button>
-        <div class="carousel-track" id="beforeafter-track"></div>
+        <div class="carousel" id="beforeafter-carousel">
+          <div class="carousel-track" id="beforeafter-track"></div>
+        </div>
         <button class="carousel-btn next">→</button>
       </div>
     </div>
@@ -422,16 +430,15 @@
         <a href="working.html" class="btn-outline" style="padding:0.5rem 1.2rem; font-size:0.95rem;">View All</a>
       </div>
       <div class="divider"></div>
-      <div class="carousel" id="working-carousel">
+      <div class="carousel-wrapper">
         <button class="carousel-btn prev">←</button>
-        <div class="carousel-track" id="working-track"></div>
+        <div class="carousel" id="working-carousel">
+          <div class="carousel-track" id="working-track"></div>
+        </div>
         <button class="carousel-btn next">→</button>
       </div>
     </div>
   </section>
-
-  <!-- SERVICES / TESTIMONIALS / ABOUT / CONTACT / FOOTER -->
-  <!-- Paste your existing sections here if you want them -->
 
   <!-- MODAL -->
   <div id="modal" class="modal">
@@ -446,7 +453,9 @@
     function initCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
       const carousel = document.getElementById(carouselId);
-      if (!track || !carousel) return;
+      const wrapper = carousel.parentElement;
+
+      if (!track || !carousel || !wrapper) return;
 
       let currentIndex = 0;
       let items = [];
@@ -471,27 +480,35 @@
         });
       }
 
-      function next() {
+      function goNext() {
         currentIndex = (currentIndex + 1) % items.length;
         if (currentIndex + 3 > items.length) currentIndex = 0;
         render();
       }
 
-      function prev() {
+      function goPrev() {
         currentIndex = (currentIndex - 1 + items.length) % items.length;
         render();
       }
 
       function startAuto() {
         clearInterval(autoSlide);
-        autoSlide = setInterval(next, 3000);
+        autoSlide = setInterval(goNext, 3000);
       }
 
-      carousel.querySelector('.prev').addEventListener('click', () => { prev(); startAuto(); });
-      carousel.querySelector('.next').addEventListener('click', () => { next(); startAuto(); });
+      // Arrow buttons
+      wrapper.querySelector('.prev').addEventListener('click', () => {
+        goPrev();
+        startAuto();
+      });
+      wrapper.querySelector('.next').addEventListener('click', () => {
+        goNext();
+        startAuto();
+      });
 
-      carousel.addEventListener('mouseenter', () => clearInterval(autoSlide));
-      carousel.addEventListener('mouseleave', startAuto);
+      // Pause on hover
+      wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
+      wrapper.addEventListener('mouseleave', startAuto);
 
       load();
     }
