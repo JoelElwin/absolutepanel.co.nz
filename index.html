@@ -35,7 +35,7 @@
       background: var(--white);
     }
 
-    /* NAV */
+    /* NAV - Logo Left | Menu Center | Phone Right */
     header {
       background: var(--orange);
       position: sticky;
@@ -49,12 +49,10 @@
       padding: 0 1.5rem;
       display: flex;
       align-items: center;
-      justify-content: flex-start;   /* ← Logo left aligned */
       height: 70px;
-      gap: 2rem;
     }
     .logo {
-      margin-right: auto;            /* ← Pushes everything else to the right */
+      flex-shrink: 0;
     }
     .logo img {
       height: 52px;
@@ -62,8 +60,10 @@
       vertical-align: middle;
     }
     .nav-links {
+      flex: 1;
       display: flex;
-      gap: 1.75rem;
+      justify-content: center;
+      gap: 2rem;
       list-style: none;
     }
     .nav-links a {
@@ -71,11 +71,15 @@
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .nav-links a:hover { color: #fff; opacity: 0.85; }
+    .nav-links a:hover {
+      color: #fff;
+      opacity: 0.85;
+    }
     .nav-phone {
+      flex-shrink: 0;
       font-family: var(--font-head);
       font-size: 1.3rem;
       font-weight: 700;
@@ -413,10 +417,12 @@
   <!-- NAV -->
   <header>
     <nav>
+      <!-- Logo Left -->
       <a href="#" class="logo">
         <img src="Images/Logo/Logo.png" alt="Absolute Panel & Paint 2010 Ltd">
       </a>
 
+      <!-- Menu Centered -->
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
@@ -424,8 +430,10 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <!-- Phone Right -->
       <a href="tel:092999895" class="nav-phone">09 299 9895</a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     </nav>
   </header>
 
