@@ -160,17 +160,9 @@
       object-fit: cover;
       display: block;
     }
-    .gallery-item::after {
-      content: attr(data-caption);
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.85));
-      color: white;
-      padding: 1rem;
-      font-size: 0.95rem;
-    }
+
+    /* REMOVED description preview from grid */
+    /* .gallery-item::after { ... }  ← removed */
 
     /* Modal */
     .modal {
@@ -280,7 +272,7 @@
     <h1>Showcase Work</h1>
   </div>
 
-  <!-- Gallery Grid -->
+  <!-- Gallery Grid (no description preview) -->
   <div class="gallery-grid" id="gallery-grid"></div>
 
   <!-- Modal -->
@@ -306,7 +298,6 @@
       galleryData.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'gallery-item';
-        div.setAttribute('data-caption', item.description);
         div.innerHTML = `<img src="${item.image}" alt="">`;
 
         div.addEventListener('click', () => openModal(index));
@@ -324,13 +315,13 @@
       desc.textContent = galleryData[currentIndex].description || '';
 
       modal.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Scroll lock
+      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
       const modal = document.getElementById('modal');
       modal.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scroll
+      document.body.style.overflow = '';
     }
 
     function nextImage() {
@@ -362,7 +353,6 @@
 
       document.addEventListener('keydown', (e) => {
         if (!modal.classList.contains('active')) return;
-
         if (e.key === 'Escape') closeModal();
         if (e.key === 'ArrowRight') nextImage();
         if (e.key === 'ArrowLeft') prevImage();
