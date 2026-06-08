@@ -101,13 +101,13 @@
       padding: 0.2rem;
     }
 
-    /* MOBILE */
+    /* MOBILE - Logo centred + Burger moved in */
     @media (max-width: 700px) {
       nav {
         grid-template-columns: 1fr 1fr;
+        padding: 0 1rem;
       }
 
-      /* Centre the logo on mobile */
       .logo {
         justify-self: center;
       }
@@ -125,14 +125,13 @@
       }
       .nav-links.active { display: flex; }
 
-      /* Hide phone on mobile */
       .nav-phone {
         display: none;
       }
 
-      /* Move burger menu slightly inward */
       .nav-toggle {
-        margin-right: 0.75rem;
+        justify-self: end;
+        margin-right: 0.5rem;
         display: block;
       }
     }
