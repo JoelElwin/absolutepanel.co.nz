@@ -261,7 +261,6 @@
       border-radius: 4px;
     }
 
-    /* Mobile - 1 photo only */
     @media (max-width: 700px) {
       .carousel-track {
         gap: 0;
@@ -465,6 +464,11 @@
   </div>
 
   <script>
+    // ==================== CHANGE THIS TO TEST DIFFERENT TIMES ====================
+    const AUTO_SLIDE_INTERVAL = 5000; // ← Change this value (in milliseconds)
+    // Examples: 2000 = 2 seconds, 4000 = 4 seconds, 5000 = 5 seconds
+    // ========================================================================
+
     function initCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
       const carousel = document.getElementById(carouselId);
@@ -524,7 +528,7 @@
 
       function startAuto() {
         clearInterval(autoSlide);
-        autoSlide = setInterval(goNext, 5000);
+        autoSlide = setInterval(goNext, AUTO_SLIDE_INTERVAL);
       }
 
       wrapper.querySelector('.prev').addEventListener('click', () => {
