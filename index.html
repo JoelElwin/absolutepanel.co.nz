@@ -234,7 +234,7 @@
       color: var(--white);
     }
 
-    /* === SMOOTH ANIMATED CAROUSEL === */
+    /* CAROUSEL */
     .carousel-wrapper {
       display: flex;
       align-items: center;
@@ -243,17 +243,16 @@
     .carousel {
       flex: 1;
       overflow: hidden;
-      position: relative;
     }
     .carousel-track {
       display: flex;
       gap: 1rem;
-      transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth animated scroll */
+      transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
     .carousel-item {
       flex: 0 0 calc(33.333% - 0.67rem);
-      cursor: pointer;
       flex-shrink: 0;
+      cursor: pointer;
     }
     .carousel-item img {
       width: 100%;
@@ -261,6 +260,13 @@
       object-fit: cover;
       border-radius: 4px;
     }
+
+    @media (max-width: 700px) {
+      .carousel-item {
+        flex: 0 0 100%; /* Show only 1 photo on mobile */
+      }
+    }
+
     .carousel-btn {
       background: var(--orange);
       color: white;
@@ -271,7 +277,6 @@
       border-radius: 50%;
       cursor: pointer;
       flex-shrink: 0;
-      transition: all 0.2s ease;
     }
     .carousel-btn:hover {
       background: var(--orange-dark);
@@ -461,12 +466,18 @@
 
       let currentIndex = 0;
       let items = [];
+      let itemsPerView = 3;
       let itemWidth = 0;
       let autoSlide;
+
+      function updateItemsPerView() {
+        itemsPerView = window.innerWidth <= 700 ? 1 : 3;
+      }
 
       async function load() {
         const res = await fetch(jsonFile);
         items = await res.json();
+        updateItemsPerView();
         renderAllItems();
         updateTrackPosition();
         startAuto();
@@ -486,13 +497,14 @@
       function updateTrackPosition() {
         const item = track.querySelector('.carousel-item');
         if (!item) return;
-        itemWidth = item.offsetWidth + 16; // 16px = gap
+
+        itemWidth = item.offsetWidth + 16; // gap
         track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
       }
 
       function goNext() {
         currentIndex = (currentIndex + 1) % items.length;
-        if (currentIndex + 3 > items.length) currentIndex = 0;
+        if (currentIndex + itemsPerView > items.length) currentIndex = 0;
         updateTrackPosition();
       }
 
@@ -520,8 +532,11 @@
       wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
       wrapper.addEventListener('mouseleave', startAuto);
 
-      // Recalculate on resize
-      window.addEventListener('resize', updateTrackPosition);
+      // Update on resize
+      window.addEventListener('resize', () => {
+        updateItemsPerView();
+        updateTrackPosition();
+      });
 
       load();
     }
