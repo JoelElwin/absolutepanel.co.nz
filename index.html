@@ -11,9 +11,255 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    /* Your existing styles here (keep everything the same) */
-    /* ... paste your current styles ... */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #f07114;
+      --orange-dark: #c44508;
+      --orange-light: #f47535;
+      --black: #0e0e0e;
+      --white: #ffffff;
+      --gray-light: #f5f5f3;
+      --gray-mid: #777;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--black);
+      background: var(--white);
+    }
 
+    /* NAV */
+    header {
+      background: var(--orange);
+      position: sticky;
+      top: 0;
+      z-index: 150;
+      border-bottom: 4px solid var(--white);
+    }
+    nav {
+      padding: 0 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      height: 70px;
+    }
+    .logo {
+      justify-self: start;
+    }
+    .logo img {
+      height: 60px;
+      width: auto;
+      vertical-align: middle;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 3.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { opacity: 0.85; }
+    .nav-right {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav-phone {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .nav-phone:hover { opacity: 0.85; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
+      padding: 0.2rem;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      nav {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 1rem;
+      }
+      .logo {
+        justify-self: center;
+      }
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--black);
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 1rem;
+        display: none;
+        align-items: center;
+        text-align: center;
+      }
+      .nav-links.active { display: flex; }
+      .nav-phone {
+        display: none;
+      }
+      .nav-toggle {
+        justify-self: end;
+        margin-right: 0.5rem;
+        display: block;
+      }
+    }
+
+    section {
+      scroll-margin-top: 85px;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--black);
+      color: var(--white);
+      padding: 5rem 1.5rem 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(232,86,10,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      border: 1.5px solid var(--orange);
+      padding: 0.3rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero-sub {
+      margin: 1.25rem auto 0.5rem;
+      max-width: 560px;
+      color: #bbb;
+      font-size: 1.1rem;
+    }
+    .hero-location {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 2.25rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hero-location span { color: var(--orange); }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+    }
+    .btn-primary:hover { background: var(--orange-dark); }
+    .btn-outline {
+      display: inline-block;
+      border: 2px solid #444;
+      color: #ccc;
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* TRUST BAR */
+    .trust-bar {
+      background: var(--orange);
+      padding: 0.85rem 1.5rem;
+    }
+    .trust-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-bar span {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    /* SECTIONS */
+    section { padding: 4rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+    .section-title span { color: var(--orange); }
+    .divider {
+      width: 52px;
+      height: 5px;
+      background: var(--orange);
+      margin-bottom: 2rem;
+    }
+
+    /* GALLERY */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -43,26 +289,191 @@
       font-size: 0.95rem;
       font-weight: 500;
     }
+
+    /* SERVICES */
+    #services { background: var(--gray-light); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-top: 5px solid var(--orange);
+      padding: 1.5rem 1.25rem;
+    }
+    .service-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .service-card p { color: #555; font-size: 0.95rem; line-height: 1.55; }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--gray-light); }
+    .testimonial {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 4px;
+      border-top: 5px solid var(--orange);
+    }
+    .testimonial p {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ABOUT */
+    #about { background: var(--black); color: var(--white); }
+    #about .section-title { color: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    #about p { color: #bbb; line-height: 1.8; margin-bottom: 1rem; }
+    .about-quote {
+      border-left: 4px solid var(--orange);
+      padding-left: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .about-quote p {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white) !important;
+      font-style: italic;
+      letter-spacing: 0.01em;
+      line-height: 1.35;
+    }
+    .highlights { list-style: none; margin-top: 0.5rem; }
+    .highlights li {
+      color: #bbb;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #222;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .highlights li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 0.5rem;
+    }
+    .contact-card {
+      border-top: 4px solid var(--orange);
+      padding-top: 1rem;
+    }
+    .contact-card .label {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      margin-bottom: 0.35rem;
+    }
+    .contact-card a {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      display: block;
+    }
+    .contact-card a:hover { color: var(--orange); }
+    .contact-card p { font-size: 1rem; color: #444; line-height: 1.5; }
+    .map-wrap {
+      margin-top: 2.5rem;
+      border-top: 4px solid var(--orange);
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: #666;
+      text-align: center;
+      padding: 1.75rem 1.5rem;
+      font-size: 0.85rem;
+      border-top: 4px solid var(--orange);
+    }
+    footer a { color: var(--orange); text-decoration: none; }
+
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- NAV (keep your current nav) -->
-  <!-- ... your existing nav code ... -->
+  <!-- NAV -->
+  <header>
+    <nav>
+      <a href="#" class="logo">
+        <img src="Images/Logo/Logo.jpg" alt="Absolute Panel & Paint 2010 Ltd">
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:092999895" class="nav-phone">09 299 9895</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      </div>
+    </nav>
+  </header>
 
-  <!-- HERO (keep as is) -->
-  <!-- ... your existing hero ... -->
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Papakura, Auckland</div>
+    <h1>Accident Repairs<br>&amp; <span>Paintwork</span><br>Done Properly</h1>
+    <p class="hero-sub">Specialists in collision repairs, full repaints, rust repairs, and classic car restorations.</p>
+    <p class="hero-location">Serving <span>South Auckland</span> since 2010</p>
+    <div class="hero-ctas">
+      <a href="tel:092999895" class="btn-primary">📞 Call 09 299 9895</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </section>
 
-  <!-- TRUST BAR (keep as is) -->
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <span>✔ Insurance Work Welcome</span>
+      <span>✔ Free Quotes</span>
+      <span>✔ Quality Workmanship</span>
+      <span>✔ Honest Service</span>
+    </div>
+  </div>
 
   <!-- ==================== SHOWCASE GALLERY ==================== -->
   <section id="showcase">
     <div class="container">
       <h2 class="section-title">Showcase <span>Work</span></h2>
       <div class="divider"></div>
-      <div class="gallery-grid" id="showcase-gallery">
-        <!-- Populated dynamically by JavaScript -->
-      </div>
+      <div class="gallery-grid" id="showcase-gallery"></div>
     </div>
   </section>
 
@@ -71,9 +482,7 @@
     <div class="container">
       <h2 class="section-title">Before <span>&amp; After</span></h2>
       <div class="divider"></div>
-      <div class="gallery-grid" id="beforeafter-gallery">
-        <!-- Populated dynamically by JavaScript -->
-      </div>
+      <div class="gallery-grid" id="beforeafter-gallery"></div>
     </div>
   </section>
 
@@ -82,16 +491,127 @@
     <div class="container">
       <h2 class="section-title">Work in <span>Progress</span></h2>
       <div class="divider"></div>
-      <div class="gallery-grid" id="working-gallery">
-        <!-- Populated dynamically by JavaScript -->
+      <div class="gallery-grid" id="working-gallery"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">Our <span>Services</span></h2>
+      <div class="divider"></div>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Accident &amp; Collision Repairs</h3>
+          <p>Panel beating and structural repairs restored to factory standard, no matter the severity.</p>
+        </div>
+        <div class="service-card">
+          <h3>Insurance Repairs</h3>
+          <p>We work with all major insurers. Bring your claim to us and we'll handle the rest.</p>
+        </div>
+        <div class="service-card">
+          <h3>Full Repaints &amp; Custom Paint</h3>
+          <p>Full vehicle resprays and custom colour work with precise computer-aided colour matching.</p>
+        </div>
+        <div class="service-card">
+          <h3>Rust Repairs</h3>
+          <p>Rust cut out and replaced properly — not just covered up. Done to last.</p>
+        </div>
+        <div class="service-card">
+          <h3>Classic &amp; Performance Restoration</h3>
+          <p>We restore classic and performance vehicles with the care and attention they deserve.</p>
+        </div>
+        <div class="service-card">
+          <h3>Scratch &amp; Scuff Repair</h3>
+          <p>Minor damage repaired quickly without needing a full panel replacement.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES, TESTIMONIALS, ABOUT, CONTACT, FOOTER (keep as is) -->
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our <span>Customers Say</span></h2>
+      <div class="divider"></div>
+      <div class="services-grid">
+        <div class="testimonial">
+          <p>"Best panel beaters in South Auckland. Honest pricing and the work on my insurance claim was perfect."</p>
+          <strong>— Mark T., Papakura</strong>
+        </div>
+        <div class="testimonial">
+          <p>"They brought my classic car back to life. The attention to detail is outstanding."</p>
+          <strong>— Paul S., Auckland</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About <span>Us</span></h2>
+      <div class="divider"></div>
+      <div class="about-grid">
+        <div>
+          <p>Absolute Panel &amp; Paint 2010 Ltd is your local expert in collision repairs, restorations, and quality paintwork — based right here in Papakura, South Auckland.</p>
+          <p>With years of experience, we take pride in bringing vehicles back to their best. Whether it's accident damage, rust repairs, a full respray, insurance work, or a classic car restoration, we treat every vehicle like our own.</p>
+          <p>We're committed to honest service, expert craftsmanship, and outstanding results every time.</p>
+          <div class="about-quote">
+            <p>"Restoring vehicles with pride, precision, and quality."</p>
+          </div>
+        </div>
+        <div>
+          <ul class="highlights">
+            <li>Accident &amp; insurance repairs</li>
+            <li>Full repaints &amp; custom paintwork</li>
+            <li>Rust repairs &amp; restoration</li>
+            <li>Classic &amp; performance vehicle restoration</li>
+            <li>Quality workmanship &amp; attention to detail</li>
+            <li>Honest, straightforward service</li>
+            <li>Free quotes — no obligation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in <span>Touch</span></h2>
+      <div class="divider"></div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="label">Phone</div>
+          <a href="tel:092999895">09 299 9895</a>
+        </div>
+        <div class="contact-card">
+          <div class="label">Email</div>
+          <a href="mailto:absolutepanel@gmail.com">absolutepanel@gmail.com</a>
+        </div>
+        <div class="contact-card">
+          <div class="label">Address</div>
+          <p>3/14 Dent Place<br>Papakura, Auckland 2112</p>
+        </div>
+        <div class="contact-card">
+          <div class="label">Hours</div>
+          <p>Monday – Friday: 8am – 5pm<br>Saturday: By appointment</p>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=3/14+Dent+Place,+Papakura,+Auckland+2112" allowfullscreen loading="lazy" title="Absolute Panel & Paint location"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Absolute Panel &amp; Paint 2010 Ltd &nbsp;|&nbsp; 3/14 Dent Place, Papakura, Auckland &nbsp;|&nbsp; <a href="tel:092999895">09 299 9895</a></p>
+  </footer>
 
   <script>
-    // Function to load a gallery from JSON
+    // Dynamic Gallery Loader
     async function loadGallery(jsonFile, containerId) {
       try {
         const response = await fetch(jsonFile);
@@ -110,22 +630,22 @@
       }
     }
 
-    // Load all three galleries when page loads
-    window.onload = function() {
+    // Load all galleries
+    window.onload = function () {
       loadGallery('showcase.json', 'showcase-gallery');
       loadGallery('beforeafter.json', 'beforeafter-gallery');
       loadGallery('working.json', 'working-gallery');
-    };
 
-    // Your existing mobile menu script
-    const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    if (toggle && links) {
-      toggle.addEventListener('click', () => links.classList.toggle('active'));
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => links.classList.remove('active'));
-      });
-    }
+      // Mobile menu
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+      if (toggle && links) {
+        toggle.addEventListener('click', () => links.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => links.classList.remove('active'));
+        });
+      }
+    };
   </script>
 </body>
 </html>
