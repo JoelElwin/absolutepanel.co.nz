@@ -1,22 +1,34 @@
 [
   {
-    "name": "Company Name 1",
-    "logo": "Images/Companylogos/company1.png"
+    "name": "Ace Landscape Services",
+    "logo": "Images/Companylogos/AceLandscapes.png"
   },
   {
-    "name": "Company Name 2",
-    "logo": "Images/Companylogos/logos/company2.png"
+    "name": "Auckland Reinforcing",
+    "logo": "Images/Companylogos/logos/AucklandReinforcing.png"
   },
   {
-    "name": "Company Name 3",
-    "logo": "Images/Companylogos/logos/company3.png"
+    "name": "CCC Cartage",
+    "logo": "Images/Companylogos/logos/CCCCartage.png"
   },
   {
-    "name": "Company Name 4",
-    "logo": "Images/Companylogos/logos/company4.png"
+    "name": "CPB Contractors",
+    "logo": "Images/Companylogos/logos/CPB.png"
   },
   {
-    "name": "Company Name 5",
-    "logo": "Images/Companylogos/logos/company5.png"
+    "name": "Door Doctor",
+    "logo": "Images/Companylogos/logos/DoorDoctor.png"
+  },
+  {
+    "name": "Henderson Demolition",
+    "logo": "Images/Companylogos/logos/HendersonDemolition.png"
+  },
+  {
+    "name": "Rapid Facility Services",
+    "logo": "Images/Companylogos/logos/RapidFacilityServices.png"
+  },
+  {
+    "name": "Smith Cranes & Contractors",
+    "logo": "Images/Companylogos/logos/SmithCranes.png"
   }
 ]
