@@ -360,12 +360,14 @@
     }
     .close:hover { color: var(--orange); }
 
-    /* Before & After Fade in Carousel */
+    /* Before & After Auto Fade in Carousel */
     .beforeafter-item .beforeafter-fade {
       position: relative;
       width: 100%;
       aspect-ratio: 2000 / 1047;
+      overflow: hidden;
     }
+    
     .beforeafter-item .beforeafter-fade img {
       position: absolute;
       top: 0;
@@ -374,16 +376,26 @@
       height: 100%;
       object-fit: cover;
       border-radius: 4px;
-      transition: opacity 1.2s ease-in-out;
+      transition: opacity 1s ease-in-out;
     }
+    
+    /* Before image */
+    .beforeafter-item .beforeafter-fade .before-img {
+      opacity: 1;
+      animation: fadeBeforeAfter 8s infinite ease-in-out;
+    }
+    
+    /* After image */
     .beforeafter-item .beforeafter-fade .after-img {
       opacity: 0;
+      animation: fadeBeforeAfter 8s infinite ease-in-out;
+      animation-delay: 4s; /* Starts fading in after 4 seconds */
     }
-    .beforeafter-item:hover .beforeafter-fade .after-img {
-      opacity: 1;
-    }
-    .beforeafter-item:hover .beforeafter-fade .before-img {
-      opacity: 0;
+    
+    @keyframes fadeBeforeAfter {
+      0%, 40%   { opacity: 1; }
+      50%, 90%  { opacity: 0; }
+      100%      { opacity: 1; }
     }
 
     /* Before & After Modal Layout */
