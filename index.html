@@ -325,98 +325,126 @@
       background: rgba(0,0,0,0.92);
       justify-content: center;
       align-items: center;
+      padding: 1rem;
     }
     .modal.active { display: flex; }
     .modal-content {
       position: relative;
-      max-width: 95%;
-      max-height: 92%;
+      max-width: 95vw;
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .modal-content img {
+
+    /* Single image modal */
+    #modal-single { display: flex; flex-direction: column; align-items: center; }
+    #modal-single img {
       max-width: 100%;
       max-height: 78vh;
       object-fit: contain;
       border-radius: 6px;
     }
+
+    /* Before & After modal */
+    #modal-beforeafter { display: none; flex-direction: column; align-items: center; width: 100%; }
+    .beforeafter-pair {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+      width: 100%;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .beforeafter-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+    }
+    .beforeafter-panel img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .beforeafter-panel .ba-label {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 700px) {
+      .beforeafter-pair {
+        flex-direction: column;
+        gap: 1rem;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .beforeafter-panel img {
+        max-height: 40vh;
+      }
+    }
+
     .modal-description {
       color: white;
       text-align: center;
       margin-top: 1rem;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       max-width: 700px;
     }
-    .close {
+    .modal-close {
       position: absolute;
-      top: -55px;
+      top: -50px;
       right: 0;
       color: white;
-      font-size: 52px;
+      font-size: 50px;
       font-weight: bold;
       cursor: pointer;
       line-height: 1;
+      background: none;
+      border: none;
+      padding: 0;
     }
-    .close:hover { color: var(--orange); }
+    .modal-close:hover { color: var(--orange); }
 
-   /* Before & After Fade - After in background, Before fades on top */
-.beforeafter-item .beforeafter-fade {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 2000 / 1047;
-  overflow: hidden;
-}
-
-/* After image - base layer (always visible) */
-.beforeafter-item .beforeafter-fade .after-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-  z-index: 1;
-}
-
-/* Before & After Fade - Smooth both ways */
-.beforeafter-item .beforeafter-fade {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 2000 / 1047;
-  overflow: hidden;
-}
-
-/* After image - base layer */
-.beforeafter-item .beforeafter-fade .after-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-  z-index: 1;
-}
-
-/* Before image - fades out and back in smoothly */
-.beforeafter-item .beforeafter-fade .before-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-  z-index: 2;
-  opacity: 1;
-  animation: fadeBeforeSmooth 5s infinite ease-in-out;
-}
-
-@keyframes fadeBeforeSmooth {
-  0%, 40%   { opacity: 1; }     /* Before visible */
-  50%, 90%  { opacity: 0; }     /* Faded out (showing After) */
-  100%      { opacity: 1; }     /* Fade back in */
-}
+    /* Before & After Fade */
+    .beforeafter-item .beforeafter-fade {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2000 / 1047;
+      overflow: hidden;
+    }
+    .beforeafter-item .beforeafter-fade .after-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      z-index: 1;
+    }
+    .beforeafter-item .beforeafter-fade .before-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      z-index: 2;
+      opacity: 1;
+      animation: fadeBeforeSmooth 5s infinite ease-in-out;
+    }
+    @keyframes fadeBeforeSmooth {
+      0%, 40%   { opacity: 1; }
+      50%, 90%  { opacity: 0; }
+      100%      { opacity: 1; }
+    }
 
     /* SECTIONS */
     section { padding: 4rem 1.5rem; }
@@ -816,12 +844,31 @@
     <p>&copy; 2026 Absolute Panel &amp; Paint 2010 Ltd &nbsp;|&nbsp; 3/14 Dent Place, Papakura, Auckland &nbsp;|&nbsp; <a href="tel:092999895">09 299 9895</a></p>
   </footer>
 
-  <!-- MODAL -->
-  <div id="modal" class="modal">
+  <!-- MODAL — static structure, two layouts toggled by JS -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modal-image" src="" alt="">
-      <p id="modal-description" class="modal-description"></p>
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+
+      <!-- Layout A: single showcase image -->
+      <div id="modal-single">
+        <img id="modal-image" src="" alt="">
+        <p id="modal-description" class="modal-description"></p>
+      </div>
+
+      <!-- Layout B: before & after side-by-side (or stacked on mobile) -->
+      <div id="modal-beforeafter">
+        <div class="beforeafter-pair">
+          <div class="beforeafter-panel">
+            <img id="modal-before-img" src="" alt="Before">
+            <span class="ba-label">Before</span>
+          </div>
+          <div class="beforeafter-panel">
+            <img id="modal-after-img" src="" alt="After">
+            <span class="ba-label">After</span>
+          </div>
+        </div>
+        <p id="modal-ba-description" class="modal-description"></p>
+      </div>
     </div>
   </div>
 
@@ -830,6 +877,62 @@
     const SLIDE_TRANSITION = 650;
     let currentGalleryData = [];
     let currentIndex = 0;
+
+    // ==================== MODAL ====================
+    function showModal(mode) {
+      const single = document.getElementById('modal-single');
+      const ba = document.getElementById('modal-beforeafter');
+      if (mode === 'single') {
+        single.style.display = 'flex';
+        ba.style.display = 'none';
+      } else {
+        single.style.display = 'none';
+        ba.style.display = 'flex';
+      }
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openShowcaseModal(index) {
+      currentIndex = index;
+      document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
+      document.getElementById('modal-description').textContent = currentGalleryData[currentIndex].description || '';
+      showModal('single');
+    }
+
+    function openBeforeAfterModal(beforeSrc, afterSrc, description) {
+      document.getElementById('modal-before-img').src = beforeSrc;
+      document.getElementById('modal-after-img').src = afterSrc;
+      document.getElementById('modal-ba-description').textContent = description || '';
+      showModal('beforeafter');
+    }
+
+    function setupModal() {
+      document.getElementById('modal-close').addEventListener('click', closeModal);
+      document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+      document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('modal');
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') {
+          closeModal();
+        } else if (e.key === 'ArrowRight' && document.getElementById('modal-single').style.display !== 'none') {
+          currentIndex = (currentIndex + 1) % currentGalleryData.length;
+          document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
+          document.getElementById('modal-description').textContent = currentGalleryData[currentIndex].description || '';
+        } else if (e.key === 'ArrowLeft' && document.getElementById('modal-single').style.display !== 'none') {
+          currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
+          document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
+          document.getElementById('modal-description').textContent = currentGalleryData[currentIndex].description || '';
+        }
+      });
+    }
 
     // ==================== IMAGE CAROUSELS ====================
     function initCarousel(jsonFile, trackId, carouselId, startDelay = 0) {
@@ -869,7 +972,7 @@
           const originalIndex = index % items.length;
           div.addEventListener('click', () => {
             currentGalleryData = items;
-            openModal(originalIndex);
+            openShowcaseModal(originalIndex);
           });
           track.appendChild(div);
         });
@@ -913,26 +1016,15 @@
       }
 
       function stopAuto() {
-        if (autoTimer) {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
       }
 
-      function restartAuto() {
-        stopAuto();
-        startAuto();
-      }
+      function restartAuto() { stopAuto(); startAuto(); }
 
       wrapper.querySelector('.prev')?.addEventListener('click', () => goPrev());
-      wrapper.querySelector('.next')?.addEventListener('click', () => {
-        goNext();
-        restartAuto();
-      });
-
+      wrapper.querySelector('.next')?.addEventListener('click', () => { goNext(); restartAuto(); });
       wrapper.addEventListener('mouseenter', stopAuto);
       wrapper.addEventListener('mouseleave', startAuto);
-
       window.addEventListener('resize', () => {
         updateItemsPerView();
         const maxStart = Math.max(0, items.length - itemsPerView);
@@ -943,7 +1035,7 @@
       load();
     }
 
-    // ==================== BEFORE & AFTER CAROUSEL (with fade) ====================
+    // ==================== BEFORE & AFTER CAROUSEL ====================
     function initBeforeAfterCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
       const carousel = document.getElementById(carouselId);
@@ -965,22 +1057,18 @@
 
       function renderAllItems() {
         track.innerHTML = '';
-
         items.forEach((item) => {
           const div = document.createElement('div');
           div.className = 'carousel-item beforeafter-item';
-
           div.innerHTML = `
             <div class="beforeafter-fade">
-              <img src="${item.before}" class="before-img" alt="Before">
               <img src="${item.after}" class="after-img" alt="After">
+              <img src="${item.before}" class="before-img" alt="Before">
             </div>
           `;
-
           div.addEventListener('click', () => {
             openBeforeAfterModal(item.before, item.after, item.description || '');
           });
-
           track.appendChild(div);
         });
       }
@@ -994,20 +1082,13 @@
         track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
         if (!useTransition) {
           void track.offsetWidth;
-          track.style.transition = `transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)`;
+          track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
         }
       }
 
       function goNext() {
-        currentSlideIndex++;
+        currentSlideIndex = (currentSlideIndex + 1) % items.length;
         updateTrackPosition();
-        if (currentSlideIndex >= items.length) {
-          setTimeout(() => {
-            track.style.transition = 'none';
-            currentSlideIndex = currentSlideIndex % items.length;
-            updateTrackPosition(false);
-          }, 500);
-        }
         autoTimer = setTimeout(goNext, 5000);
       }
 
@@ -1017,69 +1098,22 @@
       }
 
       function stopAuto() {
-        if (autoTimer) {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
       }
 
       wrapper.querySelector('.prev')?.addEventListener('click', () => {
         currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
         updateTrackPosition();
-        stopAuto();
-        startAuto();
+        stopAuto(); startAuto();
       });
-
       wrapper.querySelector('.next')?.addEventListener('click', () => {
-        goNext();
-        stopAuto();
-        startAuto();
+        goNext(); stopAuto(); startAuto();
       });
-
       wrapper.addEventListener('mouseenter', stopAuto);
       wrapper.addEventListener('mouseleave', startAuto);
-
-      window.addEventListener('resize', () => {
-        updateTrackPosition();
-      });
+      window.addEventListener('resize', () => updateTrackPosition());
 
       load();
-    }
-
-    // ==================== BEFORE & AFTER MODAL ====================
-    function openBeforeAfterModal(beforeSrc, afterSrc, description) {
-      const modal = document.getElementById('modal');
-      const content = modal.querySelector('.modal-content');
-
-      content.innerHTML = `
-        <span class="close">&times;</span>
-        <div class="beforeafter-modal">
-          <div class="beforeafter-image">
-            <img src="${beforeSrc}" alt="Before">
-            <p class="label">Before</p>
-          </div>
-          <div class="beforeafter-image">
-            <img src="${afterSrc}" alt="After">
-            <p class="label">After</p>
-          </div>
-        </div>
-        ${description ? `<p class="modal-description">${description}</p>` : ''}
-      `;
-
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-
-      content.querySelector('.close').addEventListener('click', () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-      }, { once: true });
     }
 
     // ==================== TESTIMONIALS ====================
@@ -1154,30 +1188,16 @@
       }
 
       function stopAuto() {
-        if (autoTimer) {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
       }
 
-      function restartAuto() {
-        stopAuto();
-        startAuto();
-      }
+      function restartAuto() { stopAuto(); startAuto(); }
 
       wrapper.querySelector('.prev')?.addEventListener('click', () => goPrev());
-      wrapper.querySelector('.next')?.addEventListener('click', () => {
-        goNext();
-        restartAuto();
-      });
-
+      wrapper.querySelector('.next')?.addEventListener('click', () => { goNext(); restartAuto(); });
       wrapper.addEventListener('mouseenter', stopAuto);
       wrapper.addEventListener('mouseleave', startAuto);
-
-      window.addEventListener('resize', () => {
-        updateItemsPerView();
-        updateTrackPosition();
-      });
+      window.addEventListener('resize', () => { updateItemsPerView(); updateTrackPosition(); });
 
       load();
     }
@@ -1256,69 +1276,23 @@
       }
 
       function stopAuto() {
-        if (autoTimer) {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
       }
 
       wrapper.addEventListener('mouseenter', stopAuto);
       wrapper.addEventListener('mouseleave', startAuto);
-
-      window.addEventListener('resize', () => {
-        updateItemsPerView();
-        updateTrackPosition();
-      });
+      window.addEventListener('resize', () => { updateItemsPerView(); updateTrackPosition(); });
 
       load();
     }
 
-    // ==================== BASIC MODAL ====================
-    function openModal(index) {
-      currentIndex = index;
-      const modal = document.getElementById('modal');
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
-      img.src = currentGalleryData[currentIndex].image;
-      desc.textContent = currentGalleryData[currentIndex].description || '';
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function setupModal() {
-      const modal = document.getElementById('modal');
-      document.querySelector('.close')?.addEventListener('click', closeModal);
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowRight') {
-          currentIndex = (currentIndex + 1) % currentGalleryData.length;
-          document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
-        }
-        if (e.key === 'ArrowLeft') {
-          currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
-          document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
-        }
-      });
-    }
-
-    // ==================== INITIALIZE EVERYTHING ====================
+    // ==================== INITIALIZE ====================
     window.onload = function () {
       initCarousel('json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
       initBeforeAfterCarousel('json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel');
       initTestimonialCarousel('json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
       initCustomerCarousel('json/customers.json', 'customers-track', 'customers-carousel');
 
-      // Load services if you have the function
       if (typeof initServices === 'function') {
         initServices('json/services.json', 'services-grid');
       }
