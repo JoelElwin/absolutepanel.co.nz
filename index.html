@@ -779,12 +779,13 @@
   </div>
 
   <script>
-  const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds between slides
-  const SLIDE_TRANSITION = 650;     // smoother slide speed (ms)
+  const AUTO_SLIDE_INTERVAL = 5000;
+  const SLIDE_TRANSITION = 650;
 
   let currentGalleryData = [];
   let currentIndex = 0;
 
+  // ==================== IMAGE CAROUSELS ====================
   function initCarousel(jsonFile, trackId, carouselId, startDelay = 0) {
     const track = document.getElementById(trackId);
     const carousel = document.getElementById(carouselId);
@@ -807,19 +808,18 @@
       updateItemsPerView();
       renderAllItems();
       updateTrackPosition();
-      // Start auto-slide after the given delay (for staggering)
       setTimeout(startAuto, startDelay);
     }
 
     function renderAllItems() {
       track.innerHTML = '';
-      const displayItems = [...items, ...items]; // duplicate for seamless loop
-      
+      const displayItems = [...items, ...items];
+
       displayItems.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'carousel-item';
         div.innerHTML = `<img src="${item.image}" alt="">`;
-        
+
         const originalIndex = index % items.length;
         div.addEventListener('click', () => {
           currentGalleryData = items;
@@ -838,7 +838,7 @@
 
       if (!useTransition) track.style.transition = 'none';
       track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-      
+
       if (!useTransition) {
         void track.offsetWidth;
         track.style.transition = `transform ${SLIDE_TRANSITION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
@@ -849,7 +849,6 @@
       currentSlideIndex++;
       updateTrackPosition();
 
-      // Seamless infinite loop
       if (currentSlideIndex >= items.length) {
         setTimeout(() => {
           track.style.transition = 'none';
@@ -858,7 +857,6 @@
         }, SLIDE_TRANSITION);
       }
 
-      // Schedule next slide
       autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
     }
 
@@ -885,11 +883,7 @@
       startAuto();
     }
 
-    // Arrow buttons
-    wrapper.querySelector('.prev').addEventListener('click', () => {
-      goPrev();
-    });
-    
+    wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
     wrapper.querySelector('.next').addEventListener('click', () => {
       goNext();
       restartAuto();
@@ -908,7 +902,216 @@
     load();
   }
 
-  // Modal functions
+  // ==================== TESTIMONIALS CAROUSEL ====================
+  function initTestimonialCarousel(jsonFile, trackId, carouselId) {
+    const track = document.getElementById(trackId);
+    const carousel = document.getElementById(carouselId);
+    const wrapper = carousel.parentElement;
+    if (!track || !carousel) return;
+
+    let currentSlideIndex = 0;
+    let items = [];
+    let itemsPerView = 2;
+    let itemWidth = 0;
+    let autoTimer = null;
+
+    function updateItemsPerView() {
+      itemsPerView = window.innerWidth <= 700 ? 1 : 2;
+    }
+
+    async function load() {
+      const res = await fetch(jsonFile);
+      items = await res.json();
+      updateItemsPerView();
+      renderAllItems();
+      updateTrackPosition();
+      startAuto();
+    }
+
+    function renderAllItems() {
+      track.innerHTML = '';
+      const displayItems = [...items, ...items];
+
+      displayItems.forEach((item) => {
+        const div = document.createElement('div');
+        div.className = 'carousel-item testimonial';
+        div.innerHTML = `
+          <p>"${item.quote}"</p>
+          <strong>— ${item.name}</strong><br>
+          <span style="color:#888; font-size:0.9rem;">${item.location}</span>
+        `;
+        track.appendChild(div);
+      });
+    }
+
+    function updateTrackPosition(useTransition = true) {
+      const item = track.querySelector('.carousel-item');
+      if (!item) return;
+
+      const gap = window.innerWidth <= 700 ? 0 : 20;
+      itemWidth = item.offsetWidth + gap;
+
+      if (!useTransition) track.style.transition = 'none';
+      track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+
+      if (!useTransition) {
+        void track.offsetWidth;
+        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      }
+    }
+
+    function goNext() {
+      currentSlideIndex = (currentSlideIndex + 1) % items.length;
+      updateTrackPosition();
+      autoTimer = setTimeout(goNext, 5000);
+    }
+
+    function goPrev() {
+      currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+      updateTrackPosition();
+      restartAuto();
+    }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setTimeout(goNext, 5000);
+    }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    function restartAuto() {
+      stopAuto();
+      startAuto();
+    }
+
+    wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
+    wrapper.querySelector('.next').addEventListener('click', () => {
+      goNext();
+      restartAuto();
+    });
+
+    wrapper.addEventListener('mouseenter', stopAuto);
+    wrapper.addEventListener('mouseleave', startAuto);
+
+    window.addEventListener('resize', () => {
+      updateItemsPerView();
+      updateTrackPosition();
+    });
+
+    load();
+  }
+
+  // ==================== CUSTOMERS / FLEET CAROUSEL ====================
+  function initCustomerCarousel(jsonFile, trackId, carouselId) {
+    const track = document.getElementById(trackId);
+    const carousel = document.getElementById(carouselId);
+    const wrapper = carousel.parentElement;
+    if (!track || !carousel) return;
+
+    let currentSlideIndex = 0;
+    let items = [];
+    let itemsPerView = 5;
+    let itemWidth = 0;
+    let autoTimer = null;
+
+    function updateItemsPerView() {
+      if (window.innerWidth <= 500) itemsPerView = 2;
+      else if (window.innerWidth <= 900) itemsPerView = 3;
+      else itemsPerView = 5;
+    }
+
+    async function load() {
+      const res = await fetch(jsonFile);
+      items = await res.json();
+      updateItemsPerView();
+      renderAllItems();
+      updateTrackPosition();
+      startAuto();
+    }
+
+    function renderAllItems() {
+      track.innerHTML = '';
+      const displayItems = [...items, ...items];
+
+      displayItems.forEach((item) => {
+        const div = document.createElement('div');
+        div.className = 'carousel-item customer-logo';
+        div.innerHTML = `
+          <img src="${item.logo}" alt="${item.name}">
+          <p>${item.name}</p>
+        `;
+        track.appendChild(div);
+      });
+    }
+
+    function updateTrackPosition(useTransition = true) {
+      const item = track.querySelector('.carousel-item');
+      if (!item) return;
+
+      const gap = window.innerWidth <= 700 ? 10 : 20;
+      itemWidth = item.offsetWidth + gap;
+
+      if (!useTransition) track.style.transition = 'none';
+      track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+
+      if (!useTransition) {
+        void track.offsetWidth;
+        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      }
+    }
+
+    function goNext() {
+      currentSlideIndex = (currentSlideIndex + 1) % items.length;
+      updateTrackPosition();
+      autoTimer = setTimeout(goNext, 4000);
+    }
+
+    function goPrev() {
+      currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+      updateTrackPosition();
+      restartAuto();
+    }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setTimeout(goNext, 4000);
+    }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    function restartAuto() {
+      stopAuto();
+      startAuto();
+    }
+
+    wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
+    wrapper.querySelector('.next').addEventListener('click', () => {
+      goNext();
+      restartAuto();
+    });
+
+    wrapper.addEventListener('mouseenter', stopAuto);
+    wrapper.addEventListener('mouseleave', startAuto);
+
+    window.addEventListener('resize', () => {
+      updateItemsPerView();
+      updateTrackPosition();
+    });
+
+    load();
+  }
+
+  // ==================== MODAL ====================
   function openModal(index) {
     currentIndex = index;
     const modal = document.getElementById('modal');
@@ -957,230 +1160,20 @@
     });
   }
 
+  // ==================== INITIALIZE EVERYTHING ====================
   window.onload = function () {
-  // Image Carousels (removed Work in Progress)
-  initCarousel('Json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
-  initCarousel('Json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
+    // Image Carousels
+    initCarousel('Json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
+    initCarousel('Json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
 
-  // Testimonials Carousel
-  initTestimonialCarousel('Json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
+    // Testimonials Carousel
+    initTestimonialCarousel('Json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
 
-  // Fleet & Commercial Customers Carousel
-  initCustomerCarousel('Json/customers.json', 'customers-track', 'customers-carousel');
+    // Fleet & Commercial Customers Carousel
+    initCustomerCarousel('Json/customers.json', 'customers-track', 'customers-carousel');
 
-  setupModal();
+    setupModal();
 
-    function initTestimonialCarousel(jsonFile, trackId, carouselId) {
-  const track = document.getElementById(trackId);
-  const carousel = document.getElementById(carouselId);
-  const wrapper = carousel.parentElement;
-  if (!track || !carousel) return;
-
-  let currentSlideIndex = 0;
-  let items = [];
-  let itemsPerView = 2;
-  let itemWidth = 0;
-  let autoTimer = null;
-
-  function updateItemsPerView() {
-    itemsPerView = window.innerWidth <= 700 ? 1 : 2;
-  }
-
-  async function load() {
-    const res = await fetch(jsonFile);
-    items = await res.json();
-    updateItemsPerView();
-    renderAllItems();
-    updateTrackPosition();
-    startAuto();
-  }
-
-  function renderAllItems() {
-    track.innerHTML = '';
-    // Duplicate items so the carousel never runs out of slides
-    const displayItems = [...items, ...items];
-
-    displayItems.forEach((item) => {
-      const div = document.createElement('div');
-      div.className = 'carousel-item testimonial';
-      div.innerHTML = `
-        <p>"${item.quote}"</p>
-        <strong>— ${item.name}</strong><br>
-        <span style="color:#888; font-size:0.9rem;">${item.location}</span>
-      `;
-      track.appendChild(div);
-    });
-  }
-
-  function updateTrackPosition(useTransition = true) {
-    const item = track.querySelector('.carousel-item');
-    if (!item) return;
-
-    const gap = window.innerWidth <= 700 ? 0 : 20;
-    itemWidth = item.offsetWidth + gap;
-
-    if (!useTransition) track.style.transition = 'none';
-    track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-    
-    if (!useTransition) {
-      void track.offsetWidth;
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-    }
-  }
-
-  function goNext() {
-    currentSlideIndex = (currentSlideIndex + 1) % items.length;
-    updateTrackPosition();
-    autoTimer = setTimeout(goNext, 5000);
-  }
-
-  function goPrev() {
-    currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-    updateTrackPosition();
-    restartAuto();
-  }
-
-  function startAuto() {
-    stopAuto();
-    autoTimer = setTimeout(goNext, 5000);
-  }
-
-  function stopAuto() {
-    if (autoTimer) {
-      clearTimeout(autoTimer);
-      autoTimer = null;
-    }
-  }
-
-  function restartAuto() {
-    stopAuto();
-    startAuto();
-  }
-
-  // Arrow buttons
-  wrapper.querySelector('.prev').addEventListener('click', () => {
-    goPrev();
-  });
-  
-  wrapper.querySelector('.next').addEventListener('click', () => {
-    goNext();
-    restartAuto();
-  });
-
-  wrapper.addEventListener('mouseenter', stopAuto);
-  wrapper.addEventListener('mouseleave', startAuto);
-
-  window.addEventListener('resize', () => {
-    updateItemsPerView();
-    updateTrackPosition();
-  });
-
-  load();
-}
-
-    function initCustomerCarousel(jsonFile, trackId, carouselId) {
-  const track = document.getElementById(trackId);
-  const carousel = document.getElementById(carouselId);
-  const wrapper = carousel.parentElement;
-  if (!track || !carousel) return;
-
-  let currentSlideIndex = 0;
-  let items = [];
-  let itemsPerView = 5;
-  let itemWidth = 0;
-  let autoTimer = null;
-
-  function updateItemsPerView() {
-    if (window.innerWidth <= 500) itemsPerView = 2;
-    else if (window.innerWidth <= 900) itemsPerView = 3;
-    else itemsPerView = 5;
-  }
-
-  async function load() {
-    const res = await fetch(jsonFile);
-    items = await res.json();
-    updateItemsPerView();
-    renderAllItems();
-    updateTrackPosition();
-    startAuto();
-  }
-
-  function renderAllItems() {
-    track.innerHTML = '';
-    const displayItems = [...items, ...items]; // seamless loop
-
-    displayItems.forEach((item) => {
-      const div = document.createElement('div');
-      div.className = 'carousel-item customer-logo';
-      div.innerHTML = `
-        <img src="${item.logo}" alt="${item.name}">
-        <p>${item.name}</p>
-      `;
-      track.appendChild(div);
-    });
-  }
-
-  function updateTrackPosition(useTransition = true) {
-    const item = track.querySelector('.carousel-item');
-    if (!item) return;
-
-    const gap = window.innerWidth <= 700 ? 10 : 20;
-    itemWidth = item.offsetWidth + gap;
-
-    if (!useTransition) track.style.transition = 'none';
-    track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-    
-    if (!useTransition) {
-      void track.offsetWidth;
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-    }
-  }
-
-  function goNext() {
-    currentSlideIndex = (currentSlideIndex + 1) % items.length;
-    updateTrackPosition();
-    autoTimer = setTimeout(goNext, 4000); // 4 seconds per slide
-  }
-
-  function goPrev() {
-    currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-    updateTrackPosition();
-    restartAuto();
-  }
-
-  function startAuto() {
-    stopAuto();
-    autoTimer = setTimeout(goNext, 4000);
-  }
-
-  function stopAuto() {
-    if (autoTimer) {
-      clearTimeout(autoTimer);
-      autoTimer = null;
-    }
-  }
-
-  function restartAuto() {
-    stopAuto();
-    startAuto();
-  }
-
-  wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
-  wrapper.querySelector('.next').addEventListener('click', () => {
-    goNext();
-    restartAuto();
-  });
-
-  wrapper.addEventListener('mouseenter', stopAuto);
-  wrapper.addEventListener('mouseleave', startAuto);
-
-  window.addEventListener('resize', () => {
-    updateItemsPerView();
-    updateTrackPosition();
-  });
-
-  load();
-}
     // Mobile nav toggle
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
