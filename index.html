@@ -360,7 +360,7 @@
     }
     .close:hover { color: var(--orange); }
 
-   /* Before & After Smooth Fade (No Black Flash) */
+   /* Before & After Fade - After in background, Before fades on top */
 .beforeafter-item .beforeafter-fade {
   position: relative;
   width: 100%;
@@ -368,7 +368,19 @@
   overflow: hidden;
 }
 
-.beforeafter-item .beforeafter-fade img {
+/* After image - base layer (always visible) */
+.beforeafter-item .beforeafter-fade .after-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+  z-index: 1;
+}
+
+/* Before image - on top, fades out to reveal After */
+.beforeafter-item .beforeafter-fade .before-img {
   position: absolute;
   top: 0;
   left: 0;
@@ -376,22 +388,12 @@
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
-}
-
-/* Before image */
-.beforeafter-item .beforeafter-fade .before-img {
+  z-index: 2;
   opacity: 1;
-  animation: smoothFade 5s infinite ease-in-out;
+  animation: fadeBeforeImage 4s infinite ease-in-out;
 }
 
-/* After image */
-.beforeafter-item .beforeafter-fade .after-img {
-  opacity: 0;
-  animation: smoothFade 5s infinite ease-in-out;
-  animation-delay: 2.5s;
-}
-
-@keyframes smoothFade {
+@keyframes fadeBeforeImage {
   0%, 45%   { opacity: 1; }
   55%, 100% { opacity: 0; }
 }
