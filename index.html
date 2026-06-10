@@ -326,6 +326,7 @@
       justify-content: center;
       align-items: center;
       padding: 1rem;
+      /* background click does NOT close - intentional */
     }
     .modal.active { display: flex; }
     .modal-content {
@@ -341,7 +342,7 @@
     #modal-single { display: flex; flex-direction: column; align-items: center; }
     #modal-single img {
       max-width: 100%;
-      max-height: 78vh;
+      max-height: 75vh;
       object-fit: contain;
       border-radius: 6px;
     }
@@ -365,7 +366,7 @@
     }
     .beforeafter-panel img {
       width: 100%;
-      max-height: 70vh;
+      max-height: 68vh;
       object-fit: contain;
       border-radius: 6px;
     }
@@ -375,18 +376,18 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--orange);
+      color: #ffffff;
       margin-top: 0.5rem;
     }
     @media (max-width: 700px) {
       .beforeafter-pair {
         flex-direction: column;
         gap: 1rem;
-        max-height: 80vh;
+        max-height: 78vh;
         overflow-y: auto;
       }
       .beforeafter-panel img {
-        max-height: 40vh;
+        max-height: 38vh;
       }
     }
 
@@ -412,22 +413,49 @@
     }
     .modal-close:hover { color: var(--orange); }
 
+    /* Modal prev/next nav buttons */
+    .modal-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .modal-nav-btn {
+      background: var(--orange);
+      color: white;
+      border: none;
+      font-size: 1.6rem;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .modal-nav-btn:hover { background: var(--orange-dark); }
+    .modal-nav-counter {
+      color: #ccc;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      min-width: 60px;
+      text-align: center;
+    }
+
     /* Before & After Fade */
     .beforeafter-item .beforeafter-fade {
       position: relative;
       width: 100%;
-      aspect-ratio: 2000 / 1047;
+      /* iOS Safari fix: padding-top % instead of aspect-ratio for animation to work */
+      padding-top: 52.35%; /* 1047/2000 */
       overflow: hidden;
     }
-    .beforeafter-item .beforeafter-fade .after-img {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 4px;
-      display: block;
-      z-index: 1;
-    }
+    .beforeafter-item .beforeafter-fade .after-img,
     .beforeafter-item .beforeafter-fade .before-img {
       position: absolute;
       top: 0;
@@ -436,9 +464,21 @@
       height: 100%;
       object-fit: cover;
       border-radius: 4px;
+      display: block;
+    }
+    .beforeafter-item .beforeafter-fade .after-img {
+      z-index: 1;
+    }
+    .beforeafter-item .beforeafter-fade .before-img {
       z-index: 2;
       opacity: 1;
+      -webkit-animation: fadeBeforeSmooth 5s infinite ease-in-out;
       animation: fadeBeforeSmooth 5s infinite ease-in-out;
+    }
+    @-webkit-keyframes fadeBeforeSmooth {
+      0%, 40%   { opacity: 1; }
+      50%, 90%  { opacity: 0; }
+      100%      { opacity: 1; }
     }
     @keyframes fadeBeforeSmooth {
       0%, 40%   { opacity: 1; }
@@ -853,6 +893,11 @@
       <div id="modal-single">
         <img id="modal-image" src="" alt="">
         <p id="modal-description" class="modal-description"></p>
+        <div class="modal-nav">
+          <button class="modal-nav-btn" id="modal-prev">←</button>
+          <span class="modal-nav-counter" id="modal-counter"></span>
+          <button class="modal-nav-btn" id="modal-next">→</button>
+        </div>
       </div>
 
       <!-- Layout B: before & after side-by-side (or stacked on mobile) -->
@@ -868,6 +913,11 @@
           </div>
         </div>
         <p id="modal-ba-description" class="modal-description"></p>
+        <div class="modal-nav">
+          <button class="modal-nav-btn" id="modal-ba-prev">←</button>
+          <span class="modal-nav-counter" id="modal-ba-counter"></span>
+          <button class="modal-nav-btn" id="modal-ba-next">→</button>
+        </div>
       </div>
     </div>
   </div>
@@ -879,6 +929,9 @@
     let currentIndex = 0;
 
     // ==================== MODAL ====================
+    let currentBAData = [];
+    let currentBAIndex = 0;
+
     function showModal(mode) {
       const single = document.getElementById('modal-single');
       const ba = document.getElementById('modal-beforeafter');
@@ -898,38 +951,79 @@
       document.body.style.overflow = '';
     }
 
-    function openShowcaseModal(index) {
-      currentIndex = index;
+    function updateShowcaseModalContent() {
       document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
       document.getElementById('modal-description').textContent = currentGalleryData[currentIndex].description || '';
+      document.getElementById('modal-counter').textContent = (currentIndex + 1) + ' / ' + currentGalleryData.length;
+    }
+
+    function openShowcaseModal(index) {
+      currentIndex = index;
+      updateShowcaseModalContent();
       showModal('single');
     }
 
-    function openBeforeAfterModal(beforeSrc, afterSrc, description) {
-      document.getElementById('modal-before-img').src = beforeSrc;
-      document.getElementById('modal-after-img').src = afterSrc;
-      document.getElementById('modal-ba-description').textContent = description || '';
+    function updateBAModalContent() {
+      const item = currentBAData[currentBAIndex];
+      document.getElementById('modal-before-img').src = item.before;
+      document.getElementById('modal-after-img').src = item.after;
+      document.getElementById('modal-ba-description').textContent = item.description || '';
+      document.getElementById('modal-ba-counter').textContent = (currentBAIndex + 1) + ' / ' + currentBAData.length;
+    }
+
+    function openBeforeAfterModal(data, index) {
+      currentBAData = data;
+      currentBAIndex = index;
+      updateBAModalContent();
       showModal('beforeafter');
     }
 
     function setupModal() {
+      // X button closes
       document.getElementById('modal-close').addEventListener('click', closeModal);
-      document.getElementById('modal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
+
+      // Showcase nav
+      document.getElementById('modal-prev').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
+        updateShowcaseModalContent();
       });
+      document.getElementById('modal-next').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % currentGalleryData.length;
+        updateShowcaseModalContent();
+      });
+
+      // Before/After nav
+      document.getElementById('modal-ba-prev').addEventListener('click', () => {
+        currentBAIndex = (currentBAIndex - 1 + currentBAData.length) % currentBAData.length;
+        updateBAModalContent();
+      });
+      document.getElementById('modal-ba-next').addEventListener('click', () => {
+        currentBAIndex = (currentBAIndex + 1) % currentBAData.length;
+        updateBAModalContent();
+      });
+
+      // Keyboard nav
       document.addEventListener('keydown', function(e) {
         const modal = document.getElementById('modal');
         if (!modal.classList.contains('active')) return;
         if (e.key === 'Escape') {
           closeModal();
-        } else if (e.key === 'ArrowRight' && document.getElementById('modal-single').style.display !== 'none') {
-          currentIndex = (currentIndex + 1) % currentGalleryData.length;
-          document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
-          document.getElementById('modal-description').textContent = currentGalleryData[currentIndex].description || '';
-        } else if (e.key === 'ArrowLeft' && document.getElementById('modal-single').style.display !== 'none') {
-          currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
-          document.getElementById('modal-image').src = currentGalleryData[currentIndex].image;
-          document.getElementById('modal-description').textContent = currentGalleryData[currentIndex].description || '';
+        } else if (e.key === 'ArrowRight') {
+          if (document.getElementById('modal-single').style.display !== 'none') {
+            currentIndex = (currentIndex + 1) % currentGalleryData.length;
+            updateShowcaseModalContent();
+          } else {
+            currentBAIndex = (currentBAIndex + 1) % currentBAData.length;
+            updateBAModalContent();
+          }
+        } else if (e.key === 'ArrowLeft') {
+          if (document.getElementById('modal-single').style.display !== 'none') {
+            currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
+            updateShowcaseModalContent();
+          } else {
+            currentBAIndex = (currentBAIndex - 1 + currentBAData.length) % currentBAData.length;
+            updateBAModalContent();
+          }
         }
       });
     }
@@ -1057,7 +1151,7 @@
 
       function renderAllItems() {
         track.innerHTML = '';
-        items.forEach((item) => {
+        items.forEach((item, idx) => {
           const div = document.createElement('div');
           div.className = 'carousel-item beforeafter-item';
           div.innerHTML = `
@@ -1067,7 +1161,7 @@
             </div>
           `;
           div.addEventListener('click', () => {
-            openBeforeAfterModal(item.before, item.after, item.description || '');
+            openBeforeAfterModal(items, idx);
           });
           track.appendChild(div);
         });
