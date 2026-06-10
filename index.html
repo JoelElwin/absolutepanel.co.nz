@@ -548,32 +548,64 @@
     /* CUSTOMER LOGOS */
     .customer-logo {
       text-align: center;
-      padding: 0.4rem 0.6rem;
+      padding: 0.5rem 0.4rem;
       flex-shrink: 0;
     }
+    
     .customer-logo img {
-      max-height: 65px;
+      max-height: 60px;
       width: auto;
+      max-width: 100%;
       object-fit: contain;
       filter: grayscale(15%);
       transition: filter 0.3s ease;
     }
-    .customer-logo:hover img { filter: none; }
+    
+    .customer-logo:hover img {
+      filter: none;
+    }
+    
     .customer-logo p {
-      margin-top: 0.4rem;
-      font-size: 0.85rem;
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
       color: #444;
       font-weight: 500;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
-    /* 4 logos on desktop */
-    #customers .carousel-item { flex: 0 0 calc(25% - 12px); }
+    
+    /* Desktop - 4 logos */
+    #customers .carousel-item {
+      flex: 0 0 calc(25% - 10px);
+    }
+    
+    /* Tablet - 3 logos */
     @media (max-width: 900px) {
-      #customers .carousel-item { flex: 0 0 calc(33.333% - 10px); }
+      #customers .carousel-item {
+        flex: 0 0 calc(33.333% - 8px);
+      }
+      .customer-logo img {
+        max-height: 55px;
+      }
     }
+    
+    /* Mobile - 2 logos (fixed clipping) */
     @media (max-width: 500px) {
-      #customers .carousel-item { flex: 0 0 calc(50% - 8px); }
+      #customers .carousel-item {
+        flex: 0 0 calc(50% - 6px);
+        padding: 0 6px;
+      }
+      .customer-logo {
+        padding: 0.4rem 0.3rem;
+      }
+      .customer-logo img {
+        max-height: 50px;
+      }
+      .customer-logo p {
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+      }
     }
   </style>
 </head>
