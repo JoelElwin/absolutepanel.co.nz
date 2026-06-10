@@ -932,6 +932,26 @@
     let currentBAData = [];
     let currentBAIndex = 0;
 
+    function initServices(jsonFile, gridId) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+
+  fetch(jsonFile)
+    .then(res => res.json())
+    .then(items => {
+      grid.innerHTML = '';
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'service-card';
+        div.innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+        `;
+        grid.appendChild(div);
+      });
+    });
+}
+    
     function showModal(mode) {
       const single = document.getElementById('modal-single');
       const ba = document.getElementById('modal-beforeafter');
