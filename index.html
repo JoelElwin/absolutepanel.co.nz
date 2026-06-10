@@ -937,10 +937,10 @@
 
   window.onload = function () {
     // Staggered start times so they don't move together
-    initCarousel('showcase.json', 'showcase-track', 'showcase-carousel', 0);      // starts immediately
-    initCarousel('beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200); // starts 1.2s later
-    initCarousel('working.json', 'working-track', 'working-carousel', 2400);     // starts 2.4s later
-    initTestimonialCarousel('testimonials.json', 'testimonials-track', 'testimonials-carousel');
+    initCarousel('Json/showcase.json', 'showcase-track', 'showcase-carousel', 0);      // starts immediately
+    initCarousel('Json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200); // starts 1.2s later
+    initCarousel('Json/working.json', 'working-track', 'working-carousel', 2400);     // starts 2.4s later
+    initTestimonialCarousel('Json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
     setupModal();
 
     function initTestimonialCarousel(jsonFile, trackId, carouselId) {
