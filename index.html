@@ -545,28 +545,35 @@
       #customers .carousel-item { flex: 0 0 calc(33.333% - 8px); }
     }
 
-    /* Mobile - 2 logos (fixed clipping) */
-    @media (max-width: 500px) {
-      #customers .carousel-item {
-        flex: 0 0 calc(50% - 4px);   /* Slightly more breathing room */
-        padding: 0 4px;
-      }
-    
-      .customer-logo {
-        padding: 0.3rem 0.2rem;
-      }
-    
-      .customer-logo img {
-        max-height: 52px;
-        max-width: 100%;
-        width: auto;
-      }
-    
-      .customer-logo p {
-        font-size: 0.75rem;
-        margin-top: 0.25rem;
-      }
-    }
+/* Mobile - 2 logos (fixed clipping) */
+@media (max-width: 500px) {
+  #customers .carousel-item {
+    flex: 0 0 calc(50% - 4px);
+    padding: 0 4px;
+  }
+
+  .customer-logo {
+    padding: 0.3rem 0.2rem;
+  }
+
+  .customer-logo img {
+    max-height: 52px;
+    max-width: 100%;
+    width: auto;
+  }
+
+  .customer-logo p {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
+
+/* Extra safety - prevent clipping */
+@media (max-width: 500px) {
+  #customers .carousel {
+    overflow: hidden;
+  }
+}
 
     /* Make Customers carousel wider on mobile */
     @media (max-width: 700px) {
