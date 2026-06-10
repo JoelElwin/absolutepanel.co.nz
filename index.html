@@ -47,9 +47,7 @@
       align-items: center;
       height: 70px;
     }
-    .logo {
-      justify-self: start;
-    }
+    .logo { justify-self: start; }
     .logo img {
       height: 60px;
       width: auto;
@@ -95,15 +93,12 @@
       cursor: pointer;
       padding: 0.2rem;
     }
-
     @media (max-width: 700px) {
       nav {
         grid-template-columns: 1fr 1fr;
         padding: 0 1rem;
       }
-      .logo {
-        justify-self: center;
-      }
+      .logo { justify-self: center; }
       .nav-links {
         position: absolute;
         top: 70px;
@@ -128,22 +123,42 @@
 
     section { scroll-margin-top: 85px; }
 
-    /* HERO */
+    /* HERO WITH VIDEO BACKGROUND */
     .hero {
-      background: var(--black);
-      color: var(--white);
-      padding: 5rem 1.5rem 4.5rem;
-      text-align: center;
       position: relative;
+      color: var(--white);
+      padding: 6rem 1.5rem 5rem;
+      text-align: center;
       overflow: hidden;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .hero::before {
-      content: '';
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 60% 40%, rgba(232,86,10,0.18) 0%, transparent 65%);
-      pointer-events: none;
+      background: rgba(0, 0, 0, 0.58);
+      z-index: 2;
     }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 900px;
+    }
+
     .hero-tag {
       display: inline-block;
       font-family: var(--font-head);
@@ -156,35 +171,43 @@
       padding: 0.3rem 1rem;
       margin-bottom: 1.5rem;
     }
+
     .hero h1 {
       font-family: var(--font-head);
-      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-size: clamp(3rem, 9vw, 5.8rem);
       font-weight: 800;
       line-height: 1.0;
       letter-spacing: 0.01em;
       text-transform: uppercase;
+      margin-bottom: 1rem;
     }
+
     .hero h1 span { color: var(--orange); }
+
     .hero-sub {
-      margin: 1.25rem auto 0.5rem;
-      max-width: 560px;
-      color: #bbb;
-      font-size: 1.1rem;
+      max-width: 620px;
+      margin: 0 auto 1.25rem;
+      color: #ddd;
+      font-size: 1.15rem;
     }
+
     .hero-location {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 2.25rem;
+      color: #bbb;
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
+
     .hero-location span { color: var(--orange); }
+
     .hero-ctas {
       display: flex;
       gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
     }
+
     .btn-primary {
       display: inline-block;
       background: var(--orange);
@@ -195,15 +218,14 @@
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 0.85rem 2rem;
+      padding: 0.9rem 2.2rem;
     }
     .btn-primary:hover { background: var(--orange-dark); }
 
-    /* IMPROVED VIEW ALL BUTTONS */
     .btn-outline {
       display: inline-block;
-      border: 2px solid #222;
-      color: #222;
+      border: 2px solid #fff;
+      color: #fff;
       text-decoration: none;
       font-family: var(--font-head);
       font-size: 0.95rem;
@@ -243,15 +265,8 @@
     }
 
     /* CAROUSEL */
-    .carousel-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .carousel {
-      flex: 1;
-      overflow: hidden;
-    }
+    .carousel-wrapper { display: flex; align-items: center; gap: 1rem; }
+    .carousel { flex: 1; overflow: hidden; }
     .carousel-track {
       display: flex;
       gap: 1rem;
@@ -268,17 +283,10 @@
       object-fit: cover;
       border-radius: 4px;
     }
-
     @media (max-width: 700px) {
-      .carousel-track {
-        gap: 0;
-      }
-      .carousel-item {
-        flex: 0 0 100%;
-        padding: 0 8px;
-      }
+      .carousel-track { gap: 0; }
+      .carousel-item { flex: 0 0 100%; padding: 0 8px; }
     }
-
     .carousel-btn {
       background: var(--orange);
       color: white;
@@ -309,7 +317,6 @@
       align-items: center;
     }
     .modal.active { display: flex; }
-
     .modal-content {
       position: relative;
       max-width: 92%;
@@ -318,14 +325,12 @@
       flex-direction: column;
       align-items: center;
     }
-
     .modal-content img {
       max-width: 100%;
       max-height: 78vh;
       object-fit: contain;
       border-radius: 6px;
     }
-
     .modal-description {
       color: white;
       text-align: center;
@@ -333,7 +338,6 @@
       font-size: 1.15rem;
       max-width: 700px;
     }
-
     .close {
       position: absolute;
       top: -55px;
@@ -345,7 +349,6 @@
       line-height: 1;
     }
     .close:hover { color: var(--orange); }
-
     .modal-arrow {
       position: absolute;
       top: 50%;
@@ -363,12 +366,9 @@
       justify-content: center;
       z-index: 1000;
     }
-    .modal-arrow:hover {
-      background: var(--orange);
-    }
+    .modal-arrow:hover { background: var(--orange); }
     .modal-arrow.prev { left: -70px; }
     .modal-arrow.next { right: -70px; }
-
     @media (max-width: 700px) {
       .modal-arrow.prev { left: 10px; }
       .modal-arrow.next { right: 10px; }
@@ -528,24 +528,20 @@
       .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     }
 
+    /* CUSTOMER LOGOS */
     .customer-logo {
       text-align: center;
-      padding: 0.4rem 0.6rem;     /* reduced from 1rem */
+      padding: 0.4rem 0.6rem;
       flex-shrink: 0;
     }
-    
     .customer-logo img {
-      max-height: 65px;           /* slightly smaller for tighter look */
+      max-height: 65px;
       width: auto;
       object-fit: contain;
       filter: grayscale(15%);
       transition: filter 0.3s ease;
     }
-    
-    .customer-logo:hover img {
-      filter: none;
-    }
-    
+    .customer-logo:hover img { filter: none; }
     .customer-logo p {
       margin-top: 0.4rem;
       font-size: 0.85rem;
@@ -554,23 +550,13 @@
       white-space: nowrap;
     }
 
-    /* Force 4 logos on desktop for Customers carousel */
-    #customers .carousel-item {
-      flex: 0 0 calc(25% - 12px);   /* 4 logos */
-    }
-    
-    /* 3 logos on tablets */
+    /* 4 logos on desktop */
+    #customers .carousel-item { flex: 0 0 calc(25% - 12px); }
     @media (max-width: 900px) {
-      #customers .carousel-item {
-        flex: 0 0 calc(33.333% - 10px);
-      }
+      #customers .carousel-item { flex: 0 0 calc(33.333% - 10px); }
     }
-    
-    /* 2 logos on mobile */
     @media (max-width: 500px) {
-      #customers .carousel-item {
-        flex: 0 0 calc(50% - 8px);
-      }
+      #customers .carousel-item { flex: 0 0 calc(50% - 8px); }
     }
   </style>
 </head>
@@ -595,16 +581,26 @@
     </nav>
   </header>
 
-  <!-- HERO -->
-<section class="hero">
-  <div class="hero-tag">Papakura, Auckland</div>
-  <h1>Accident Repairs<br>&amp; <span>Paintwork</span><br>Done Properly</h1>
-  <p class="hero-sub">Specialists in collision repairs, full repaints, rust repairs, and classic car restorations.</p>
-  <p class="hero-location">Serving <span>South Auckland</span> since 2010</p>
-  <div class="hero-ctas">
-    <a href="tel:092999895" class="btn-primary">📞 Call 09 299 9895</a>
-  </div>
-</section>
+  <!-- HERO WITH VIDEO -->
+  <section class="hero">
+    <!-- Video Background -->
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="Videos/APAP.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <div class="hero-tag">Papakura, Auckland</div>
+      <h1>Accident Repairs<br>&amp; <span>Paintwork</span><br>Done Properly</h1>
+      <p class="hero-sub">Specialists in collision repairs, full repaints, rust repairs, and classic car restorations.</p>
+      <p class="hero-location">Serving <span>South Auckland</span> since 2010</p>
+
+      <div class="hero-ctas">
+        <a href="tel:092999895" class="btn-primary">📞 Call 09 299 9895</a>
+      </div>
+    </div>
+  </section>
 
   <!-- TRUST BAR -->
   <div class="trust-bar">
@@ -617,41 +613,41 @@
   </div>
 
   <!-- GALLERY SECTION -->
-<section id="gallery">
-  <div class="container">
-    <!-- Showcase -->
-    <div style="margin-bottom: 3rem;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h2 class="section-title">Showcase <span>Work</span></h2>
-        <a href="showcase.html" class="btn-outline">View All</a>
-      </div>
-      <div class="divider"></div>
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev">←</button>
-        <div class="carousel" id="showcase-carousel">
-          <div class="carousel-track" id="showcase-track"></div>
+  <section id="gallery">
+    <div class="container">
+      <!-- Showcase -->
+      <div style="margin-bottom: 3rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 class="section-title">Showcase <span>Work</span></h2>
+          <a href="showcase.html" class="btn-outline">View All</a>
         </div>
-        <button class="carousel-btn next">→</button>
+        <div class="divider"></div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn prev">←</button>
+          <div class="carousel" id="showcase-carousel">
+            <div class="carousel-track" id="showcase-track"></div>
+          </div>
+          <button class="carousel-btn next">→</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Before & After -->
-    <div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h2 class="section-title">Before <span>&amp; After</span></h2>
-        <a href="beforeafter.html" class="btn-outline">View All</a>
-      </div>
-      <div class="divider"></div>
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev">←</button>
-        <div class="carousel" id="beforeafter-carousel">
-          <div class="carousel-track" id="beforeafter-track"></div>
+      <!-- Before & After -->
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 class="section-title">Before <span>&amp; After</span></h2>
+          <a href="beforeafter.html" class="btn-outline">View All</a>
         </div>
-        <button class="carousel-btn next">→</button>
+        <div class="divider"></div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn prev">←</button>
+          <div class="carousel" id="beforeafter-carousel">
+            <div class="carousel-track" id="beforeafter-track"></div>
+          </div>
+          <button class="carousel-btn next">→</button>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- SERVICES -->
   <section id="services">
@@ -688,40 +684,38 @@
   </section>
 
   <!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="container">
-    <h2 class="section-title">What Our <span>Customers Say</span></h2>
-    <div class="divider"></div>
-
-    <div class="carousel-wrapper">
-      <button class="carousel-btn prev">←</button>
-      <div class="carousel" id="testimonials-carousel">
-        <div class="carousel-track" id="testimonials-track"></div>
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our <span>Customers Say</span></h2>
+      <div class="divider"></div>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev">←</button>
+        <div class="carousel" id="testimonials-carousel">
+          <div class="carousel-track" id="testimonials-track"></div>
+        </div>
+        <button class="carousel-btn next">→</button>
       </div>
-      <button class="carousel-btn next">→</button>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- CUSTOMERS / FLEET -->
-<section id="customers">
-  <div class="container">
-    <h2 class="section-title">Fleet &amp; Commercial <span>Customers</span></h2>
-    <div class="divider"></div>
-    <p style="text-align:center; max-width:600px; margin:0 auto 2rem; color:#555;">
-      We proudly work with leading fleet operators, transport companies, and commercial businesses across Auckland.
-    </p>
-
-    <div class="carousel-wrapper">
-      <button class="carousel-btn prev">←</button>
-      <div class="carousel" id="customers-carousel">
-        <div class="carousel-track" id="customers-track"></div>
+  <section id="customers">
+    <div class="container">
+      <h2 class="section-title">Fleet &amp; Commercial <span>Customers</span></h2>
+      <div class="divider"></div>
+      <p style="text-align:center; max-width:600px; margin:0 auto 2rem; color:#555;">
+        We proudly work with leading fleet operators, transport companies, and commercial businesses across Auckland.
+      </p>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev">←</button>
+        <div class="carousel" id="customers-carousel">
+          <div class="carousel-track" id="customers-track"></div>
+        </div>
+        <button class="carousel-btn next">→</button>
       </div>
-      <button class="carousel-btn next">→</button>
     </div>
-  </div>
-</section>
-  
+  </section>
+
   <!-- ABOUT -->
   <section id="about">
     <div class="container">
@@ -774,7 +768,6 @@
           <p>Monday – Friday: 8am – 5pm<br>Saturday: By appointment</p>
         </div>
       </div>
-
       <div class="map-wrap">
         <iframe
           src="https://www.google.com/maps?q=Absolute+Panel+and+Paint,+3/14+Dent+Place,+Papakura,+Auckland+2112&output=embed"
@@ -802,423 +795,394 @@
     </div>
   </div>
 
- <script>
-  const AUTO_SLIDE_INTERVAL = 5000;
-  const SLIDE_TRANSITION = 650;
+  <script>
+    // ==================== ALL YOUR EXISTING JAVASCRIPT ====================
+    const AUTO_SLIDE_INTERVAL = 5000;
+    const SLIDE_TRANSITION = 650;
+    let currentGalleryData = [];
+    let currentIndex = 0;
 
-  let currentGalleryData = [];
-  let currentIndex = 0;
+    function initCarousel(jsonFile, trackId, carouselId, startDelay = 0) {
+      const track = document.getElementById(trackId);
+      const carousel = document.getElementById(carouselId);
+      const wrapper = carousel.parentElement;
+      if (!track || !carousel) return;
 
-  // ==================== IMAGE CAROUSELS ====================
-  function initCarousel(jsonFile, trackId, carouselId, startDelay = 0) {
-    const track = document.getElementById(trackId);
-    const carousel = document.getElementById(carouselId);
-    const wrapper = carousel.parentElement;
-    if (!track || !carousel) return;
+      let currentSlideIndex = 0;
+      let items = [];
+      let itemsPerView = 3;
+      let itemWidth = 0;
+      let autoTimer = null;
 
-    let currentSlideIndex = 0;
-    let items = [];
-    let itemsPerView = 3;
-    let itemWidth = 0;
-    let autoTimer = null;
+      function updateItemsPerView() {
+        if (window.innerWidth <= 500) itemsPerView = 2;
+        else if (window.innerWidth <= 900) itemsPerView = 3;
+        else itemsPerView = 4;
+      }
 
-    function updateItemsPerView() {
-      if (window.innerWidth <= 500) itemsPerView = 2;
-      else if (window.innerWidth <= 900) itemsPerView = 3;
-      else itemsPerView = 4;
-    }
+      async function load() {
+        const res = await fetch(jsonFile);
+        items = await res.json();
+        updateItemsPerView();
+        renderAllItems();
+        updateTrackPosition();
+        setTimeout(startAuto, startDelay);
+      }
 
-    async function load() {
-      const res = await fetch(jsonFile);
-      items = await res.json();
-      updateItemsPerView();
-      renderAllItems();
-      updateTrackPosition();
-      setTimeout(startAuto, startDelay);
-    }
-
-    function renderAllItems() {
-      track.innerHTML = '';
-      const displayItems = [...items, ...items];
-
-      displayItems.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'carousel-item';
-        div.innerHTML = `<img src="${item.image}" alt="">`;
-
-        const originalIndex = index % items.length;
-        div.addEventListener('click', () => {
-          currentGalleryData = items;
-          openModal(originalIndex);
+      function renderAllItems() {
+        track.innerHTML = '';
+        const displayItems = [...items, ...items];
+        displayItems.forEach((item, index) => {
+          const div = document.createElement('div');
+          div.className = 'carousel-item';
+          div.innerHTML = `<img src="${item.image}" alt="">`;
+          const originalIndex = index % items.length;
+          div.addEventListener('click', () => {
+            currentGalleryData = items;
+            openModal(originalIndex);
+          });
+          track.appendChild(div);
         });
-        track.appendChild(div);
+      }
+
+      function updateTrackPosition(useTransition = true) {
+        const item = track.querySelector('.carousel-item');
+        if (!item) return;
+        const gap = window.innerWidth <= 700 ? 0 : 16;
+        itemWidth = item.offsetWidth + gap;
+        if (!useTransition) track.style.transition = 'none';
+        track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+        if (!useTransition) {
+          void track.offsetWidth;
+          track.style.transition = `transform ${SLIDE_TRANSITION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
+        }
+      }
+
+      function goNext() {
+        currentSlideIndex++;
+        updateTrackPosition();
+        if (currentSlideIndex >= items.length) {
+          setTimeout(() => {
+            track.style.transition = 'none';
+            currentSlideIndex = currentSlideIndex % items.length;
+            updateTrackPosition(false);
+          }, SLIDE_TRANSITION);
+        }
+        autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
+      }
+
+      function goPrev() {
+        currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+        updateTrackPosition();
+        restartAuto();
+      }
+
+      function startAuto() {
+        stopAuto();
+        autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
+      }
+
+      function stopAuto() {
+        if (autoTimer) {
+          clearTimeout(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function restartAuto() {
+        stopAuto();
+        startAuto();
+      }
+
+      wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
+      wrapper.querySelector('.next').addEventListener('click', () => {
+        goNext();
+        restartAuto();
+      });
+
+      wrapper.addEventListener('mouseenter', stopAuto);
+      wrapper.addEventListener('mouseleave', startAuto);
+
+      window.addEventListener('resize', () => {
+        updateItemsPerView();
+        const maxStart = Math.max(0, items.length - itemsPerView);
+        if (currentSlideIndex > maxStart) currentSlideIndex = 0;
+        updateTrackPosition();
+      });
+
+      load();
+    }
+
+    function initTestimonialCarousel(jsonFile, trackId, carouselId) {
+      const track = document.getElementById(trackId);
+      const carousel = document.getElementById(carouselId);
+      const wrapper = carousel.parentElement;
+      if (!track || !carousel) return;
+
+      let currentSlideIndex = 0;
+      let items = [];
+      let itemsPerView = 2;
+      let itemWidth = 0;
+      let autoTimer = null;
+
+      function updateItemsPerView() {
+        itemsPerView = window.innerWidth <= 700 ? 1 : 2;
+      }
+
+      async function load() {
+        const res = await fetch(jsonFile);
+        items = await res.json();
+        updateItemsPerView();
+        renderAllItems();
+        updateTrackPosition();
+        startAuto();
+      }
+
+      function renderAllItems() {
+        track.innerHTML = '';
+        const displayItems = [...items, ...items];
+        displayItems.forEach((item) => {
+          const div = document.createElement('div');
+          div.className = 'carousel-item testimonial';
+          div.innerHTML = `
+            <p>"${item.quote}"</p>
+            <strong>— ${item.name}</strong><br>
+            <span style="color:#888; font-size:0.9rem;">${item.location}</span>
+          `;
+          track.appendChild(div);
+        });
+      }
+
+      function updateTrackPosition(useTransition = true) {
+        const item = track.querySelector('.carousel-item');
+        if (!item) return;
+        const gap = window.innerWidth <= 700 ? 0 : 20;
+        itemWidth = item.offsetWidth + gap;
+        if (!useTransition) track.style.transition = 'none';
+        track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+        if (!useTransition) {
+          void track.offsetWidth;
+          track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        }
+      }
+
+      function goNext() {
+        currentSlideIndex = (currentSlideIndex + 1) % items.length;
+        updateTrackPosition();
+        autoTimer = setTimeout(goNext, 5000);
+      }
+
+      function goPrev() {
+        currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+        updateTrackPosition();
+        restartAuto();
+      }
+
+      function startAuto() {
+        stopAuto();
+        autoTimer = setTimeout(goNext, 5000);
+      }
+
+      function stopAuto() {
+        if (autoTimer) {
+          clearTimeout(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function restartAuto() {
+        stopAuto();
+        startAuto();
+      }
+
+      wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
+      wrapper.querySelector('.next').addEventListener('click', () => {
+        goNext();
+        restartAuto();
+      });
+
+      wrapper.addEventListener('mouseenter', stopAuto);
+      wrapper.addEventListener('mouseleave', startAuto);
+
+      window.addEventListener('resize', () => {
+        updateItemsPerView();
+        updateTrackPosition();
+      });
+
+      load();
+    }
+
+    function initCustomerCarousel(jsonFile, trackId, carouselId) {
+      const track = document.getElementById(trackId);
+      const carousel = document.getElementById(carouselId);
+      const wrapper = carousel.parentElement;
+      if (!track || !carousel) return;
+
+      let currentSlideIndex = 0;
+      let items = [];
+      let itemsPerView = 4;
+      let itemWidth = 0;
+      let autoTimer = null;
+
+      function updateItemsPerView() {
+        if (window.innerWidth <= 500) itemsPerView = 2;
+        else if (window.innerWidth <= 900) itemsPerView = 3;
+        else itemsPerView = 4;
+      }
+
+      async function load() {
+        const res = await fetch(jsonFile);
+        items = await res.json();
+        updateItemsPerView();
+        renderAllItems();
+        updateTrackPosition();
+        startAuto();
+      }
+
+      function renderAllItems() {
+        track.innerHTML = '';
+        const displayItems = [...items, ...items];
+        displayItems.forEach((item) => {
+          const div = document.createElement('div');
+          div.className = 'carousel-item customer-logo';
+          div.innerHTML = `
+            <img src="${item.logo}" alt="${item.name}">
+            <p>${item.name}</p>
+          `;
+          track.appendChild(div);
+        });
+      }
+
+      function updateTrackPosition(useTransition = true) {
+        const item = track.querySelector('.carousel-item');
+        if (!item) return;
+        const gap = window.innerWidth <= 700 ? 8 : 12;
+        itemWidth = item.offsetWidth + gap;
+        if (!useTransition) track.style.transition = 'none';
+        track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+        if (!useTransition) {
+          void track.offsetWidth;
+          track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        }
+      }
+
+      function goNext() {
+        currentSlideIndex++;
+        updateTrackPosition();
+        if (currentSlideIndex >= items.length) {
+          setTimeout(() => {
+            track.style.transition = 'none';
+            currentSlideIndex = currentSlideIndex % items.length;
+            updateTrackPosition(false);
+          }, 500);
+        }
+        autoTimer = setTimeout(goNext, 4000);
+      }
+
+      function goPrev() {
+        currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+        updateTrackPosition();
+        restartAuto();
+      }
+
+      function startAuto() {
+        stopAuto();
+        autoTimer = setTimeout(goNext, 4000);
+      }
+
+      function stopAuto() {
+        if (autoTimer) {
+          clearTimeout(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function restartAuto() {
+        stopAuto();
+        startAuto();
+      }
+
+      wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
+      wrapper.querySelector('.next').addEventListener('click', () => {
+        goNext();
+        restartAuto();
+      });
+
+      wrapper.addEventListener('mouseenter', stopAuto);
+      wrapper.addEventListener('mouseleave', startAuto);
+
+      window.addEventListener('resize', () => {
+        updateItemsPerView();
+        updateTrackPosition();
+      });
+
+      load();
+    }
+
+    function openModal(index) {
+      currentIndex = index;
+      const modal = document.getElementById('modal');
+      const img = document.getElementById('modal-image');
+      const desc = document.getElementById('modal-description');
+      img.src = currentGalleryData[currentIndex].image;
+      desc.textContent = currentGalleryData[currentIndex].description || '';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % currentGalleryData.length;
+      updateModalImage();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
+      updateModalImage();
+    }
+
+    function updateModalImage() {
+      const img = document.getElementById('modal-image');
+      const desc = document.getElementById('modal-description');
+      img.src = currentGalleryData[currentIndex].image;
+      desc.textContent = currentGalleryData[currentIndex].description || '';
+    }
+
+    function setupModal() {
+      const modal = document.getElementById('modal');
+      document.querySelector('.close').addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
       });
     }
 
-    function updateTrackPosition(useTransition = true) {
-      const item = track.querySelector('.carousel-item');
-      if (!item) return;
+    window.onload = function () {
+      initCarousel('json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
+      initCarousel('json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
+      initTestimonialCarousel('json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
+      initCustomerCarousel('json/customers.json', 'customers-track', 'customers-carousel');
+      setupModal();
 
-      const gap = window.innerWidth <= 700 ? 0 : 16;
-      itemWidth = item.offsetWidth + gap;
-
-      if (!useTransition) track.style.transition = 'none';
-      track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-
-      if (!useTransition) {
-        void track.offsetWidth;
-        track.style.transition = `transform ${SLIDE_TRANSITION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+      if (toggle && links) {
+        toggle.addEventListener('click', () => links.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => links.classList.remove('active'));
+        });
       }
-    }
-
-    function goNext() {
-      currentSlideIndex++;
-      updateTrackPosition();
-
-      if (currentSlideIndex >= items.length) {
-        setTimeout(() => {
-          track.style.transition = 'none';
-          currentSlideIndex = currentSlideIndex % items.length;
-          updateTrackPosition(false);
-        }, SLIDE_TRANSITION);
-      }
-
-      autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
-    }
-
-    function goPrev() {
-      currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-      updateTrackPosition();
-      restartAuto();
-    }
-
-    function startAuto() {
-      stopAuto();
-      autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-    }
-
-    function restartAuto() {
-      stopAuto();
-      startAuto();
-    }
-
-    wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
-    wrapper.querySelector('.next').addEventListener('click', () => {
-      goNext();
-      restartAuto();
-    });
-
-    wrapper.addEventListener('mouseenter', stopAuto);
-    wrapper.addEventListener('mouseleave', startAuto);
-
-    window.addEventListener('resize', () => {
-      updateItemsPerView();
-      const maxStart = Math.max(0, items.length - itemsPerView);
-      if (currentSlideIndex > maxStart) currentSlideIndex = 0;
-      updateTrackPosition();
-    });
-
-    load();
-  }
-
-  // ==================== TESTIMONIALS CAROUSEL ====================
-  function initTestimonialCarousel(jsonFile, trackId, carouselId) {
-    const track = document.getElementById(trackId);
-    const carousel = document.getElementById(carouselId);
-    const wrapper = carousel.parentElement;
-    if (!track || !carousel) return;
-
-    let currentSlideIndex = 0;
-    let items = [];
-    let itemsPerView = 2;
-    let itemWidth = 0;
-    let autoTimer = null;
-
-    function updateItemsPerView() {
-      itemsPerView = window.innerWidth <= 700 ? 1 : 2;
-    }
-
-    async function load() {
-      const res = await fetch(jsonFile);
-      items = await res.json();
-      updateItemsPerView();
-      renderAllItems();
-      updateTrackPosition();
-      startAuto();
-    }
-
-    function renderAllItems() {
-      track.innerHTML = '';
-      const displayItems = [...items, ...items];
-
-      displayItems.forEach((item) => {
-        const div = document.createElement('div');
-        div.className = 'carousel-item testimonial';
-        div.innerHTML = `
-          <p>"${item.quote}"</p>
-          <strong>— ${item.name}</strong><br>
-          <span style="color:#888; font-size:0.9rem;">${item.location}</span>
-        `;
-        track.appendChild(div);
-      });
-    }
-
-    function updateTrackPosition(useTransition = true) {
-      const item = track.querySelector('.carousel-item');
-      if (!item) return;
-
-      const gap = window.innerWidth <= 700 ? 0 : 20;
-      itemWidth = item.offsetWidth + gap;
-
-      if (!useTransition) track.style.transition = 'none';
-      track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-
-      if (!useTransition) {
-        void track.offsetWidth;
-        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-      }
-    }
-
-    function goNext() {
-      currentSlideIndex = (currentSlideIndex + 1) % items.length;
-      updateTrackPosition();
-      autoTimer = setTimeout(goNext, 5000);
-    }
-
-    function goPrev() {
-      currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-      updateTrackPosition();
-      restartAuto();
-    }
-
-    function startAuto() {
-      stopAuto();
-      autoTimer = setTimeout(goNext, 5000);
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-    }
-
-    function restartAuto() {
-      stopAuto();
-      startAuto();
-    }
-
-    wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
-    wrapper.querySelector('.next').addEventListener('click', () => {
-      goNext();
-      restartAuto();
-    });
-
-    wrapper.addEventListener('mouseenter', stopAuto);
-    wrapper.addEventListener('mouseleave', startAuto);
-
-    window.addEventListener('resize', () => {
-      updateItemsPerView();
-      updateTrackPosition();
-    });
-
-    load();
-  }
-
-  function initCustomerCarousel(jsonFile, trackId, carouselId) {
-  const track = document.getElementById(trackId);
-  const carousel = document.getElementById(carouselId);
-  const wrapper = carousel.parentElement;
-  if (!track || !carousel) return;
-
-  let currentSlideIndex = 0;
-  let items = [];
-  let itemsPerView = 4;           // Changed to 4 logos at a time
-  let itemWidth = 0;
-  let autoTimer = null;
-
-  function updateItemsPerView() {
-    if (window.innerWidth <= 500) itemsPerView = 2;
-    else if (window.innerWidth <= 900) itemsPerView = 3;
-    else itemsPerView = 4;        // 4 logos on desktop
-  }
-
-  async function load() {
-    const res = await fetch(jsonFile);
-    items = await res.json();
-    updateItemsPerView();
-    renderAllItems();
-    updateTrackPosition();
-    startAuto();
-  }
-
-  function renderAllItems() {
-    track.innerHTML = '';
-    const displayItems = [...items, ...items]; // duplicate for seamless loop
-
-    displayItems.forEach((item) => {
-      const div = document.createElement('div');
-      div.className = 'carousel-item customer-logo';
-      div.innerHTML = `
-        <img src="${item.logo}" alt="${item.name}">
-        <p>${item.name}</p>
-      `;
-      track.appendChild(div);
-    });
-  }
-
-  function updateTrackPosition(useTransition = true) {
-    const item = track.querySelector('.carousel-item');
-    if (!item) return;
-
-    const gap = window.innerWidth <= 700 ? 8 : 12;
-    itemWidth = item.offsetWidth + gap;
-
-    if (!useTransition) track.style.transition = 'none';
-    track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-
-    if (!useTransition) {
-      void track.offsetWidth;
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-    }
-  }
-
-  function goNext() {
-    currentSlideIndex++;
-    updateTrackPosition();
-
-    // Seamless infinite loop (no jumping back to #1)
-    if (currentSlideIndex >= items.length) {
-      setTimeout(() => {
-        track.style.transition = 'none';
-        currentSlideIndex = currentSlideIndex % items.length;
-        updateTrackPosition(false);
-      }, 500);
-    }
-
-    autoTimer = setTimeout(goNext, 4000);
-  }
-
-  function goPrev() {
-    currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-    updateTrackPosition();
-    restartAuto();
-  }
-
-  function startAuto() {
-    stopAuto();
-    autoTimer = setTimeout(goNext, 4000);
-  }
-
-  function stopAuto() {
-    if (autoTimer) {
-      clearTimeout(autoTimer);
-      autoTimer = null;
-    }
-  }
-
-  function restartAuto() {
-    stopAuto();
-    startAuto();
-  }
-
-  wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
-  wrapper.querySelector('.next').addEventListener('click', () => {
-    goNext();
-    restartAuto();
-  });
-
-  wrapper.addEventListener('mouseenter', stopAuto);
-  wrapper.addEventListener('mouseleave', startAuto);
-
-  window.addEventListener('resize', () => {
-    updateItemsPerView();
-    updateTrackPosition();
-  });
-
-  load();
-}
-
-  // ==================== MODAL ====================
-  function openModal(index) {
-    currentIndex = index;
-    const modal = document.getElementById('modal');
-    const img = document.getElementById('modal-image');
-    const desc = document.getElementById('modal-description');
-    img.src = currentGalleryData[currentIndex].image;
-    desc.textContent = currentGalleryData[currentIndex].description || '';
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('modal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % currentGalleryData.length;
-    updateModalImage();
-  }
-
-  function prevImage() {
-    currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
-    updateModalImage();
-  }
-
-  function updateModalImage() {
-    const img = document.getElementById('modal-image');
-    const desc = document.getElementById('modal-description');
-    img.src = currentGalleryData[currentIndex].image;
-    desc.textContent = currentGalleryData[currentIndex].description || '';
-  }
-
-  function setupModal() {
-    const modal = document.getElementById('modal');
-    document.querySelector('.close').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (!modal.classList.contains('active')) return;
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    });
-  }
-
-  // ==================== INITIALIZE EVERYTHING ====================
-  window.onload = function () {
-    // Image Carousels
-    initCarousel('json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
-    initCarousel('json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
-
-    // Testimonials Carousel
-    initTestimonialCarousel('json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
-
-    // Fleet & Commercial Customers Carousel
-    initCustomerCarousel('json/customers.json', 'customers-track', 'customers-carousel');
-
-    setupModal();
-
-    // Mobile nav toggle
-    const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    if (toggle && links) {
-      toggle.addEventListener('click', () => links.classList.toggle('active'));
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => links.classList.remove('active'));
-      });
-    }
-  };
-</script>
+    };
+  </script>
 </body>
 </html>
