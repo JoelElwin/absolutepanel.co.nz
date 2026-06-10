@@ -1011,110 +1011,119 @@
     load();
   }
 
-  // ==================== CUSTOMERS / FLEET CAROUSEL ====================
   function initCustomerCarousel(jsonFile, trackId, carouselId) {
-    const track = document.getElementById(trackId);
-    const carousel = document.getElementById(carouselId);
-    const wrapper = carousel.parentElement;
-    if (!track || !carousel) return;
+  const track = document.getElementById(trackId);
+  const carousel = document.getElementById(carouselId);
+  const wrapper = carousel.parentElement;
+  if (!track || !carousel) return;
 
-    let currentSlideIndex = 0;
-    let items = [];
-    let itemsPerView = 5;
-    let itemWidth = 0;
-    let autoTimer = null;
+  let currentSlideIndex = 0;
+  let items = [];
+  let itemsPerView = 4;           // Changed to 4 logos at a time
+  let itemWidth = 0;
+  let autoTimer = null;
 
-    function updateItemsPerView() {
-      if (window.innerWidth <= 500) itemsPerView = 2;
-      else if (window.innerWidth <= 900) itemsPerView = 3;
-      else itemsPerView = 5;
-    }
-
-    async function load() {
-      const res = await fetch(jsonFile);
-      items = await res.json();
-      updateItemsPerView();
-      renderAllItems();
-      updateTrackPosition();
-      startAuto();
-    }
-
-    function renderAllItems() {
-      track.innerHTML = '';
-      const displayItems = [...items, ...items];
-
-      displayItems.forEach((item) => {
-        const div = document.createElement('div');
-        div.className = 'carousel-item customer-logo';
-        div.innerHTML = `
-          <img src="${item.logo}" alt="${item.name}">
-          <p>${item.name}</p>
-        `;
-        track.appendChild(div);
-      });
-    }
-
-    function updateTrackPosition(useTransition = true) {
-      const item = track.querySelector('.carousel-item');
-      if (!item) return;
-
-      const gap = window.innerWidth <= 700 ? 8 : 12;
-      itemWidth = item.offsetWidth + gap;
-
-      if (!useTransition) track.style.transition = 'none';
-      track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-
-      if (!useTransition) {
-        void track.offsetWidth;
-        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-      }
-    }
-
-    function goNext() {
-      currentSlideIndex = (currentSlideIndex + 1) % items.length;
-      updateTrackPosition();
-      autoTimer = setTimeout(goNext, 4000);
-    }
-
-    function goPrev() {
-      currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-      updateTrackPosition();
-      restartAuto();
-    }
-
-    function startAuto() {
-      stopAuto();
-      autoTimer = setTimeout(goNext, 4000);
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-    }
-
-    function restartAuto() {
-      stopAuto();
-      startAuto();
-    }
-
-    wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
-    wrapper.querySelector('.next').addEventListener('click', () => {
-      goNext();
-      restartAuto();
-    });
-
-    wrapper.addEventListener('mouseenter', stopAuto);
-    wrapper.addEventListener('mouseleave', startAuto);
-
-    window.addEventListener('resize', () => {
-      updateItemsPerView();
-      updateTrackPosition();
-    });
-
-    load();
+  function updateItemsPerView() {
+    if (window.innerWidth <= 500) itemsPerView = 2;
+    else if (window.innerWidth <= 900) itemsPerView = 3;
+    else itemsPerView = 4;        // 4 logos on desktop
   }
+
+  async function load() {
+    const res = await fetch(jsonFile);
+    items = await res.json();
+    updateItemsPerView();
+    renderAllItems();
+    updateTrackPosition();
+    startAuto();
+  }
+
+  function renderAllItems() {
+    track.innerHTML = '';
+    const displayItems = [...items, ...items]; // duplicate for seamless loop
+
+    displayItems.forEach((item) => {
+      const div = document.createElement('div');
+      div.className = 'carousel-item customer-logo';
+      div.innerHTML = `
+        <img src="${item.logo}" alt="${item.name}">
+        <p>${item.name}</p>
+      `;
+      track.appendChild(div);
+    });
+  }
+
+  function updateTrackPosition(useTransition = true) {
+    const item = track.querySelector('.carousel-item');
+    if (!item) return;
+
+    const gap = window.innerWidth <= 700 ? 8 : 12;
+    itemWidth = item.offsetWidth + gap;
+
+    if (!useTransition) track.style.transition = 'none';
+    track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+
+    if (!useTransition) {
+      void track.offsetWidth;
+      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+    }
+  }
+
+  function goNext() {
+    currentSlideIndex++;
+    updateTrackPosition();
+
+    // Seamless infinite loop (no jumping back to #1)
+    if (currentSlideIndex >= items.length) {
+      setTimeout(() => {
+        track.style.transition = 'none';
+        currentSlideIndex = currentSlideIndex % items.length;
+        updateTrackPosition(false);
+      }, 500);
+    }
+
+    autoTimer = setTimeout(goNext, 4000);
+  }
+
+  function goPrev() {
+    currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+    updateTrackPosition();
+    restartAuto();
+  }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setTimeout(goNext, 4000);
+  }
+
+  function stopAuto() {
+    if (autoTimer) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  function restartAuto() {
+    stopAuto();
+    startAuto();
+  }
+
+  wrapper.querySelector('.prev').addEventListener('click', () => goPrev());
+  wrapper.querySelector('.next').addEventListener('click', () => {
+    goNext();
+    restartAuto();
+  });
+
+  wrapper.addEventListener('mouseenter', stopAuto);
+  wrapper.addEventListener('mouseleave', startAuto);
+
+  window.addEventListener('resize', () => {
+    updateItemsPerView();
+    updateTrackPosition();
+  });
+
+  load();
+}
 
   // ==================== MODAL ====================
   function openModal(index) {
