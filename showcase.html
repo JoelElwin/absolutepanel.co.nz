@@ -25,7 +25,6 @@
       color: var(--black);
     }
 
-    /* === HEADER - Exact same as main page === */
     header {
       background: var(--orange);
       position: sticky;
@@ -40,14 +39,8 @@
       align-items: center;
       height: 70px;
     }
-    .logo {
-      justify-self: start;
-    }
-    .logo img {
-      height: 60px;
-      width: auto;
-      vertical-align: middle;
-    }
+    .logo { justify-self: start; }
+    .logo img { height: 60px; width: auto; vertical-align: middle; }
     .nav-links {
       display: flex;
       justify-content: center;
@@ -90,13 +83,8 @@
     }
 
     @media (max-width: 700px) {
-      nav {
-        grid-template-columns: 1fr 1fr;
-        padding: 0 1rem;
-      }
-      .logo {
-        justify-self: center;
-      }
+      nav { grid-template-columns: 1fr 1fr; padding: 0 1rem; }
+      .logo { justify-self: center; }
       .nav-links {
         position: absolute;
         top: 70px;
@@ -112,11 +100,7 @@
       }
       .nav-links.active { display: flex; }
       .nav-phone { display: none; }
-      .nav-toggle {
-        justify-self: end;
-        margin-right: 0.5rem;
-        display: block;
-      }
+      .nav-toggle { justify-self: end; margin-right: 0.5rem; display: block; }
     }
 
     .page-header {
@@ -138,11 +122,8 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
-
     @media (max-width: 700px) {
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
+      .gallery-grid { grid-template-columns: 1fr; }
     }
 
     .gallery-item {
@@ -157,27 +138,28 @@
       aspect-ratio: 2000 / 1047;
       object-fit: cover;
       display: block;
+      transition: transform 0.3s ease;
     }
+    .gallery-item:hover img { transform: scale(1.03); }
 
     /* Modal */
     .modal {
       display: none;
       position: fixed;
       z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.92);
       justify-content: center;
       align-items: center;
+      padding: 1rem;
     }
     .modal.active { display: flex; }
 
     .modal-content {
       position: relative;
-      max-width: 92%;
-      max-height: 92%;
+      max-width: 95vw;
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -185,7 +167,7 @@
 
     .modal-content img {
       max-width: 100%;
-      max-height: 78vh;
+      max-height: 75vh;
       object-fit: contain;
       border-radius: 6px;
     }
@@ -194,11 +176,10 @@
       color: white;
       text-align: center;
       margin-top: 1rem;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       max-width: 700px;
     }
 
-    /* Bigger Close Button */
     .close {
       position: absolute;
       top: -55px;
@@ -208,42 +189,46 @@
       font-weight: bold;
       cursor: pointer;
       line-height: 1;
+      background: none;
+      border: none;
+      padding: 0;
     }
     .close:hover { color: var(--orange); }
 
-    /* Modal Arrows */
-    .modal-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
+    .modal-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .modal-nav-btn {
+      background: var(--orange);
       color: white;
       border: none;
-      font-size: 2.2rem;
-      width: 50px;
-      height: 50px;
+      font-size: 1.6rem;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
     }
-    .modal-arrow:hover {
-      background: var(--orange);
-    }
-    .modal-arrow.prev { left: -70px; }
-    .modal-arrow.next { right: -70px; }
-
-    @media (max-width: 700px) {
-      .modal-arrow.prev { left: 10px; }
-      .modal-arrow.next { right: 10px; }
+    .modal-nav-btn:hover { background: var(--orange-dark); }
+    .modal-nav-counter {
+      color: #ccc;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      min-width: 60px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header (Fixed alignment) -->
   <header>
     <nav>
       <a href="index.html" class="logo">
@@ -267,17 +252,18 @@
     <h1>Showcase Work</h1>
   </div>
 
-  <!-- Gallery Grid -->
   <div class="gallery-grid" id="gallery-grid"></div>
 
-  <!-- Modal -->
   <div id="modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <button class="modal-arrow prev" onclick="prevImage()">←</button>
-      <button class="modal-arrow next" onclick="nextImage()">→</button>
+      <button class="close" id="modal-close">&times;</button>
       <img id="modal-image" src="" alt="">
       <p id="modal-description" class="modal-description"></p>
+      <div class="modal-nav">
+        <button class="modal-nav-btn" id="modal-prev">←</button>
+        <span class="modal-nav-counter" id="modal-counter"></span>
+        <button class="modal-nav-btn" id="modal-next">→</button>
+      </div>
     </div>
   </div>
 
@@ -294,7 +280,6 @@
         const div = document.createElement('div');
         div.className = 'gallery-item';
         div.innerHTML = `<img src="${item.image}" alt="">`;
-
         div.addEventListener('click', () => openModal(index));
         container.appendChild(div);
       });
@@ -302,52 +287,38 @@
 
     function openModal(index) {
       currentIndex = index;
-      const modal = document.getElementById('modal');
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
-
-      img.src = galleryData[currentIndex].image;
-      desc.textContent = galleryData[currentIndex].description || '';
-
-      modal.classList.add('active');
+      updateModal();
+      document.getElementById('modal').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
+    function updateModal() {
+      document.getElementById('modal-image').src = galleryData[currentIndex].image;
+      document.getElementById('modal-description').textContent = galleryData[currentIndex].description || '';
+      document.getElementById('modal-counter').textContent = (currentIndex + 1) + ' / ' + galleryData.length;
+    }
+
     function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('active');
+      document.getElementById('modal').classList.remove('active');
       document.body.style.overflow = '';
     }
 
     function nextImage() {
       currentIndex = (currentIndex + 1) % galleryData.length;
-      updateModalImage();
+      updateModal();
     }
 
     function prevImage() {
       currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
-      updateModalImage();
-    }
-
-    function updateModalImage() {
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
-
-      img.src = galleryData[currentIndex].image;
-      desc.textContent = galleryData[currentIndex].description || '';
+      updateModal();
     }
 
     function setupModal() {
-      const modal = document.getElementById('modal');
-
-      document.querySelector('.close').addEventListener('click', closeModal);
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
+      document.getElementById('modal-close').addEventListener('click', closeModal);
+      document.getElementById('modal-prev').addEventListener('click', prevImage);
+      document.getElementById('modal-next').addEventListener('click', nextImage);
       document.addEventListener('keydown', (e) => {
-        if (!modal.classList.contains('active')) return;
+        if (!document.getElementById('modal').classList.contains('active')) return;
         if (e.key === 'Escape') closeModal();
         if (e.key === 'ArrowRight') nextImage();
         if (e.key === 'ArrowLeft') prevImage();
@@ -357,7 +328,6 @@
     function setupMobileMenu() {
       const toggle = document.getElementById('navToggle');
       const links = document.getElementById('navLinks');
-
       if (toggle && links) {
         toggle.addEventListener('click', () => links.classList.toggle('active'));
         document.querySelectorAll('.nav-links a').forEach(link => {
