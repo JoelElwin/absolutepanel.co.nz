@@ -944,110 +944,112 @@
     setupModal();
 
     function initTestimonialCarousel(jsonFile, trackId, carouselId) {
-      const track = document.getElementById(trackId);
-      const carousel = document.getElementById(carouselId);
-      const wrapper = carousel.parentElement;
-      if (!track || !carousel) return;
-    
-      let currentSlideIndex = 0;
-      let items = [];
-      let itemsPerView = 2;
-      let itemWidth = 0;
-      let autoTimer = null;
-    
-      function updateItemsPerView() {
-        itemsPerView = window.innerWidth <= 700 ? 1 : 2;
-      }
-    
-      async function load() {
-        const res = await fetch(jsonFile);
-        items = await res.json();
-        updateItemsPerView();
-        renderAllItems();
-        updateTrackPosition();
-        startAuto();
-      }
-    
-      function renderAllItems() {
-        track.innerHTML = '';
-        items.forEach((item) => {
-          const div = document.createElement('div');
-          div.className = 'carousel-item testimonial';
-          div.innerHTML = `
-            <p>"${item.quote}"</p>
-            <strong>— ${item.name}</strong><br>
-            <span style="color:#888; font-size:0.9rem;">${item.location}</span>
-          `;
-          track.appendChild(div);
-        });
-      }
-    
-      function updateTrackPosition(useTransition = true) {
-        const item = track.querySelector('.carousel-item');
-        if (!item) return;
-    
-        const gap = window.innerWidth <= 700 ? 0 : 20;
-        itemWidth = item.offsetWidth + gap;
-    
-        if (!useTransition) track.style.transition = 'none';
-        track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-        
-        if (!useTransition) {
-          void track.offsetWidth;
-          track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-        }
-      }
-    
-      function goNext() {
-        currentSlideIndex = (currentSlideIndex + 1) % items.length;
-        updateTrackPosition();
-        autoTimer = setTimeout(goNext, 5000);
-      }
-    
-      function goPrev() {
-        currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-        updateTrackPosition();
-        restartAuto();
-      }
-    
-      function startAuto() {
-        stopAuto();
-        autoTimer = setTimeout(goNext, 5000);
-      }
-    
-      function stopAuto() {
-        if (autoTimer) {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
-      }
-    
-      function restartAuto() {
-        stopAuto();
-        startAuto();
-      }
-    
-      // Arrow buttons
-      wrapper.querySelector('.prev').addEventListener('click', () => {
-        goPrev();
-      });
-      
-      wrapper.querySelector('.next').addEventListener('click', () => {
-        goNext();
-        restartAuto();
-      });
-    
-      wrapper.addEventListener('mouseenter', stopAuto);
-      wrapper.addEventListener('mouseleave', startAuto);
-    
-      window.addEventListener('resize', () => {
-        updateItemsPerView();
-        updateTrackPosition();
-      });
-    
-      load();
-    }
+  const track = document.getElementById(trackId);
+  const carousel = document.getElementById(carouselId);
+  const wrapper = carousel.parentElement;
+  if (!track || !carousel) return;
 
+  let currentSlideIndex = 0;
+  let items = [];
+  let itemsPerView = 2;
+  let itemWidth = 0;
+  let autoTimer = null;
+
+  function updateItemsPerView() {
+    itemsPerView = window.innerWidth <= 700 ? 1 : 2;
+  }
+
+  async function load() {
+    const res = await fetch(jsonFile);
+    items = await res.json();
+    updateItemsPerView();
+    renderAllItems();
+    updateTrackPosition();
+    startAuto();
+  }
+
+  function renderAllItems() {
+    track.innerHTML = '';
+    // Duplicate items so the carousel never runs out of slides
+    const displayItems = [...items, ...items];
+
+    displayItems.forEach((item) => {
+      const div = document.createElement('div');
+      div.className = 'carousel-item testimonial';
+      div.innerHTML = `
+        <p>"${item.quote}"</p>
+        <strong>— ${item.name}</strong><br>
+        <span style="color:#888; font-size:0.9rem;">${item.location}</span>
+      `;
+      track.appendChild(div);
+    });
+  }
+
+  function updateTrackPosition(useTransition = true) {
+    const item = track.querySelector('.carousel-item');
+    if (!item) return;
+
+    const gap = window.innerWidth <= 700 ? 0 : 20;
+    itemWidth = item.offsetWidth + gap;
+
+    if (!useTransition) track.style.transition = 'none';
+    track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+    
+    if (!useTransition) {
+      void track.offsetWidth;
+      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+    }
+  }
+
+  function goNext() {
+    currentSlideIndex = (currentSlideIndex + 1) % items.length;
+    updateTrackPosition();
+    autoTimer = setTimeout(goNext, 5000);
+  }
+
+  function goPrev() {
+    currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+    updateTrackPosition();
+    restartAuto();
+  }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setTimeout(goNext, 5000);
+  }
+
+  function stopAuto() {
+    if (autoTimer) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  function restartAuto() {
+    stopAuto();
+    startAuto();
+  }
+
+  // Arrow buttons
+  wrapper.querySelector('.prev').addEventListener('click', () => {
+    goPrev();
+  });
+  
+  wrapper.querySelector('.next').addEventListener('click', () => {
+    goNext();
+    restartAuto();
+  });
+
+  wrapper.addEventListener('mouseenter', stopAuto);
+  wrapper.addEventListener('mouseleave', startAuto);
+
+  window.addEventListener('resize', () => {
+    updateItemsPerView();
+    updateTrackPosition();
+  });
+
+  load();
+}
     // Mobile nav toggle
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
