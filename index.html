@@ -693,31 +693,8 @@
     <div class="container">
       <h2 class="section-title">Our <span>Services</span></h2>
       <div class="divider"></div>
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>Accident &amp; Collision Repairs</h3>
-          <p>Panel beating and structural repairs restored to factory standard, no matter the severity.</p>
-        </div>
-        <div class="service-card">
-          <h3>Insurance Repairs</h3>
-          <p>We work with all major insurers. Bring your claim to us and we'll handle the rest.</p>
-        </div>
-        <div class="service-card">
-          <h3>Full Repaints &amp; Custom Paint</h3>
-          <p>Full vehicle resprays and custom colour work with precise computer-aided colour matching.</p>
-        </div>
-        <div class="service-card">
-          <h3>Rust Repairs</h3>
-          <p>Rust cut out and replaced properly — not just covered up. Done to last.</p>
-        </div>
-        <div class="service-card">
-          <h3>Classic &amp; Performance Restoration</h3>
-          <p>We restore classic and performance vehicles with the care and attention they deserve.</p>
-        </div>
-        <div class="service-card">
-          <h3>Scratch &amp; Scuff Repair</h3>
-          <p>Minor damage repaired quickly without needing a full panel replacement.</p>
-        </div>
+      <div class="services-grid" id="services-grid">
+        <!-- Services will be loaded dynamically from JSON -->
       </div>
     </div>
   </section>
@@ -1049,6 +1026,28 @@
       load();
     }
 
+    function initServices(jsonFile, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+    
+      fetch(jsonFile)
+        .then(res => res.json())
+        .then(services => {
+          container.innerHTML = '';
+    
+          services.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'service-card';
+            card.innerHTML = `
+              <h3>${service.title}</h3>
+              <p>${service.description}</p>
+            `;
+            container.appendChild(card);
+          });
+        })
+        .catch(err => console.error('Error loading services:', err));
+    }
+    
     function initCustomerCarousel(jsonFile, trackId, carouselId) {
       const track = document.getElementById(trackId);
       const carousel = document.getElementById(carouselId);
@@ -1192,6 +1191,7 @@
       initCarousel('json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
       initTestimonialCarousel('json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
       initCustomerCarousel('json/customers.json', 'customers-track', 'customers-carousel');
+      initServices('json/services.json', 'services-grid');
       setupModal();
 
       const toggle = document.getElementById('navToggle');
