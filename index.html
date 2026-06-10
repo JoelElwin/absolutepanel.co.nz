@@ -538,10 +538,10 @@
         <img src="Images/Logo/Logo.jpg" alt="Absolute Panel & Paint 2010 Ltd">
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#services">Services</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact">Contact Us</a></li>
       </ul>
       <div class="nav-right">
         <a href="tel:092999895" class="nav-phone">09 299 9895</a>
@@ -760,12 +760,13 @@
   </div>
 
   <script>
-  const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
+  const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds between slides
+  const SLIDE_TRANSITION = 650;     // smoother slide speed (ms)
 
   let currentGalleryData = [];
   let currentIndex = 0;
 
-  function initCarousel(jsonFile, trackId, carouselId) {
+  function initCarousel(jsonFile, trackId, carouselId, startDelay = 0) {
     const track = document.getElementById(trackId);
     const carousel = document.getElementById(carouselId);
     const wrapper = carousel.parentElement;
@@ -775,7 +776,7 @@
     let items = [];
     let itemsPerView = 3;
     let itemWidth = 0;
-    let autoSlide = null;
+    let autoTimer = null;
 
     function updateItemsPerView() {
       itemsPerView = window.innerWidth <= 700 ? 1 : 3;
@@ -787,13 +788,13 @@
       updateItemsPerView();
       renderAllItems();
       updateTrackPosition();
-      startAuto();
+      // Start auto-slide after the given delay (for staggering)
+      setTimeout(startAuto, startDelay);
     }
 
     function renderAllItems() {
       track.innerHTML = '';
-      // Duplicate items so we can do seamless infinite scrolling
-      const displayItems = [...items, ...items];
+      const displayItems = [...items, ...items]; // duplicate for seamless loop
       
       displayItems.forEach((item, index) => {
         const div = document.createElement('div');
@@ -816,14 +817,12 @@
       const gap = window.innerWidth <= 700 ? 0 : 16;
       itemWidth = item.offsetWidth + gap;
 
-      if (!useTransition) {
-        track.style.transition = 'none';
-      }
+      if (!useTransition) track.style.transition = 'none';
       track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
       
       if (!useTransition) {
         void track.offsetWidth;
-        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        track.style.transition = `transform ${SLIDE_TRANSITION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
       }
     }
 
@@ -831,29 +830,40 @@
       currentSlideIndex++;
       updateTrackPosition();
 
-      // Seamless loop - snap back after animation finishes
+      // Seamless infinite loop
       if (currentSlideIndex >= items.length) {
         setTimeout(() => {
           track.style.transition = 'none';
           currentSlideIndex = currentSlideIndex % items.length;
           updateTrackPosition(false);
-        }, 500);
+        }, SLIDE_TRANSITION);
       }
+
+      // Schedule next slide
+      autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
     }
 
     function goPrev() {
       currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
       updateTrackPosition();
-      startAuto();
+      restartAuto();
     }
 
     function startAuto() {
-      clearInterval(autoSlide);
-      // Add random stagger so the 3 carousels don't move at exactly the same time
-      const stagger = Math.random() * 1400; // 0 to ~1.4 seconds difference
-      setTimeout(() => {
-        autoSlide = setInterval(goNext, AUTO_SLIDE_INTERVAL);
-      }, stagger);
+      stopAuto();
+      autoTimer = setTimeout(goNext, AUTO_SLIDE_INTERVAL);
+    }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    function restartAuto() {
+      stopAuto();
+      startAuto();
     }
 
     // Arrow buttons
@@ -863,10 +873,10 @@
     
     wrapper.querySelector('.next').addEventListener('click', () => {
       goNext();
-      startAuto();
+      restartAuto();
     });
 
-    wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
+    wrapper.addEventListener('mouseenter', stopAuto);
     wrapper.addEventListener('mouseleave', startAuto);
 
     window.addEventListener('resize', () => {
@@ -879,7 +889,7 @@
     load();
   }
 
-  // Modal functions (unchanged)
+  // Modal functions
   function openModal(index) {
     currentIndex = index;
     const modal = document.getElementById('modal');
@@ -929,12 +939,14 @@
   }
 
   window.onload = function () {
-    initCarousel('showcase.json', 'showcase-track', 'showcase-carousel');
-    initCarousel('beforeafter.json', 'beforeafter-track', 'beforeafter-carousel');
-    initCarousel('working.json', 'working-track', 'working-carousel');
+    // Staggered start times so they don't move together
+    initCarousel('showcase.json', 'showcase-track', 'showcase-carousel', 0);      // starts immediately
+    initCarousel('beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200); // starts 1.2s later
+    initCarousel('working.json', 'working-track', 'working-carousel', 2400);     // starts 2.4s later
+
     setupModal();
 
-    // Mobile nav
+    // Mobile nav toggle
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
     if (toggle && links) {
