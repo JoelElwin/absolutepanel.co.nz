@@ -1,35 +1,12 @@
-
 [
   {
-    "image": "Images/BeforeAfter/13bEscort.jpg",
-    "description": "Test Discription "
+    "before": "Images/BeforeAfter/13bEscort.jpg",
+    "after": "Images/BeforeAfter/13bEscort1.jpg",
+    "description": "Full front end repair and repaint on this Hilux"
   },
   {
-    "image": "Images/BeforeAfter/13bEscort1.jpg",
-    "description": "Test Discription 1 "
-  },
-  {
-    "image": "Images/BeforeAfter/13bEscort2.jpg",
-    "description": "Test Discription 2 "
-  },
-  {
-    "image": "Images/BeforeAfter/13bEscort3.jpg",
-    "description": "Test Discription 3 "
-  },
-  {
-    "image": "Images/BeforeAfter/13bEscort4.jpg",
-    "description": "Test Discription 4 "
-  },
-  {
-    "image": "Images/BeforeAfter/13bEscort5.jpg",
-    "description": "Test Discription 5 "
-  },
-  {
-    "image": "Images/BeforeAfter/13bEscort6.jpg",
-    "description": "Test Discription 6 "
-  },
-  {
-    "image": "Images/BeforeAfter/13bEscort7.jpg",
-    "description": "Test Discription 7 "
+    "before": "Images/BeforeAfter/13bEscort2.jpg",
+    "after": "Images/BeforeAfter/13bEscort3.jpg",
+    "description": "Major rear quarter and bumper repair"
   }
 ]
