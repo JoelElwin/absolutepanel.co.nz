@@ -1,34 +1,42 @@
 [
   {
-    "image": "Images/Showcase/13bEscort.jpg",
-    "description": "Test Discription "
+    "image": "Images/Showcase/Arcdian.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort1.jpg",
-    "description": "Test Discription 1 "
+    "image": "Images/Showcase/Camaro.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort2.jpg",
-    "description": "Test Discription 2 "
+    "image": "Images/Showcase/Chev.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort3.jpg",
-    "description": "Test Discription 3 "
+    "image": "Images/Showcase/Corvette.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort4.jpg",
-    "description": "Test Discription 4 "
+    "image": "Images/Showcase/Dart.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort5.jpg",
-    "description": "Test Discription 5 "
+    "image": "Images/Showcase/EH.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort6.jpg",
-    "description": "Test Discription 6 "
+    "image": "Images/Showcase/Hauntu.JPG",
+    "description": ""
   },
   {
-    "image": "Images/Showcase/13bEscort7.jpg",
-    "description": "Test Discription 7 "
+    "image": "Images/Showcase/HQGreen.JPG",
+    "description": ""
+  },
+  {
+    "image": "Images/Showcase/Impalla.JPG",
+    "description": ""
+  },
+  {
+    "image": "Images/Showcase/VW.JPG",
+    "description": ""
   }
 ]
