@@ -661,22 +661,20 @@
   </section>
 
   <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <div class="container">
-      <h2 class="section-title">What Our <span>Customers Say</span></h2>
-      <div class="divider"></div>
-      <div class="services-grid">
-        <div class="testimonial">
-          <p>"Best panel beaters in South Auckland. Honest pricing and the work on my insurance claim was perfect."</p>
-          <strong>— Mark T., Papakura</strong>
-        </div>
-        <div class="testimonial">
-          <p>"They brought my classic car back to life. The attention to detail is outstanding."</p>
-          <strong>— Paul S., Auckland</strong>
-        </div>
+<section id="testimonials">
+  <div class="container">
+    <h2 class="section-title">What Our <span>Customers Say</span></h2>
+    <div class="divider"></div>
+
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev">←</button>
+      <div class="carousel" id="testimonials-carousel">
+        <div class="carousel-track" id="testimonials-track"></div>
       </div>
+      <button class="carousel-btn next">→</button>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ABOUT -->
   <section id="about">
@@ -942,8 +940,92 @@
     initCarousel('showcase.json', 'showcase-track', 'showcase-carousel', 0);      // starts immediately
     initCarousel('beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200); // starts 1.2s later
     initCarousel('working.json', 'working-track', 'working-carousel', 2400);     // starts 2.4s later
-
+    initTestimonialCarousel('testimonials.json', 'testimonials-track', 'testimonials-carousel');
     setupModal();
+
+    function initTestimonialCarousel(jsonFile, trackId, carouselId) {
+  const track = document.getElementById(trackId);
+  const carousel = document.getElementById(carouselId);
+  const wrapper = carousel.parentElement;
+  if (!track || !carousel) return;
+
+  let currentSlideIndex = 0;
+  let items = [];
+  let itemsPerView = 2;
+  let itemWidth = 0;
+  let autoSlide = null;
+
+  function updateItemsPerView() {
+    itemsPerView = window.innerWidth <= 700 ? 1 : 2;
+  }
+
+  async function load() {
+    const res = await fetch(jsonFile);
+    items = await res.json();
+    updateItemsPerView();
+    renderAllItems();
+    updateTrackPosition();
+    startAuto();
+  }
+
+  function renderAllItems() {
+    track.innerHTML = '';
+    items.forEach((item) => {
+      const div = document.createElement('div');
+      div.className = 'carousel-item testimonial';
+      div.innerHTML = `
+        <p>"${item.quote}"</p>
+        <strong>— ${item.name}</strong>
+        <span style="color:#888; font-size:0.9rem;">${item.location}</span>
+      `;
+      track.appendChild(div);
+    });
+  }
+
+  function updateTrackPosition() {
+    const item = track.querySelector('.carousel-item');
+    if (!item) return;
+
+    const gap = window.innerWidth <= 700 ? 0 : 20;
+    itemWidth = item.offsetWidth + gap;
+    track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+  }
+
+  function goNext() {
+    currentSlideIndex = (currentSlideIndex + 1) % items.length;
+    if (currentSlideIndex + itemsPerView > items.length) currentSlideIndex = 0;
+    updateTrackPosition();
+  }
+
+  function goPrev() {
+    currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+    updateTrackPosition();
+  }
+
+  function startAuto() {
+    clearInterval(autoSlide);
+    autoSlide = setInterval(goNext, 5000);
+  }
+
+  wrapper.querySelector('.prev').addEventListener('click', () => {
+    goPrev();
+    startAuto();
+  });
+  wrapper.querySelector('.next').addEventListener('click', () => {
+    goNext();
+    startAuto();
+  });
+
+  wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
+  wrapper.addEventListener('mouseleave', startAuto);
+
+  window.addEventListener('resize', () => {
+    updateItemsPerView();
+    updateTrackPosition();
+  });
+
+  load();
+}
 
     // Mobile nav toggle
     const toggle = document.getElementById('navToggle');
