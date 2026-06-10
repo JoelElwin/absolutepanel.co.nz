@@ -280,94 +280,83 @@
 
   <script>
     let galleryData = [];
-    let currentIndex = 0;
+let currentIndex = 0;
 
-    async function loadGallery() {
-      const res = await fetch('beforeafter.json');
-      galleryData = await res.json();
-      const container = document.getElementById('gallery-grid');
+async function loadGallery() {
+  const res = await fetch('json/beforeafter.json');
+  galleryData = await res.json();
+  const container = document.getElementById('gallery-grid');
 
-      galleryData.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'gallery-item';
-        div.innerHTML = `<img src="${item.image}" alt="">`;
+  galleryData.forEach((item, index) => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item beforeafter-item';
+    div.innerHTML = `
+      <div class="beforeafter-fade">
+        <img src="${item.after}" class="after-img" alt="After">
+        <img src="${item.before}" class="before-img" alt="Before">
+      </div>
+    `;
+    div.addEventListener('click', () => openModal(index));
+    container.appendChild(div);
+  });
+}
 
-        div.addEventListener('click', () => openModal(index));
-        container.appendChild(div);
-      });
-    }
+function openModal(index) {
+  currentIndex = index;
+  updateModal();
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
-    function openModal(index) {
-      currentIndex = index;
-      const modal = document.getElementById('modal');
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
+function updateModal() {
+  const item = galleryData[currentIndex];
+  document.getElementById('modal-before-img').src = item.before;
+  document.getElementById('modal-after-img').src = item.after;
+  document.getElementById('modal-description').textContent = item.description || '';
+  document.getElementById('modal-counter').textContent = (currentIndex + 1) + ' / ' + galleryData.length;
+}
 
-      img.src = galleryData[currentIndex].image;
-      desc.textContent = galleryData[currentIndex].description || '';
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
 
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+function nextImage() {
+  currentIndex = (currentIndex + 1) % galleryData.length;
+  updateModal();
+}
 
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+function prevImage() {
+  currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+  updateModal();
+}
 
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % galleryData.length;
-      updateModalImage();
-    }
+function setupModal() {
+  document.querySelector('.close').addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('modal').classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft') prevImage();
+  });
+}
 
-    function prevImage() {
-      currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
-      updateModalImage();
-    }
+function setupMobileMenu() {
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => links.classList.toggle('active'));
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => links.classList.remove('active'));
+    });
+  }
+}
 
-    function updateModalImage() {
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
-
-      img.src = galleryData[currentIndex].image;
-      desc.textContent = galleryData[currentIndex].description || '';
-    }
-
-    function setupModal() {
-      const modal = document.getElementById('modal');
-
-      document.querySelector('.close').addEventListener('click', closeModal);
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-      });
-    }
-
-    function setupMobileMenu() {
-      const toggle = document.getElementById('navToggle');
-      const links = document.getElementById('navLinks');
-
-      if (toggle && links) {
-        toggle.addEventListener('click', () => links.classList.toggle('active'));
-        document.querySelectorAll('.nav-links a').forEach(link => {
-          link.addEventListener('click', () => links.classList.remove('active'));
-        });
-      }
-    }
-
-    window.onload = function () {
-      loadGallery();
-      setupModal();
-      setupMobileMenu();
-    };
+window.onload = function () {
+  loadGallery();
+  setupModal();
+  setupMobileMenu();
+};
   </script>
 </body>
 </html>
