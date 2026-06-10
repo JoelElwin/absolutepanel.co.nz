@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Company Name 1",
+    "logo": "Images/Companylogos/company1.png"
+  },
+  {
+    "name": "Company Name 2",
+    "logo": "Images/Companylogos/logos/company2.png"
+  },
+  {
+    "name": "Company Name 3",
+    "logo": "Images/Companylogos/logos/company3.png"
+  },
+  {
+    "name": "Company Name 4",
+    "logo": "Images/Companylogos/logos/company4.png"
+  },
+  {
+    "name": "Company Name 5",
+    "logo": "Images/Companylogos/logos/company5.png"
+  }
+]
