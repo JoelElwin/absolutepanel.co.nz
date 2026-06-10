@@ -25,7 +25,6 @@
       color: var(--black);
     }
 
-    /* Header - Same as main page */
     header {
       background: var(--orange);
       position: sticky;
@@ -40,14 +39,8 @@
       align-items: center;
       height: 70px;
     }
-    .logo {
-      justify-self: start;
-    }
-    .logo img {
-      height: 60px;
-      width: auto;
-      vertical-align: middle;
-    }
+    .logo { justify-self: start; }
+    .logo img { height: 60px; width: auto; vertical-align: middle; }
     .nav-links {
       display: flex;
       justify-content: center;
@@ -90,13 +83,8 @@
     }
 
     @media (max-width: 700px) {
-      nav {
-        grid-template-columns: 1fr 1fr;
-        padding: 0 1rem;
-      }
-      .logo {
-        justify-self: center;
-      }
+      nav { grid-template-columns: 1fr 1fr; padding: 0 1rem; }
+      .logo { justify-self: center; }
       .nav-links {
         position: absolute;
         top: 70px;
@@ -112,11 +100,7 @@
       }
       .nav-links.active { display: flex; }
       .nav-phone { display: none; }
-      .nav-toggle {
-        justify-self: end;
-        margin-right: 0.5rem;
-        display: block;
-      }
+      .nav-toggle { justify-self: end; margin-right: 0.5rem; display: block; }
     }
 
     .page-header {
@@ -138,11 +122,8 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
-
     @media (max-width: 700px) {
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
+      .gallery-grid { grid-template-columns: 1fr; }
     }
 
     .gallery-item {
@@ -152,11 +133,38 @@
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-    .gallery-item img {
+
+    /* Before/After fade animation */
+    .beforeafter-fade {
+      position: relative;
       width: 100%;
-      aspect-ratio: 2000 / 1047;
+      padding-top: 52.35%;
+      overflow: hidden;
+    }
+    .beforeafter-fade .after-img,
+    .beforeafter-fade .before-img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
+      border-radius: 4px;
       display: block;
+    }
+    .beforeafter-fade .after-img { z-index: 1; }
+    .beforeafter-fade .before-img {
+      z-index: 2;
+      -webkit-animation: fadeBeforeSmooth 5s infinite ease-in-out;
+      animation: fadeBeforeSmooth 5s infinite ease-in-out;
+    }
+    @-webkit-keyframes fadeBeforeSmooth {
+      0%, 40%  { opacity: 1; }
+      50%, 90% { opacity: 0; }
+      100%     { opacity: 1; }
+    }
+    @keyframes fadeBeforeSmooth {
+      0%, 40%  { opacity: 1; }
+      50%, 90% { opacity: 0; }
+      100%     { opacity: 1; }
     }
 
     /* Modal */
@@ -164,38 +172,22 @@
       display: none;
       position: fixed;
       z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.92);
       justify-content: center;
       align-items: center;
+      padding: 1rem;
     }
     .modal.active { display: flex; }
 
     .modal-content {
       position: relative;
-      max-width: 92%;
-      max-height: 92%;
+      max-width: 95vw;
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    .modal-content img {
-      max-width: 100%;
-      max-height: 78vh;
-      object-fit: contain;
-      border-radius: 6px;
-    }
-
-    .modal-description {
-      color: white;
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 1.15rem;
-      max-width: 700px;
     }
 
     .close {
@@ -207,41 +199,94 @@
       font-weight: bold;
       cursor: pointer;
       line-height: 1;
+      background: none;
+      border: none;
+      padding: 0;
     }
     .close:hover { color: var(--orange); }
 
-    .modal-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
+    .beforeafter-pair {
+      display: flex;
+      gap: 1.5rem;
+      width: 100%;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .beforeafter-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+    }
+    .beforeafter-panel img {
+      width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .ba-label {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-top: 0.5rem;
+    }
+
+    .modal-description {
+      color: white;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      max-width: 700px;
+    }
+
+    .modal-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .modal-nav-btn {
+      background: var(--orange);
       color: white;
       border: none;
-      font-size: 2.2rem;
-      width: 50px;
-      height: 50px;
+      font-size: 1.6rem;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
     }
-    .modal-arrow:hover {
-      background: var(--orange);
+    .modal-nav-btn:hover { background: var(--orange-dark); }
+    .modal-nav-counter {
+      color: #ccc;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      min-width: 60px;
+      text-align: center;
     }
-    .modal-arrow.prev { left: -70px; }
-    .modal-arrow.next { right: -70px; }
 
     @media (max-width: 700px) {
-      .modal-arrow.prev { left: 10px; }
-      .modal-arrow.next { right: 10px; }
+      .beforeafter-pair {
+        flex-direction: column;
+        gap: 1rem;
+        max-height: 78vh;
+        overflow-y: auto;
+      }
+      .beforeafter-panel img { max-height: 38vh; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <nav>
       <a href="index.html" class="logo">
@@ -267,96 +312,109 @@
 
   <div class="gallery-grid" id="gallery-grid"></div>
 
-  <!-- Modal -->
   <div id="modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <button class="modal-arrow prev" onclick="prevImage()">←</button>
-      <button class="modal-arrow next" onclick="nextImage()">→</button>
-      <img id="modal-image" src="" alt="">
+      <button class="close" id="modal-close">&times;</button>
+      <div class="beforeafter-pair">
+        <div class="beforeafter-panel">
+          <img id="modal-before-img" src="" alt="Before">
+          <span class="ba-label">Before</span>
+        </div>
+        <div class="beforeafter-panel">
+          <img id="modal-after-img" src="" alt="After">
+          <span class="ba-label">After</span>
+        </div>
+      </div>
       <p id="modal-description" class="modal-description"></p>
+      <div class="modal-nav">
+        <button class="modal-nav-btn" id="modal-prev">←</button>
+        <span class="modal-nav-counter" id="modal-counter"></span>
+        <button class="modal-nav-btn" id="modal-next">→</button>
+      </div>
     </div>
   </div>
 
   <script>
     let galleryData = [];
-let currentIndex = 0;
+    let currentIndex = 0;
 
-async function loadGallery() {
-  const res = await fetch('json/beforeafter.json');
-  galleryData = await res.json();
-  const container = document.getElementById('gallery-grid');
+    async function loadGallery() {
+      const res = await fetch('json/beforeafter.json');
+      galleryData = await res.json();
+      const container = document.getElementById('gallery-grid');
 
-  galleryData.forEach((item, index) => {
-    const div = document.createElement('div');
-    div.className = 'gallery-item beforeafter-item';
-    div.innerHTML = `
-      <div class="beforeafter-fade">
-        <img src="${item.after}" class="after-img" alt="After">
-        <img src="${item.before}" class="before-img" alt="Before">
-      </div>
-    `;
-    div.addEventListener('click', () => openModal(index));
-    container.appendChild(div);
-  });
-}
+      galleryData.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.innerHTML = `
+          <div class="beforeafter-fade">
+            <img src="${item.after}" class="after-img" alt="After">
+            <img src="${item.before}" class="before-img" alt="Before">
+          </div>
+        `;
+        div.addEventListener('click', () => openModal(index));
+        container.appendChild(div);
+      });
+    }
 
-function openModal(index) {
-  currentIndex = index;
-  updateModal();
-  document.getElementById('modal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+    function openModal(index) {
+      currentIndex = index;
+      updateModal();
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
-function updateModal() {
-  const item = galleryData[currentIndex];
-  document.getElementById('modal-before-img').src = item.before;
-  document.getElementById('modal-after-img').src = item.after;
-  document.getElementById('modal-description').textContent = item.description || '';
-  document.getElementById('modal-counter').textContent = (currentIndex + 1) + ' / ' + galleryData.length;
-}
+    function updateModal() {
+      const item = galleryData[currentIndex];
+      document.getElementById('modal-before-img').src = item.before;
+      document.getElementById('modal-after-img').src = item.after;
+      document.getElementById('modal-description').textContent = item.description || '';
+      document.getElementById('modal-counter').textContent = (currentIndex + 1) + ' / ' + galleryData.length;
+    }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('active');
-  document.body.style.overflow = '';
-}
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
 
-function nextImage() {
-  currentIndex = (currentIndex + 1) % galleryData.length;
-  updateModal();
-}
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % galleryData.length;
+      updateModal();
+    }
 
-function prevImage() {
-  currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
-  updateModal();
-}
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+      updateModal();
+    }
 
-function setupModal() {
-  document.querySelector('.close').addEventListener('click', closeModal);
-  document.addEventListener('keydown', (e) => {
-    if (!document.getElementById('modal').classList.contains('active')) return;
-    if (e.key === 'Escape') closeModal();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-  });
-}
+    function setupModal() {
+      document.getElementById('modal-close').addEventListener('click', closeModal);
+      document.getElementById('modal-prev').addEventListener('click', prevImage);
+      document.getElementById('modal-next').addEventListener('click', nextImage);
+      document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('modal').classList.contains('active')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      });
+    }
 
-function setupMobileMenu() {
-  const toggle = document.getElementById('navToggle');
-  const links = document.getElementById('navLinks');
-  if (toggle && links) {
-    toggle.addEventListener('click', () => links.classList.toggle('active'));
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => links.classList.remove('active'));
-    });
-  }
-}
+    function setupMobileMenu() {
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+      if (toggle && links) {
+        toggle.addEventListener('click', () => links.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => links.classList.remove('active'));
+        });
+      }
+    }
 
-window.onload = function () {
-  loadGallery();
-  setupModal();
-  setupMobileMenu();
-};
+    window.onload = function () {
+      loadGallery();
+      setupModal();
+      setupMobileMenu();
+    };
   </script>
 </body>
 </html>
