@@ -360,41 +360,41 @@
     }
     .close:hover { color: var(--orange); }
 
-   /* Before & After Auto Fade */
-.beforeafter-item .beforeafter-fade {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 2000 / 1047;
-  overflow: hidden;
-}
-
-.beforeafter-item .beforeafter-fade img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-/* Before image */
-.beforeafter-item .beforeafter-fade .before-img {
-  opacity: 1;
-  animation: beforeAfterFade 8s infinite ease-in-out;
-}
-
-/* After image */
-.beforeafter-item .beforeafter-fade .after-img {
-  opacity: 0;
-  animation: beforeAfterFade 8s infinite ease-in-out;
-  animation-delay: 4s;
-}
-
-@keyframes beforeAfterFade {
-  0%, 45%   { opacity: 1; }
-  55%, 100% { opacity: 0; }
-}
+   /* Before & After Smooth Fast Fade */
+    .beforeafter-item .beforeafter-fade {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2000 / 1047;
+      overflow: hidden;
+    }
+    
+    .beforeafter-item .beforeafter-fade img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    
+    /* Before image */
+    .beforeafter-item .beforeafter-fade .before-img {
+      opacity: 1;
+      animation: smoothCrossfade 4s infinite ease-in-out;
+    }
+    
+    /* After image */
+    .beforeafter-item .beforeafter-fade .after-img {
+      opacity: 0;
+      animation: smoothCrossfade 4s infinite ease-in-out;
+      animation-delay: 2s;
+    }
+    
+    @keyframes smoothCrossfade {
+      0%, 45%   { opacity: 1; }
+      55%, 100% { opacity: 0; }
+    }
     /* Before & After Modal Layout */
     .beforeafter-modal {
       display: flex;
