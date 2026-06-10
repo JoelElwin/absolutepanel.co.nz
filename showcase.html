@@ -286,7 +286,7 @@
     let currentIndex = 0;
 
     async function loadGallery() {
-      const res = await fetch('showcase.json');
+      const res = await fetch('json/showcase.json');
       galleryData = await res.json();
       const container = document.getElementById('gallery-grid');
 
