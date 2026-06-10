@@ -760,7 +760,7 @@
   </div>
 
   <script>
-  const AUTO_SLIDE_INTERVAL = 5000; // Changed to 5 seconds
+  const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
 
   let currentGalleryData = [];
   let currentIndex = 0;
@@ -776,7 +776,6 @@
     let itemsPerView = 3;
     let itemWidth = 0;
     let autoSlide = null;
-    let isTransitioning = false;
 
     function updateItemsPerView() {
       itemsPerView = window.innerWidth <= 700 ? 1 : 3;
@@ -793,7 +792,7 @@
 
     function renderAllItems() {
       track.innerHTML = '';
-      // Duplicate items for seamless infinite loop
+      // Duplicate items so we can do seamless infinite scrolling
       const displayItems = [...items, ...items];
       
       displayItems.forEach((item, index) => {
@@ -801,7 +800,6 @@
         div.className = 'carousel-item';
         div.innerHTML = `<img src="${item.image}" alt="">`;
         
-        // Map back to original index for modal
         const originalIndex = index % items.length;
         div.addEventListener('click', () => {
           currentGalleryData = items;
@@ -824,30 +822,21 @@
       track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
       
       if (!useTransition) {
-        // Force reflow then restore transition
         void track.offsetWidth;
         track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
       }
     }
 
     function goNext() {
-      if (isTransitioning) return;
-      isTransitioning = true;
-
       currentSlideIndex++;
       updateTrackPosition();
 
-      // Seamless wrap: after animation finishes, snap back to start
+      // Seamless loop - snap back after animation finishes
       if (currentSlideIndex >= items.length) {
         setTimeout(() => {
           track.style.transition = 'none';
           currentSlideIndex = currentSlideIndex % items.length;
           updateTrackPosition(false);
-          isTransitioning = false;
-        }, 500);
-      } else {
-        setTimeout(() => {
-          isTransitioning = false;
         }, 500);
       }
     }
@@ -860,13 +849,16 @@
 
     function startAuto() {
       clearInterval(autoSlide);
-      autoSlide = setInterval(goNext, AUTO_SLIDE_INTERVAL);
+      // Add random stagger so the 3 carousels don't move at exactly the same time
+      const stagger = Math.random() * 1400; // 0 to ~1.4 seconds difference
+      setTimeout(() => {
+        autoSlide = setInterval(goNext, AUTO_SLIDE_INTERVAL);
+      }, stagger);
     }
 
-    // Button handlers
+    // Arrow buttons
     wrapper.querySelector('.prev').addEventListener('click', () => {
       goPrev();
-      startAuto();
     });
     
     wrapper.querySelector('.next').addEventListener('click', () => {
@@ -879,11 +871,8 @@
 
     window.addEventListener('resize', () => {
       updateItemsPerView();
-      // Clamp currentSlideIndex if needed after resize
       const maxStart = Math.max(0, items.length - itemsPerView);
-      if (currentSlideIndex > maxStart) {
-        currentSlideIndex = 0;
-      }
+      if (currentSlideIndex > maxStart) currentSlideIndex = 0;
       updateTrackPosition();
     });
 
@@ -945,7 +934,7 @@
     initCarousel('working.json', 'working-track', 'working-carousel');
     setupModal();
 
-    // Mobile nav toggle
+    // Mobile nav
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
     if (toggle && links) {
