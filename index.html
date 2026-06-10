@@ -545,33 +545,42 @@
       #customers .carousel-item { flex: 0 0 calc(33.333% - 8px); }
     }
 
-/* Mobile - 2 logos (fixed clipping) */
+/* === CUSTOMERS CAROUSEL - MOBILE FIX === */
 @media (max-width: 500px) {
-  #customers .carousel-item {
-    flex: 0 0 calc(50% - 4px);
+  #customers .carousel {
+    overflow: hidden;
     padding: 0 4px;
   }
 
+  #customers .carousel-track {
+    justify-content: center;     /* Centers the two logos */
+    gap: 10px;                   /* Nice even spacing */
+  }
+
+  #customers .carousel-item {
+    flex: 0 0 calc(46% - 5px);   /* Slightly narrower to stop clipping */
+    padding: 0;
+  }
+
   .customer-logo {
-    padding: 0.3rem 0.2rem;
+    padding: 0.25rem 0.15rem;
+    text-align: center;
   }
 
   .customer-logo img {
-    max-height: 52px;
+    max-height: 50px;
     max-width: 100%;
     width: auto;
+    display: block;
+    margin: 0 auto;
   }
 
   .customer-logo p {
     font-size: 0.75rem;
-    margin-top: 0.25rem;
-  }
-}
-
-/* Extra safety - prevent clipping */
-@media (max-width: 500px) {
-  #customers .carousel {
+    margin-top: 0.2rem;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
