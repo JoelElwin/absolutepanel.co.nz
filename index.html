@@ -360,7 +360,7 @@
     }
     .close:hover { color: var(--orange); }
 
-    /* Before & After Auto Fade (Carousel) */
+   /* Before & After Auto Fade */
 .beforeafter-item .beforeafter-fade {
   position: relative;
   width: 100%;
@@ -376,27 +376,25 @@
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
-  transition: none; /* Important - remove transition so animation works cleanly */
 }
 
-/* Before image - visible first */
+/* Before image */
 .beforeafter-item .beforeafter-fade .before-img {
   opacity: 1;
-  animation: crossfade 8s infinite ease-in-out;
+  animation: beforeAfterFade 8s infinite ease-in-out;
 }
 
-/* After image - starts hidden, fades in later */
+/* After image */
 .beforeafter-item .beforeafter-fade .after-img {
   opacity: 0;
-  animation: crossfade 8s infinite ease-in-out;
+  animation: beforeAfterFade 8s infinite ease-in-out;
   animation-delay: 4s;
 }
 
-@keyframes crossfade {
+@keyframes beforeAfterFade {
   0%, 45%   { opacity: 1; }
   55%, 100% { opacity: 0; }
 }
-
     /* Before & After Modal Layout */
     .beforeafter-modal {
       display: flex;
