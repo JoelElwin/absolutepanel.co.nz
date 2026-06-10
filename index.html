@@ -1162,15 +1162,11 @@
 
   // ==================== INITIALIZE EVERYTHING ====================
   window.onload = function () {
-    // Image Carousels
-    initCarousel('Json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
-    initCarousel('Json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
-
-    // Testimonials Carousel
-    initTestimonialCarousel('Json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
-
-    // Fleet & Commercial Customers Carousel
-    initCustomerCarousel('Json/customers.json', 'customers-track', 'customers-carousel');
+    initCarousel('json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
+    initCarousel('json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
+  
+    initTestimonialCarousel('json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
+    initCustomerCarousel('json/customers.json', 'customers-track', 'customers-carousel');
 
     setupModal();
 
