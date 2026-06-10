@@ -593,59 +593,41 @@
   </div>
 
   <!-- GALLERY SECTION -->
-  <section id="gallery">
-    <div class="container">
-
-      <!-- Showcase -->
-      <div style="margin-bottom: 3rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <h2 class="section-title">Showcase <span>Work</span></h2>
-          <a href="showcase.html" class="btn-outline">View All</a>
-        </div>
-        <div class="divider"></div>
-        <div class="carousel-wrapper">
-          <button class="carousel-btn prev">←</button>
-          <div class="carousel" id="showcase-carousel">
-            <div class="carousel-track" id="showcase-track"></div>
-          </div>
-          <button class="carousel-btn next">→</button>
-        </div>
+<section id="gallery">
+  <div class="container">
+    <!-- Showcase -->
+    <div style="margin-bottom: 3rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h2 class="section-title">Showcase <span>Work</span></h2>
+        <a href="showcase.html" class="btn-outline">View All</a>
       </div>
-
-      <!-- Before & After -->
-      <div style="margin-bottom: 3rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <h2 class="section-title">Before <span>&amp; After</span></h2>
-          <a href="beforeafter.html" class="btn-outline">View All</a>
+      <div class="divider"></div>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev">←</button>
+        <div class="carousel" id="showcase-carousel">
+          <div class="carousel-track" id="showcase-track"></div>
         </div>
-        <div class="divider"></div>
-        <div class="carousel-wrapper">
-          <button class="carousel-btn prev">←</button>
-          <div class="carousel" id="beforeafter-carousel">
-            <div class="carousel-track" id="beforeafter-track"></div>
-          </div>
-          <button class="carousel-btn next">→</button>
-        </div>
+        <button class="carousel-btn next">→</button>
       </div>
-
-      <!-- Working -->
-      <div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <h2 class="section-title">Work in <span>Progress</span></h2>
-          <a href="working.html" class="btn-outline">View All</a>
-        </div>
-        <div class="divider"></div>
-        <div class="carousel-wrapper">
-          <button class="carousel-btn prev">←</button>
-          <div class="carousel" id="working-carousel">
-            <div class="carousel-track" id="working-track"></div>
-          </div>
-          <button class="carousel-btn next">→</button>
-        </div>
-      </div>
-
     </div>
-  </section>
+
+    <!-- Before & After -->
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h2 class="section-title">Before <span>&amp; After</span></h2>
+        <a href="beforeafter.html" class="btn-outline">View All</a>
+      </div>
+      <div class="divider"></div>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev">←</button>
+        <div class="carousel" id="beforeafter-carousel">
+          <div class="carousel-track" id="beforeafter-track"></div>
+        </div>
+        <button class="carousel-btn next">→</button>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- SERVICES -->
   <section id="services">
@@ -976,13 +958,17 @@
   }
 
   window.onload = function () {
-    // Staggered start times so they don't move together
-    initCarousel('Json/showcase.json', 'showcase-track', 'showcase-carousel', 0);      // starts immediately
-    initCarousel('Json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200); // starts 1.2s later
-    initCarousel('Json/working.json', 'working-track', 'working-carousel', 2400);     // starts 2.4s later
-    initTestimonialCarousel('Json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
-    initCustomerCarousel('Json/customers.json', 'customers-track', 'customers-carousel');
-    setupModal();
+  // Image Carousels (removed Work in Progress)
+  initCarousel('Json/showcase.json', 'showcase-track', 'showcase-carousel', 0);
+  initCarousel('Json/beforeafter.json', 'beforeafter-track', 'beforeafter-carousel', 1200);
+
+  // Testimonials Carousel
+  initTestimonialCarousel('Json/testimonials.json', 'testimonials-track', 'testimonials-carousel');
+
+  // Fleet & Commercial Customers Carousel
+  initCustomerCarousel('Json/customers.json', 'customers-track', 'customers-carousel');
+
+  setupModal();
 
     function initTestimonialCarousel(jsonFile, trackId, carouselId) {
   const track = document.getElementById(trackId);
