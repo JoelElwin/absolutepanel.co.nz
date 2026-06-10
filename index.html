@@ -760,168 +760,201 @@
   </div>
 
   <script>
-    const AUTO_SLIDE_INTERVAL = 3000;
+  const AUTO_SLIDE_INTERVAL = 5000; // Changed to 5 seconds
 
-    let currentGalleryData = [];
-    let currentIndex = 0;
+  let currentGalleryData = [];
+  let currentIndex = 0;
 
-    function initCarousel(jsonFile, trackId, carouselId) {
-      const track = document.getElementById(trackId);
-      const carousel = document.getElementById(carouselId);
-      const wrapper = carousel.parentElement;
+  function initCarousel(jsonFile, trackId, carouselId) {
+    const track = document.getElementById(trackId);
+    const carousel = document.getElementById(carouselId);
+    const wrapper = carousel.parentElement;
+    if (!track || !carousel) return;
 
-      if (!track || !carousel) return;
+    let currentSlideIndex = 0;
+    let items = [];
+    let itemsPerView = 3;
+    let itemWidth = 0;
+    let autoSlide = null;
+    let isTransitioning = false;
 
-      let currentSlideIndex = 0;
-      let items = [];
-      let itemsPerView = 3;
-      let itemWidth = 0;
-      let autoSlide;
+    function updateItemsPerView() {
+      itemsPerView = window.innerWidth <= 700 ? 1 : 3;
+    }
 
-      function updateItemsPerView() {
-        itemsPerView = window.innerWidth <= 700 ? 1 : 3;
-      }
+    async function load() {
+      const res = await fetch(jsonFile);
+      items = await res.json();
+      updateItemsPerView();
+      renderAllItems();
+      updateTrackPosition();
+      startAuto();
+    }
 
-      async function load() {
-        const res = await fetch(jsonFile);
-        items = await res.json();
-        updateItemsPerView();
-        renderAllItems();
-        updateTrackPosition();
-        startAuto();
-      }
-
-      function renderAllItems() {
-        track.innerHTML = '';
-        items.forEach((item, index) => {
-          const div = document.createElement('div');
-          div.className = 'carousel-item';
-          div.innerHTML = `<img src="${item.image}" alt="">`;
-
-          div.addEventListener('click', () => {
-            currentGalleryData = items;
-            openModal(index);
-          });
-
-          track.appendChild(div);
+    function renderAllItems() {
+      track.innerHTML = '';
+      // Duplicate items for seamless infinite loop
+      const displayItems = [...items, ...items];
+      
+      displayItems.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'carousel-item';
+        div.innerHTML = `<img src="${item.image}" alt="">`;
+        
+        // Map back to original index for modal
+        const originalIndex = index % items.length;
+        div.addEventListener('click', () => {
+          currentGalleryData = items;
+          openModal(originalIndex);
         });
-      }
-
-      function updateTrackPosition() {
-        const item = track.querySelector('.carousel-item');
-        if (!item) return;
-
-        const gap = window.innerWidth <= 700 ? 0 : 16;
-        itemWidth = item.offsetWidth + gap;
-        track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
-      }
-
-      function goNext() {
-        currentSlideIndex = (currentSlideIndex + 1) % items.length;
-        if (currentSlideIndex + itemsPerView > items.length) currentSlideIndex = 0;
-        updateTrackPosition();
-      }
-
-      function goPrev() {
-        currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
-        updateTrackPosition();
-      }
-
-      function startAuto() {
-        clearInterval(autoSlide);
-        autoSlide = setInterval(goNext, AUTO_SLIDE_INTERVAL);
-      }
-
-      wrapper.querySelector('.prev').addEventListener('click', () => {
-        goPrev();
-        startAuto();
-      });
-      wrapper.querySelector('.next').addEventListener('click', () => {
-        goNext();
-        startAuto();
-      });
-
-      wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
-      wrapper.addEventListener('mouseleave', startAuto);
-
-      window.addEventListener('resize', () => {
-        updateItemsPerView();
-        updateTrackPosition();
-      });
-
-      load();
-    }
-
-    function openModal(index) {
-      currentIndex = index;
-      const modal = document.getElementById('modal');
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
-
-      img.src = currentGalleryData[currentIndex].image;
-      desc.textContent = currentGalleryData[currentIndex].description || '';
-
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % currentGalleryData.length;
-      updateModalImage();
-    }
-
-    function prevImage() {
-      currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
-      updateModalImage();
-    }
-
-    function updateModalImage() {
-      const img = document.getElementById('modal-image');
-      const desc = document.getElementById('modal-description');
-
-      img.src = currentGalleryData[currentIndex].image;
-      desc.textContent = currentGalleryData[currentIndex].description || '';
-    }
-
-    function setupModal() {
-      const modal = document.getElementById('modal');
-
-      document.querySelector('.close').addEventListener('click', closeModal);
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
+        track.appendChild(div);
       });
     }
 
-    window.onload = function () {
-      initCarousel('showcase.json', 'showcase-track', 'showcase-carousel');
-      initCarousel('beforeafter.json', 'beforeafter-track', 'beforeafter-carousel');
-      initCarousel('working.json', 'working-track', 'working-carousel');
+    function updateTrackPosition(useTransition = true) {
+      const item = track.querySelector('.carousel-item');
+      if (!item) return;
 
-      setupModal();
+      const gap = window.innerWidth <= 700 ? 0 : 16;
+      itemWidth = item.offsetWidth + gap;
 
-      const toggle = document.getElementById('navToggle');
-      const links = document.getElementById('navLinks');
-      if (toggle && links) {
-        toggle.addEventListener('click', () => links.classList.toggle('active'));
-        document.querySelectorAll('.nav-links a').forEach(link => {
-          link.addEventListener('click', () => links.classList.remove('active'));
-        });
+      if (!useTransition) {
+        track.style.transition = 'none';
       }
-    };
-  </script>
+      track.style.transform = `translateX(-${currentSlideIndex * itemWidth}px)`;
+      
+      if (!useTransition) {
+        // Force reflow then restore transition
+        void track.offsetWidth;
+        track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      }
+    }
+
+    function goNext() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      currentSlideIndex++;
+      updateTrackPosition();
+
+      // Seamless wrap: after animation finishes, snap back to start
+      if (currentSlideIndex >= items.length) {
+        setTimeout(() => {
+          track.style.transition = 'none';
+          currentSlideIndex = currentSlideIndex % items.length;
+          updateTrackPosition(false);
+          isTransitioning = false;
+        }, 500);
+      } else {
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 500);
+      }
+    }
+
+    function goPrev() {
+      currentSlideIndex = (currentSlideIndex - 1 + items.length) % items.length;
+      updateTrackPosition();
+      startAuto();
+    }
+
+    function startAuto() {
+      clearInterval(autoSlide);
+      autoSlide = setInterval(goNext, AUTO_SLIDE_INTERVAL);
+    }
+
+    // Button handlers
+    wrapper.querySelector('.prev').addEventListener('click', () => {
+      goPrev();
+      startAuto();
+    });
+    
+    wrapper.querySelector('.next').addEventListener('click', () => {
+      goNext();
+      startAuto();
+    });
+
+    wrapper.addEventListener('mouseenter', () => clearInterval(autoSlide));
+    wrapper.addEventListener('mouseleave', startAuto);
+
+    window.addEventListener('resize', () => {
+      updateItemsPerView();
+      // Clamp currentSlideIndex if needed after resize
+      const maxStart = Math.max(0, items.length - itemsPerView);
+      if (currentSlideIndex > maxStart) {
+        currentSlideIndex = 0;
+      }
+      updateTrackPosition();
+    });
+
+    load();
+  }
+
+  // Modal functions (unchanged)
+  function openModal(index) {
+    currentIndex = index;
+    const modal = document.getElementById('modal');
+    const img = document.getElementById('modal-image');
+    const desc = document.getElementById('modal-description');
+    img.src = currentGalleryData[currentIndex].image;
+    desc.textContent = currentGalleryData[currentIndex].description || '';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % currentGalleryData.length;
+    updateModalImage();
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + currentGalleryData.length) % currentGalleryData.length;
+    updateModalImage();
+  }
+
+  function updateModalImage() {
+    const img = document.getElementById('modal-image');
+    const desc = document.getElementById('modal-description');
+    img.src = currentGalleryData[currentIndex].image;
+    desc.textContent = currentGalleryData[currentIndex].description || '';
+  }
+
+  function setupModal() {
+    const modal = document.getElementById('modal');
+    document.querySelector('.close').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+  }
+
+  window.onload = function () {
+    initCarousel('showcase.json', 'showcase-track', 'showcase-carousel');
+    initCarousel('beforeafter.json', 'beforeafter-track', 'beforeafter-carousel');
+    initCarousel('working.json', 'working-track', 'working-carousel');
+    setupModal();
+
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (toggle && links) {
+      toggle.addEventListener('click', () => links.classList.toggle('active'));
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => links.classList.remove('active'));
+      });
+    }
+  };
+</script>
 </body>
 </html>
