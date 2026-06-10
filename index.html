@@ -379,7 +379,26 @@
   z-index: 1;
 }
 
-/* Before image - on top, fades out to reveal After */
+/* Before & After Fade - Smooth both ways */
+.beforeafter-item .beforeafter-fade {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2000 / 1047;
+  overflow: hidden;
+}
+
+/* After image - base layer */
+.beforeafter-item .beforeafter-fade .after-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+  z-index: 1;
+}
+
+/* Before image - fades out and back in smoothly */
 .beforeafter-item .beforeafter-fade .before-img {
   position: absolute;
   top: 0;
@@ -390,42 +409,14 @@
   border-radius: 4px;
   z-index: 2;
   opacity: 1;
-  animation: fadeBeforeImage 4s infinite ease-in-out;
+  animation: fadeBeforeSmooth 5s infinite ease-in-out;
 }
 
-@keyframes fadeBeforeImage {
-  0%, 45%   { opacity: 1; }
-  55%, 100% { opacity: 0; }
+@keyframes fadeBeforeSmooth {
+  0%, 40%   { opacity: 1; }     /* Before visible */
+  50%, 90%  { opacity: 0; }     /* Faded out (showing After) */
+  100%      { opacity: 1; }     /* Fade back in */
 }
-    /* Before & After Modal Layout */
-    .beforeafter-modal {
-      display: flex;
-      gap: 1.5rem;
-      width: 100%;
-      max-width: 1100px;
-    }
-    .beforeafter-modal .beforeafter-image {
-      flex: 1;
-      text-align: center;
-    }
-    .beforeafter-modal .beforeafter-image img {
-      width: 100%;
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .beforeafter-modal .label {
-      margin-top: 0.6rem;
-      font-weight: 600;
-      color: #ccc;
-      font-size: 1rem;
-    }
-
-    @media (max-width: 700px) {
-      .beforeafter-modal {
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-    }
 
     /* SECTIONS */
     section { padding: 4rem 1.5rem; }
