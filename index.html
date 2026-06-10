@@ -530,23 +530,28 @@
 
     .customer-logo {
       text-align: center;
-      padding: 1rem;
+      padding: 0.4rem 0.6rem;     /* reduced from 1rem */
+      flex-shrink: 0;
     }
+    
     .customer-logo img {
-      max-height: 70px;
+      max-height: 65px;           /* slightly smaller for tighter look */
       width: auto;
       object-fit: contain;
-      filter: grayscale(20%);
+      filter: grayscale(15%);
       transition: filter 0.3s ease;
     }
+    
     .customer-logo:hover img {
       filter: none;
     }
+    
     .customer-logo p {
-      margin-top: 0.6rem;
-      font-size: 0.9rem;
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
       color: #444;
       font-weight: 500;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -1053,7 +1058,7 @@
       const item = track.querySelector('.carousel-item');
       if (!item) return;
 
-      const gap = window.innerWidth <= 700 ? 10 : 20;
+      const gap = window.innerWidth <= 700 ? 8 : 12;
       itemWidth = item.offsetWidth + gap;
 
       if (!useTransition) track.style.transition = 'none';
